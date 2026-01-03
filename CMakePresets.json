@@ -1,0 +1,46 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 16,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build using Ninja generator",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ASTERUI_BUILD_EXAMPLES": "ON",
+                "ASTERUI_BUILD_TESTS": "ON",
+                "CMAKE_PREFIX_PATH": "D:/Qt/6.8.3/msvc2022_64",
+                "Qt6_DIR": "D:/Qt/6.8.3/msvc2022_64/lib/cmake/Qt6"
+            }
+        },
+        {
+            "name": "windows-msvc",
+            "displayName": "Windows MSVC",
+            "description": "Build using Visual Studio compiler",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "ASTERUI_BUILD_EXAMPLES": "ON",
+                "CMAKE_PREFIX_PATH": "D:/Qt/6.8.3/msvc2022_64",
+                "Qt6_DIR": "D:/Qt/6.8.3/msvc2022_64/lib/cmake/Qt6"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default"
+        },
+        {
+            "name": "windows-msvc",
+            "configurePreset": "windows-msvc"
+        }
+    ]
+}
