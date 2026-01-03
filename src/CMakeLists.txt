@@ -1,10 +1,12 @@
 set(ASTERUI_SOURCES
     AsterUI.cpp
+    AsterTheme.cpp
 )
 
 set(ASTERUI_HEADERS
     ../include/AsterUI/Global.h
     ../include/AsterUI/AsterUI.h
+    ../include/AsterUI/AsterTheme.h
 )
 
 add_library(AsterUI SHARED
