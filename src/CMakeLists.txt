@@ -2,13 +2,14 @@ set(ASTERUI_SOURCES
     AsterUI.cpp
     AsterTheme.cpp
     AsterButton.cpp
-    AsterInput.cpp
+    AsterLineEdit.cpp
     AsterCheckBox.cpp
     AsterSwitch.cpp
     AsterCard.cpp
     AsterTag.cpp
     AsterSlider.cpp
     AsterSelect.cpp
+    AsterTextEdit.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -16,7 +17,8 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterUI.h
     ../include/AsterUI/AsterTheme.h
     ../include/AsterUI/AsterButton.h
-    ../include/AsterUI/AsterInput.h
+    ../include/AsterUI/AsterLineEdit.h
+    ../include/AsterUI/AsterTextEdit.h
     ../include/AsterUI/AsterCheckBox.h
     ../include/AsterUI/AsterSwitch.h
     ../include/AsterUI/AsterCard.h

@@ -21,7 +21,6 @@ int main(int argc, char *argv[]) {
 
     QWidget *centralWidget = new QWidget(&window);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    mainLayout->setSpacing(20);
     mainLayout->setContentsMargins(40, 40, 40, 40);
 
     // Section: Buttons
@@ -59,23 +58,35 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(btnLayout);
 
-    // Section: Inputs
+    // Section: LineEdit
     QLabel *inputLabel = new QLabel("Inputs", centralWidget);
     inputLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(inputLabel);
 
     QVBoxLayout *inputLayout = new QVBoxLayout();
     
-    // Basic Input
-    auto *inputBasic = new AsterUI::AsterInput("Basic Input");
+    // Basic LineEdit
+    auto *inputBasic = new AsterUI::AsterLineEdit("Basic Input");
+    inputBasic->setFixedHeight(30);
     inputLayout->addWidget(inputBasic);
 
-    // Clearable Input
-    auto *inputClearable = new AsterUI::AsterInput("Clearable Input");
+    // Clearable LineEdit
+    auto *inputClearable = new AsterUI::AsterLineEdit("Clearable Input");
+    inputClearable->setFixedHeight(30);
     inputClearable->setClearable(true);
     inputLayout->addWidget(inputClearable);
 
     mainLayout->addLayout(inputLayout);
+
+    // Section: TextEdit
+    QLabel *textEditLabel = new QLabel("TextEdit", centralWidget);
+    textEditLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(textEditLabel);
+
+    auto *textEdit = new AsterUI::AsterTextEdit();
+    textEdit->setPlaceholderText("Enter multi-line text here...");
+    textEdit->setFixedHeight(100);
+    mainLayout->addWidget(textEdit);
 
     // Section: Toggles
     QLabel *toggleLabel = new QLabel("Toggles", centralWidget);

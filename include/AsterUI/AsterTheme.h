@@ -25,6 +25,7 @@ namespace AsterUI {
             Text,           // 主要文本
             TextSecondary,  // 次要文本
             TextDisabled,   // 禁用文本
+            Placeholder,    // 占位符文本
             
             Background,     // 背景色
             Surface,        // 表面色 (卡片、弹窗背景)
