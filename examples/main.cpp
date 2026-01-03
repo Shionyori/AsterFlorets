@@ -120,6 +120,66 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(cardLayout);
 
+    // Section: Tags
+    QLabel *tagLabel = new QLabel("Tags", centralWidget);
+    tagLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(tagLabel);
+
+    QHBoxLayout *tagLayout = new QHBoxLayout();
+    tagLayout->setAlignment(Qt::AlignLeft);
+
+    // Default Tag
+    tagLayout->addWidget(new AsterUI::AsterTag("Default"));
+
+    // Primary Tag
+    auto *tagPrimary = new AsterUI::AsterTag("Primary");
+    tagPrimary->setType(AsterUI::AsterTag::Type::Primary);
+    tagLayout->addWidget(tagPrimary);
+
+    // Success Tag
+    auto *tagSuccess = new AsterUI::AsterTag("Success");
+    tagSuccess->setType(AsterUI::AsterTag::Type::Success);
+    tagLayout->addWidget(tagSuccess);
+
+    // Warning Tag
+    auto *tagWarning = new AsterUI::AsterTag("Warning");
+    tagWarning->setType(AsterUI::AsterTag::Type::Warning);
+    tagLayout->addWidget(tagWarning);
+
+    // Error Tag
+    auto *tagError = new AsterUI::AsterTag("Error");
+    tagError->setType(AsterUI::AsterTag::Type::Error);
+    tagLayout->addWidget(tagError);
+
+    // Closable Tag
+    auto *tagClosable = new AsterUI::AsterTag("Closable");
+    tagClosable->setClosable(true);
+    tagLayout->addWidget(tagClosable);
+
+    mainLayout->addLayout(tagLayout);
+
+    // Section: Sliders
+    QLabel *sliderLabel = new QLabel("Sliders", centralWidget);
+    sliderLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(sliderLabel);
+
+    QHBoxLayout *sliderLayout = new QHBoxLayout();
+    sliderLayout->setAlignment(Qt::AlignLeft);
+
+    // Horizontal Slider
+    auto *sliderH = new AsterUI::AsterSlider(Qt::Horizontal);
+    sliderH->setValue(30);
+    sliderH->setFixedWidth(200);
+    sliderLayout->addWidget(sliderH);
+
+    // Vertical Slider
+    auto *sliderV = new AsterUI::AsterSlider(Qt::Vertical);
+    sliderV->setValue(70);
+    sliderV->setFixedHeight(100);
+    sliderLayout->addWidget(sliderV);
+
+    mainLayout->addLayout(sliderLayout);
+
     mainLayout->addStretch();
 
     window.setCentralWidget(centralWidget);

@@ -7,6 +7,8 @@
 #include "AsterCheckBox.h"
 #include "AsterSwitch.h"
 #include "AsterCard.h"
+#include "AsterTag.h"
+#include "AsterSlider.h"
 #include <QString>
 
 namespace AsterUI {

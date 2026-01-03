@@ -6,6 +6,8 @@ set(ASTERUI_SOURCES
     AsterCheckBox.cpp
     AsterSwitch.cpp
     AsterCard.cpp
+    AsterTag.cpp
+    AsterSlider.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -17,6 +19,8 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterCheckBox.h
     ../include/AsterUI/AsterSwitch.h
     ../include/AsterUI/AsterCard.h
+    ../include/AsterUI/AsterTag.h
+    ../include/AsterUI/AsterSlider.h
 )
 
 add_library(AsterUI SHARED

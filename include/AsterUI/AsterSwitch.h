@@ -55,6 +55,7 @@ namespace AsterUI {
         QColor m_uncheckedColor;
         
         QParallelAnimationGroup* m_animGroup;
+        bool m_isHovered = false;
     };
 
 }

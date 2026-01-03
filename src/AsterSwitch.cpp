@@ -84,10 +84,14 @@ namespace AsterUI {
 
     void AsterSwitch::enterEvent(QEnterEvent* event) {
         QAbstractButton::enterEvent(event);
+        m_isHovered = true;
+        update();
     }
 
     void AsterSwitch::leaveEvent(QEvent* event) {
         QAbstractButton::leaveEvent(event);
+        m_isHovered = false;
+        update();
     }
 
     void AsterSwitch::startAnimation(bool checked) {
@@ -124,36 +128,49 @@ namespace AsterUI {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
 
-        // 1. 绘制轨道 (Track)
-        // 轨道高度占满控件，圆角为高度的一半
-        QRectF trackRect = rect();
+        // 定义边距，为悬浮光环留出空间 (2px)
+        // 这样光环可以画在轨道外部，而不是覆盖在轨道上
+        qreal margin = 2.0;
+        QRectF r = rect();
+        QRectF trackRect = r.adjusted(margin, margin, -margin, -margin);
+        qreal trackRadius = trackRect.height() / 2.0;
+
+        // 1. 绘制悬浮光环 (Glow Ring)
+        if (m_isHovered) {
+            QColor glowColor = m_checkedColor;
+            glowColor.setAlpha(40); // 调低透明度，更柔和
+            
+            painter.setPen(Qt::NoPen);
+            painter.setBrush(glowColor);
+            // 光环填满整个控件区域 (比轨道大)
+            painter.drawRoundedRect(r, r.height() / 2.0, r.height() / 2.0);
+        }
+
+        // 2. 绘制轨道 (Track)
         painter.setPen(Qt::NoPen);
         painter.setBrush(m_backgroundColor);
-        painter.drawRoundedRect(trackRect, height() / 2.0, height() / 2.0);
+        painter.drawRoundedRect(trackRect, trackRadius, trackRadius);
 
-        // 2. 计算手柄 (Handle) 位置和大小
+        // 3. 计算手柄 (Handle) 位置和大小
         // 留出 2px 的边距 (Padding)，让手柄悬浮在轨道内
         qreal padding = 2.0;
-        qreal handleSize = height() - 2 * padding;
-        qreal trackWidth = width();
+        qreal handleSize = trackRect.height() - 2 * padding;
         
-        // 计算手柄的 X 坐标范围
-        // 最小 X: padding
-        // 最大 X: width - padding - handleSize
-        qreal minX = padding;
-        qreal maxX = trackWidth - padding - handleSize;
+        // 计算手柄的 X 坐标范围 (相对于 trackRect)
+        qreal minX = trackRect.left() + padding;
+        qreal maxX = trackRect.right() - padding - handleSize;
         
         // 根据当前动画位置 (0.0 ~ 1.0) 插值计算实际 X
         qreal currentX = minX + (maxX - minX) * m_handlePosition;
         
-        QRectF handleRect(currentX, padding, handleSize, handleSize);
+        QRectF handleRect(currentX, trackRect.top() + padding, handleSize, handleSize);
 
-        // 3. 绘制手柄阴影 (简单的偏移半透明圆)
+        // 4. 绘制手柄阴影 (简单的偏移半透明圆)
         // 阴影向下偏移 1px，颜色为半透明黑
         painter.setBrush(QColor(0, 0, 0, 40)); 
         painter.drawEllipse(handleRect.translated(0, 1)); 
 
-        // 4. 绘制手柄本体 (纯白)
+        // 5. 绘制手柄本体 (纯白)
         painter.setBrush(Qt::white);
         painter.drawEllipse(handleRect);
     }
