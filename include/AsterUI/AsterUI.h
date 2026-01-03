@@ -9,6 +9,7 @@
 #include "AsterCard.h"
 #include "AsterTag.h"
 #include "AsterSlider.h"
+#include "AsterSelect.h"
 #include <QString>
 
 namespace AsterUI {

@@ -180,6 +180,33 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(sliderLayout);
 
+    // Section: Selects
+    QLabel *selectLabel = new QLabel("Selects", centralWidget);
+    selectLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(selectLabel);
+
+    QHBoxLayout *selectLayout = new QHBoxLayout();
+    selectLayout->setAlignment(Qt::AlignLeft);
+
+    // Basic Select
+    auto *select1 = new AsterUI::AsterSelect();
+    select1->setPlaceholderText("Choose an option");
+    select1->addItems({"Option 1", "Option 2", "Option 3", "Long Option Text Here"});
+    select1->setCurrentIndex(-1);
+    select1->setFixedWidth(200);
+    selectLayout->addWidget(select1);
+
+    // Select with many items
+    auto *select2 = new AsterUI::AsterSelect();
+    select2->setPlaceholderText("Select Country");
+    QStringList countries;
+    for(int i=1; i<=20; ++i) countries << QString("Country %1").arg(i);
+    select2->addItems(countries);
+    select2->setFixedWidth(200);
+    selectLayout->addWidget(select2);
+
+    mainLayout->addLayout(selectLayout);
+
     mainLayout->addStretch();
 
     window.setCentralWidget(centralWidget);
