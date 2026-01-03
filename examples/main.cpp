@@ -58,6 +58,25 @@ int main(int argc, char *argv[]) {
     btnLayout->addWidget(btnLink);
 
     mainLayout->addLayout(btnLayout);
+
+    // Section: Inputs
+    QLabel *inputLabel = new QLabel("Inputs", centralWidget);
+    inputLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(inputLabel);
+
+    QVBoxLayout *inputLayout = new QVBoxLayout();
+    
+    // Basic Input
+    auto *inputBasic = new AsterUI::AsterInput("Basic Input");
+    inputLayout->addWidget(inputBasic);
+
+    // Clearable Input
+    auto *inputClearable = new AsterUI::AsterInput("Clearable Input");
+    inputClearable->setClearable(true);
+    inputLayout->addWidget(inputClearable);
+
+    mainLayout->addLayout(inputLayout);
+
     mainLayout->addStretch();
 
     window.setCentralWidget(centralWidget);

@@ -2,6 +2,7 @@ set(ASTERUI_SOURCES
     AsterUI.cpp
     AsterTheme.cpp
     AsterButton.cpp
+    AsterInput.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -9,6 +10,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterUI.h
     ../include/AsterUI/AsterTheme.h
     ../include/AsterUI/AsterButton.h
+    ../include/AsterUI/AsterInput.h
 )
 
 add_library(AsterUI SHARED
