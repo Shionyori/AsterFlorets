@@ -4,6 +4,8 @@
 #include "AsterTheme.h"
 #include "AsterButton.h"
 #include "AsterInput.h"
+#include "AsterCheckBox.h"
+#include "AsterSwitch.h"
 #include <QString>
 
 namespace AsterUI {

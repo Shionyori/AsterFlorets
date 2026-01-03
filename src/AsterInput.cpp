@@ -73,6 +73,19 @@ namespace AsterUI {
         }
     }
 
+    void AsterInput::setBorderRadius(int radius) {
+        m_borderRadius = radius;
+        update();
+    }
+
+    void AsterInput::setStatus(Status status) {
+        if (m_status == status) return;
+        m_status = status;
+        
+        // 立即更新边框颜色
+        animateBorder(hasFocus());
+    }
+
     void AsterInput::setBorderColor(const QColor& color) {
         m_borderColor = color;
         update();
@@ -88,7 +101,7 @@ namespace AsterUI {
         painter.setRenderHint(QPainter::Antialiasing);
 
         auto theme = AsterTheme::instance();
-        int radius = theme->borderRadius();
+        int radius = (m_borderRadius >= 0) ? m_borderRadius : theme->borderRadius();
 
         // 1. 绘制背景和边框
         QPainterPath path;
@@ -147,8 +160,16 @@ namespace AsterUI {
     void AsterInput::animateBorder(bool focused) {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
-        QColor end = focused ? theme->color(AsterTheme::ColorRole::Primary) 
-                             : theme->color(AsterTheme::ColorRole::Border);
+        QColor end;
+
+        if (m_status == Status::Error) {
+            end = theme->color(AsterTheme::ColorRole::Error);
+        } else if (m_status == Status::Warning) {
+            end = theme->color(AsterTheme::ColorRole::Warning);
+        } else {
+            end = focused ? theme->color(AsterTheme::ColorRole::Primary) 
+                          : theme->color(AsterTheme::ColorRole::Border);
+        }
 
         m_borderAnimation->stop();
         m_borderAnimation->setStartValue(start);

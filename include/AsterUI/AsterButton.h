@@ -12,6 +12,8 @@ namespace AsterUI {
         Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
         Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor)
+        Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)
+        Q_PROPERTY(bool loading READ isLoading WRITE setLoading)
 
     public:
         enum class Type {
@@ -29,6 +31,13 @@ namespace AsterUI {
 
         Type type() const;
         void setType(Type type);
+
+        // 属性访问器
+        int borderRadius() const { return m_borderRadius; }
+        void setBorderRadius(int radius);
+
+        bool isLoading() const { return m_loading; }
+        void setLoading(bool loading);
 
         // 动画属性访问器
         QColor backgroundColor() const { return m_backgroundColor; }
@@ -65,6 +74,11 @@ namespace AsterUI {
         QColor m_backgroundColor;
         QColor m_borderColor;
         QColor m_textColor;
+
+        int m_borderRadius = -1; // -1 表示使用主题默认值
+        bool m_loading = false;
+        qreal m_loadingAngle = 0.0;
+        QTimer* m_loadingTimer = nullptr;
 
         // 动画相关
         QParallelAnimationGroup* m_colorAnimationGroup;

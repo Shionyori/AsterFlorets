@@ -5,6 +5,8 @@
 #include <QMouseEvent>
 #include <QVariantAnimation>
 
+#include <QTimer>
+
 namespace AsterUI {
 
     AsterButton::AsterButton(const QString& text, QWidget* parent) 
@@ -18,9 +20,18 @@ namespace AsterUI {
         , m_type(Type::Default)
         , m_colorAnimationGroup(new QParallelAnimationGroup(this))
         , m_rippleAnimation(new QPropertyAnimation(this, "")) // 占位，后续自定义
+        , m_loadingTimer(new QTimer(this))
     {
         setCursor(Qt::PointingHandCursor);
         
+        // Loading 动画定时器
+        connect(m_loadingTimer, &QTimer::timeout, this, [this]() {
+            m_loadingAngle += 10.0;
+            if (m_loadingAngle >= 360.0) m_loadingAngle = 0.0;
+            update();
+        });
+        m_loadingTimer->setInterval(30); // ~30fps
+
         // 初始化波纹动画
         auto rippleAnim = new QVariantAnimation(this);
         rippleAnim->setDuration(400);
@@ -65,6 +76,24 @@ namespace AsterUI {
 
     void AsterButton::setTextColor(const QColor& color) {
         m_textColor = color;
+        update();
+    }
+
+    void AsterButton::setBorderRadius(int radius) {
+        m_borderRadius = radius;
+        update();
+    }
+
+    void AsterButton::setLoading(bool loading) {
+        if (m_loading == loading) return;
+        m_loading = loading;
+        setEnabled(!loading); // Loading 时禁用交互
+        
+        if (m_loading) {
+            m_loadingTimer->start();
+        } else {
+            m_loadingTimer->stop();
+        }
         update();
     }
 
@@ -113,10 +142,34 @@ namespace AsterUI {
             painter.drawPath(path);
         }
 
-        // 2. 绘制文字
+        // 2. 绘制内容 (Spinner + Text)
         painter.setPen(m_textColor);
         painter.setFont(font());
-        painter.drawText(rect(), Qt::AlignCenter, text());
+        
+        if (m_loading) {
+            // 计算总宽度：Spinner + Spacing + Text
+            int spinnerSize = 14;
+            int spacing = 8;
+            int textWidth = painter.fontMetrics().horizontalAdvance(text());
+            int totalWidth = spinnerSize + spacing + textWidth;
+            
+            int startX = (width() - totalWidth) / 2;
+            int centerY = height() / 2;
+            
+            // 绘制 Spinner
+            painter.save();
+            painter.translate(startX + spinnerSize / 2, centerY);
+            painter.rotate(m_loadingAngle);
+            painter.setPen(QPen(m_textColor, 2));
+            painter.drawArc(-spinnerSize/2, -spinnerSize/2, spinnerSize, spinnerSize, 0, 270 * 16);
+            painter.restore();
+            
+            // 绘制文字
+            QRect textRect(startX + spinnerSize + spacing, 0, textWidth, height());
+            painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
+        } else {
+            painter.drawText(rect(), Qt::AlignCenter, text());
+        }
     }
 
     void AsterButton::drawRipple(QPainter& painter) {

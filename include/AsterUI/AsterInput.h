@@ -10,8 +10,17 @@ namespace AsterUI {
     class ASTERUI_EXPORT AsterInput : public QLineEdit {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
+        Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)
+        Q_PROPERTY(Status status READ status WRITE setStatus)
 
     public:
+        enum class Status {
+            Normal,
+            Error,
+            Warning
+        };
+        Q_ENUM(Status)
+
         explicit AsterInput(QWidget* parent = nullptr);
         explicit AsterInput(const QString& placeholder, QWidget* parent = nullptr);
         ~AsterInput() override;
@@ -19,6 +28,13 @@ namespace AsterUI {
         // 清除按钮
         bool isClearable() const;
         void setClearable(bool clearable);
+
+        // 属性
+        int borderRadius() const { return m_borderRadius; }
+        void setBorderRadius(int radius);
+
+        Status status() const { return m_status; }
+        void setStatus(Status status);
 
         // 动画属性
         QColor borderColor() const { return m_borderColor; }
@@ -41,6 +57,9 @@ namespace AsterUI {
         
         QColor m_borderColor;
         QPropertyAnimation* m_borderAnimation;
+
+        int m_borderRadius = -1;
+        Status m_status = Status::Normal;
     };
 
 }

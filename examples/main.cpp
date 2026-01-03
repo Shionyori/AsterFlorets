@@ -77,6 +77,26 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(inputLayout);
 
+    // Section: Toggles
+    QLabel *toggleLabel = new QLabel("Toggles", centralWidget);
+    toggleLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(toggleLabel);
+
+    QHBoxLayout *toggleLayout = new QHBoxLayout();
+    toggleLayout->setAlignment(Qt::AlignLeft);
+
+    // CheckBox
+    auto *checkBox = new AsterUI::AsterCheckBox("Remember me");
+    toggleLayout->addWidget(checkBox);
+
+    // Switch
+    auto *switchBtn = new AsterUI::AsterSwitch();
+    // 强制设置一个固定大小，排除布局问题
+    switchBtn->setFixedSize(44, 22); 
+    toggleLayout->addWidget(switchBtn);
+
+    mainLayout->addLayout(toggleLayout);
+
     mainLayout->addStretch();
 
     window.setCentralWidget(centralWidget);
