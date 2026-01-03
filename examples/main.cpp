@@ -97,6 +97,29 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(toggleLayout);
 
+    // Section: Cards
+    QLabel *cardLabel = new QLabel("Cards", centralWidget);
+    cardLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    mainLayout->addWidget(cardLabel);
+
+    QHBoxLayout *cardLayout = new QHBoxLayout();
+    cardLayout->setAlignment(Qt::AlignLeft);
+
+    // Basic Card
+    auto *card1 = new AsterUI::AsterCard();
+    card1->setTitle("Basic Card");
+    card1->setFixedSize(200, 120);
+    cardLayout->addWidget(card1);
+
+    // Hoverable Card
+    auto *card2 = new AsterUI::AsterCard();
+    card2->setTitle("Hoverable Card");
+    card2->setHoverable(true);
+    card2->setFixedSize(200, 120);
+    cardLayout->addWidget(card2);
+
+    mainLayout->addLayout(cardLayout);
+
     mainLayout->addStretch();
 
     window.setCentralWidget(centralWidget);

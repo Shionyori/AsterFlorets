@@ -6,6 +6,7 @@
 #include "AsterInput.h"
 #include "AsterCheckBox.h"
 #include "AsterSwitch.h"
+#include "AsterCard.h"
 #include <QString>
 
 namespace AsterUI {
