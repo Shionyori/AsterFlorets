@@ -37,14 +37,10 @@ target_include_directories(AsterUI PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(AsterUI PRIVATE
+target_link_libraries(AsterUI PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
 )
 
 target_compile_definitions(AsterUI PRIVATE ASTERUI_LIBRARY)
-
-if(WIN32)
-    set_target_properties(AsterUI PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
-endif()

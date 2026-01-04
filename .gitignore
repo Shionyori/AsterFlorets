@@ -15,6 +15,7 @@
 
 # CMake
 CMakeCache.txt
+CMakeUserPresets.json
 CMakeFiles/
 cmake_install.cmake
 Makefile

@@ -7,40 +7,39 @@
     },
     "configurePresets": [
         {
-            "name": "default",
-            "displayName": "Default Config",
-            "description": "Default build using Ninja generator",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
+            "name": "windows-msvc",
+            "displayName": "Windows MSVC",
+            "description": "Build using Visual Studio 17 2022 generator",
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
+            "binaryDir": "${sourceDir}/build/windows-msvc",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "ASTERUI_BUILD_EXAMPLES": "ON",
-                "ASTERUI_BUILD_TESTS": "ON",
-                "CMAKE_PREFIX_PATH": "D:/Qt/6.8.3/msvc2022_64",
-                "Qt6_DIR": "D:/Qt/6.8.3/msvc2022_64/lib/cmake/Qt6"
+                "ASTERUI_BUILD_TESTS": "ON"
             }
         },
         {
-            "name": "windows-msvc",
-            "displayName": "Windows MSVC",
-            "description": "Build using Visual Studio compiler",
-            "generator": "Visual Studio 17 2022",
-            "binaryDir": "${sourceDir}/build/${presetName}",
+            "name": "linux-mingw",
+            "displayName": "Linux MinGW",
+            "description": "Build using Ninja generator and MinGW",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/linux-mingw",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
                 "ASTERUI_BUILD_EXAMPLES": "ON",
-                "CMAKE_PREFIX_PATH": "D:/Qt/6.8.3/msvc2022_64",
-                "Qt6_DIR": "D:/Qt/6.8.3/msvc2022_64/lib/cmake/Qt6"
+                "ASTERUI_BUILD_TESTS": "ON"
             }
         }
     ],
     "buildPresets": [
         {
-            "name": "default",
-            "configurePreset": "default"
-        },
-        {
             "name": "windows-msvc",
             "configurePreset": "windows-msvc"
+        },
+        {
+            "name": "linux-mingw",
+            "configurePreset": "linux-mingw"
         }
     ]
 }
