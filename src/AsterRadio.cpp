@@ -27,7 +27,8 @@ namespace AsterUI {
         
         // Use toggled signal instead of checkStateSet for better reliability with QRadioButton
         connect(this, &QRadioButton::toggled, this, [this](bool checked) {
-            startAnimation(checked);
+            Q_UNUSED(checked);
+            startAnimation();
         });
 
         updateColors();
@@ -73,26 +74,28 @@ namespace AsterUI {
     void AsterRadio::enterEvent(QEnterEvent* event) {
         QRadioButton::enterEvent(event);
         m_isHovered = true;
-        if (!isChecked()) {
-            updateColors();
-        }
+        startAnimation();
     }
 
     void AsterRadio::leaveEvent(QEvent* event) {
         QRadioButton::leaveEvent(event);
         m_isHovered = false;
-        if (!isChecked()) {
-            updateColors();
-        }
+        startAnimation();
     }
 
-    void AsterRadio::startAnimation(bool checked) {
+    void AsterRadio::startAnimation() {
         auto theme = AsterTheme::instance();
         m_animGroup->stop();
         m_animGroup->clear();
 
-        QColor targetBorder = checked ? theme->color(AsterTheme::ColorRole::Primary) 
-                                      : (m_isHovered ? theme->color(AsterTheme::ColorRole::Primary) : theme->color(AsterTheme::ColorRole::Border));
+        bool checked = isChecked();
+        QColor targetBorder;
+        if (checked) {
+            targetBorder = theme->color(AsterTheme::ColorRole::Primary);
+        } else {
+            targetBorder = m_isHovered ? theme->color(AsterTheme::ColorRole::Primary) 
+                                       : theme->color(AsterTheme::ColorRole::Border);
+        }
         
         double targetScale = checked ? 1.0 : 0.0;
 
@@ -112,8 +115,12 @@ namespace AsterUI {
             return anim;
         };
 
-        m_animGroup->addAnimation(createScaleAnim("dotScale", m_dotScale, targetScale));
-        m_animGroup->addAnimation(createColorAnim("borderColor", m_borderColor, targetBorder));
+        if (m_dotScale != targetScale)
+            m_animGroup->addAnimation(createScaleAnim("dotScale", m_dotScale, targetScale));
+            
+        if (m_borderColor != targetBorder)
+            m_animGroup->addAnimation(createColorAnim("borderColor", m_borderColor, targetBorder));
+            
         m_animGroup->start();
     }
 

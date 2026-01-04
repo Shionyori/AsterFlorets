@@ -45,7 +45,7 @@ namespace AsterUI {
 
     private:
         void init();
-        void animateBorder(bool focused);
+        void animateBorder();
 
         QPlainTextEdit* m_editor = nullptr;
         QColor m_borderColor;

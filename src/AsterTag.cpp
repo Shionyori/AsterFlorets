@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QMouseEvent>
+#include <QPropertyAnimation>
 
 namespace AsterUI {
 
@@ -23,6 +24,11 @@ namespace AsterUI {
     void AsterTag::init() {
         setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         updateStyle();
+        m_closeBtnOpacity = 0.0;
+
+        m_closeAnim = new QPropertyAnimation(this, "closeBtnOpacity", this);
+        m_closeAnim->setDuration(200);
+        m_closeAnim->setEasingCurve(QEasingCurve::OutCubic);
     }
 
     void AsterTag::setText(const QString& text) {
@@ -135,15 +141,30 @@ namespace AsterUI {
         if (m_closable) {
             QRect closeRect = closeButtonRect();
             
-            if (m_isCloseHovered) {
+            // Background (Animated)
+            if (m_closeBtnOpacity > 0.001) {
                 painter.setPen(Qt::NoPen);
-                painter.setBrush(m_textColor); // Hover 时用文字色做背景
+                QColor bg = m_textColor;
+                bg.setAlphaF(m_closeBtnOpacity);
+                painter.setBrush(bg);
                 painter.drawEllipse(closeRect);
-                painter.setPen(Qt::white); // X 变白
-            } else {
-                painter.setPen(m_textColor);
-                painter.setBrush(Qt::NoBrush);
             }
+
+            // X Icon
+            // If opacity is high, make X white, else make it text color
+            // Or just blend?
+            // Original: Hover -> White X, TextColor BG. Normal -> TextColor X, No BG.
+            
+            // Let's interpolate color
+            QColor xColor = m_textColor;
+            if (m_closeBtnOpacity > 0.5) {
+                // Transition to white as background becomes opaque
+                // Simple threshold for now, or interpolate
+                xColor = Qt::white;
+            }
+            
+            painter.setPen(xColor);
+            painter.setBrush(Qt::NoBrush);
 
             // Draw 'X'
             int p = 4; // padding inside close rect
@@ -166,7 +187,7 @@ namespace AsterUI {
             bool hover = closeButtonRect().contains(event->pos());
             if (hover != m_isCloseHovered) {
                 m_isCloseHovered = hover;
-                update();
+                animateCloseButton(hover);
                 setCursor(hover ? Qt::PointingHandCursor : Qt::ArrowCursor);
             }
         }
@@ -181,9 +202,19 @@ namespace AsterUI {
 
     void AsterTag::leaveEvent(QEvent* event) {
         m_isHovered = false;
-        m_isCloseHovered = false;
+        if (m_isCloseHovered) {
+            m_isCloseHovered = false;
+            animateCloseButton(false);
+        }
         update();
         QWidget::leaveEvent(event);
+    }
+
+    void AsterTag::animateCloseButton(bool hovered) {
+        m_closeAnim->stop();
+        m_closeAnim->setStartValue(m_closeBtnOpacity);
+        m_closeAnim->setEndValue(hovered ? 1.0 : 0.0);
+        m_closeAnim->start();
     }
 
 }

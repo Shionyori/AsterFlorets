@@ -97,12 +97,7 @@ namespace AsterUI {
         QFrame::enterEvent(event);
         if (m_hoverable) {
             m_isHovered = true;
-            // 悬停时加深阴影
-            if (auto shadow = qobject_cast<QGraphicsDropShadowEffect*>(graphicsEffect())) {
-                shadow->setBlurRadius(25);
-                shadow->setColor(QColor(0, 0, 0, 40));
-                shadow->setOffset(0, 4);
-            }
+            animateHover(true);
         }
     }
 
@@ -110,13 +105,30 @@ namespace AsterUI {
         QFrame::leaveEvent(event);
         if (m_hoverable) {
             m_isHovered = false;
-            // 恢复阴影
-            if (auto shadow = qobject_cast<QGraphicsDropShadowEffect*>(graphicsEffect())) {
-                shadow->setBlurRadius(15);
-                shadow->setColor(QColor(0, 0, 0, 20));
-                shadow->setOffset(0, 2);
-            }
+            animateHover(false);
         }
+    }
+
+    void AsterCard::animateHover(bool hovered) {
+        auto shadow = qobject_cast<QGraphicsDropShadowEffect*>(graphicsEffect());
+        if (!shadow) return;
+
+        if (m_hoverAnimGroup) {
+            m_hoverAnimGroup->stop();
+            delete m_hoverAnimGroup;
+        }
+        m_hoverAnimGroup = new QParallelAnimationGroup(this);
+
+        // Only animate color (opacity) for a smooth fade-in/out effect
+        auto colorAnim = new QPropertyAnimation(shadow, "color");
+        colorAnim->setDuration(300); 
+        colorAnim->setStartValue(shadow->color());
+        // Slightly darker shadow on hover
+        colorAnim->setEndValue(hovered ? QColor(0, 0, 0, 60) : QColor(0, 0, 0, 20));
+        colorAnim->setEasingCurve(QEasingCurve::OutCubic);
+
+        m_hoverAnimGroup->addAnimation(colorAnim);
+        m_hoverAnimGroup->start();
     }
 
 }

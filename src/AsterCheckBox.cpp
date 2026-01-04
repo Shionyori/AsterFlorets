@@ -26,7 +26,8 @@ namespace AsterUI {
         m_animGroup = new QParallelAnimationGroup(this);
         
         connect(this, &QCheckBox::stateChanged, this, [this](int state) {
-            startAnimation(state);
+            Q_UNUSED(state);
+            startAnimation();
         });
 
         updateColors();
@@ -76,27 +77,33 @@ namespace AsterUI {
     void AsterCheckBox::enterEvent(QEnterEvent* event) {
         QCheckBox::enterEvent(event);
         m_isHovered = true;
-        if (checkState() == Qt::Unchecked) {
-            updateColors(); // Update border color on hover
-        }
+        startAnimation();
     }
 
     void AsterCheckBox::leaveEvent(QEvent* event) {
         QCheckBox::leaveEvent(event);
         m_isHovered = false;
-        if (checkState() == Qt::Unchecked) {
-            updateColors();
-        }
+        startAnimation();
     }
 
-    void AsterCheckBox::startAnimation(int state) {
+    void AsterCheckBox::startAnimation() {
         auto theme = AsterTheme::instance();
         m_animGroup->stop();
         m_animGroup->clear();
 
-        bool checked = (state != Qt::Unchecked);
-        QColor targetBorder = checked ? theme->color(AsterTheme::ColorRole::Primary) 
-                                      : (m_isHovered ? theme->color(AsterTheme::ColorRole::Primary) : theme->color(AsterTheme::ColorRole::Border));
+        bool checked = (checkState() != Qt::Unchecked);
+        
+        // Target Border Color
+        // Checked: Primary
+        // Unchecked & Hovered: Primary
+        // Unchecked & Normal: Border
+        QColor targetBorder;
+        if (checked) {
+            targetBorder = theme->color(AsterTheme::ColorRole::Primary);
+        } else {
+            targetBorder = m_isHovered ? theme->color(AsterTheme::ColorRole::Primary) 
+                                       : theme->color(AsterTheme::ColorRole::Border);
+        }
         
         double targetScale = checked ? 1.0 : 0.0;
 
@@ -116,8 +123,12 @@ namespace AsterUI {
             return anim;
         };
 
-        m_animGroup->addAnimation(createScaleAnim("checkScale", m_checkScale, targetScale));
-        m_animGroup->addAnimation(createColorAnim("borderColor", m_borderColor, targetBorder));
+        if (m_checkScale != targetScale)
+            m_animGroup->addAnimation(createScaleAnim("checkScale", m_checkScale, targetScale));
+            
+        if (m_borderColor != targetBorder)
+            m_animGroup->addAnimation(createColorAnim("borderColor", m_borderColor, targetBorder));
+            
         m_animGroup->start();
     }
 

@@ -35,7 +35,7 @@ namespace AsterUI {
 
     private:
         void init();
-        void startAnimation(int state);
+        void startAnimation();
         void updateColors();
 
     private:

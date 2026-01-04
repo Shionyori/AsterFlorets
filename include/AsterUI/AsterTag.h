@@ -3,6 +3,7 @@
 #include "Global.h"
 #include <QWidget>
 #include <QColor>
+#include <QPropertyAnimation>
 
 namespace AsterUI {
 
@@ -10,6 +11,7 @@ namespace AsterUI {
         Q_OBJECT
         Q_PROPERTY(QString text READ text WRITE setText)
         Q_PROPERTY(bool closable READ isClosable WRITE setClosable)
+        Q_PROPERTY(double closeBtnOpacity READ closeBtnOpacity WRITE setCloseBtnOpacity)
 
     public:
         enum class Type {
@@ -34,6 +36,14 @@ namespace AsterUI {
         bool isClosable() const { return m_closable; }
         void setClosable(bool closable);
 
+        double closeBtnOpacity() const { return m_closeBtnOpacity; }
+        void setCloseBtnOpacity(double opacity) {
+            if (m_closeBtnOpacity != opacity) {
+                m_closeBtnOpacity = opacity;
+                update();
+            }
+        }
+
     signals:
         void closed();
         void clicked();
@@ -50,17 +60,21 @@ namespace AsterUI {
         void init();
         void updateStyle();
         QRect closeButtonRect() const;
+        void animateCloseButton(bool hovered);
 
     private:
         QString m_text;
         Type m_type = Type::Default;
         bool m_closable = false;
+        
+        QColor m_textColor;
+        QColor m_bgColor;
+        QColor m_borderColor;
+
         bool m_isHovered = false;
         bool m_isCloseHovered = false;
 
-        QColor m_bgColor;
-        QColor m_borderColor;
-        QColor m_textColor;
+        double m_closeBtnOpacity = 0.0;
+        QPropertyAnimation* m_closeAnim = nullptr;
     };
-
 }

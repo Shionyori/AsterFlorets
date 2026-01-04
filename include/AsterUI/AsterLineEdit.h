@@ -51,7 +51,7 @@ namespace AsterUI {
     private:
         void init();
         void updateClearButtonPosition();
-        void animateBorder(bool focused);
+        void animateBorder();
 
     private:
         bool m_clearable;

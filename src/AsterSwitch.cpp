@@ -19,6 +19,8 @@ namespace AsterUI {
     void AsterSwitch::init() {
         setCursor(Qt::PointingHandCursor);
         m_animGroup = new QParallelAnimationGroup(this);
+        m_glowAnim = new QPropertyAnimation(this, "glowOpacity", this);
+        m_glowAnim->setDuration(200);
         
         // 默认颜色
         m_uncheckedColor = QColor(0, 0, 0, 64); // Unchecked gray (Alpha 25%)
@@ -26,6 +28,7 @@ namespace AsterUI {
 
         // 初始颜色
         m_backgroundColor = m_uncheckedColor;
+        m_glowOpacity = 0.0;
     }
 
     QSize AsterSwitch::sizeHint() const {
@@ -43,6 +46,11 @@ namespace AsterUI {
 
     void AsterSwitch::setBackgroundColor(const QColor& color) {
         m_backgroundColor = color;
+        update();
+    }
+
+    void AsterSwitch::setGlowOpacity(double opacity) {
+        m_glowOpacity = opacity;
         update();
     }
 
@@ -85,13 +93,20 @@ namespace AsterUI {
     void AsterSwitch::enterEvent(QEnterEvent* event) {
         QAbstractButton::enterEvent(event);
         m_isHovered = true;
-        update();
+        animateGlow(true);
     }
 
     void AsterSwitch::leaveEvent(QEvent* event) {
         QAbstractButton::leaveEvent(event);
         m_isHovered = false;
-        update();
+        animateGlow(false);
+    }
+
+    void AsterSwitch::animateGlow(bool hovered) {
+        m_glowAnim->stop();
+        m_glowAnim->setStartValue(m_glowOpacity);
+        m_glowAnim->setEndValue(hovered ? 1.0 : 0.0);
+        m_glowAnim->start();
     }
 
     void AsterSwitch::startAnimation(bool checked) {
@@ -136,9 +151,9 @@ namespace AsterUI {
         qreal trackRadius = trackRect.height() / 2.0;
 
         // 1. 绘制悬浮光环 (Glow Ring)
-        if (m_isHovered) {
+        if (m_glowOpacity > 0.01) {
             QColor glowColor = m_checkedColor;
-            glowColor.setAlpha(40); // 调低透明度，更柔和
+            glowColor.setAlphaF(0.15 * m_glowOpacity); // Max alpha 0.15
             
             painter.setPen(Qt::NoPen);
             painter.setBrush(glowColor);

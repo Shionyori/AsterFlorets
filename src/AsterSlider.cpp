@@ -2,6 +2,7 @@
 #include "AsterUI/AsterTheme.h"
 #include <QPainter>
 #include <QMouseEvent>
+#include <QPropertyAnimation>
 
 namespace AsterUI {
 
@@ -33,6 +34,12 @@ namespace AsterUI {
         setPageStep(10);
         
         setCursor(Qt::PointingHandCursor);
+
+        m_handleBorderOpacity = 0.0;
+
+        m_hoverAnim = new QPropertyAnimation(this, "handleBorderOpacity", this);
+        m_hoverAnim->setDuration(200);
+        m_hoverAnim->setEasingCurve(QEasingCurve::OutCubic);
     }
 
     void AsterSlider::setActiveColor(const QColor& color) {
@@ -155,22 +162,28 @@ namespace AsterUI {
         
         // Handle Body
         painter.setBrush(m_handleColor);
-        // Draw slightly larger if hovered/dragging
-        if (m_isHovered || m_isDragging) {
-            // Draw a border ring
-            QPen pen(m_activeColor);
+        painter.setPen(Qt::NoPen);
+        painter.drawEllipse(hRect);
+
+        // Border Ring (Hover/Drag effect)
+        double opacity = m_handleBorderOpacity;
+        if (m_isDragging) opacity = 1.0;
+
+        if (opacity > 0.001) {
+            QColor borderColor = m_activeColor;
+            borderColor.setAlphaF(opacity);
+            QPen pen(borderColor);
             pen.setWidth(2);
             painter.setPen(pen);
+            painter.setBrush(Qt::NoBrush);
             painter.drawEllipse(hRect.adjusted(1, 1, -1, -1));
-        } else {
-            painter.setPen(Qt::NoPen);
-            painter.drawEllipse(hRect);
         }
     }
 
     void AsterSlider::mousePressEvent(QMouseEvent* event) {
         if (event->button() == Qt::LeftButton) {
             m_isDragging = true;
+            animateHover(true); // Ensure visual feedback immediately
             int newVal = pixelPosToValue(orientation() == Qt::Horizontal ? event->pos().x() : event->pos().y());
             setValue(newVal);
             update();
@@ -194,6 +207,9 @@ namespace AsterUI {
     void AsterSlider::mouseReleaseEvent(QMouseEvent* event) {
         if (event->button() == Qt::LeftButton) {
             m_isDragging = false;
+            // If we are still inside, keep hover effect, else fade out
+            bool stillHovered = rect().contains(mapFromGlobal(QCursor::pos()));
+            animateHover(stillHovered);
             update();
             event->accept();
         } else {
@@ -203,14 +219,24 @@ namespace AsterUI {
 
     void AsterSlider::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
-        update();
+        animateHover(true);
         QAbstractSlider::enterEvent(event);
     }
 
     void AsterSlider::leaveEvent(QEvent* event) {
         m_isHovered = false;
-        update();
+        if (!m_isDragging) {
+            animateHover(false);
+        }
         QAbstractSlider::leaveEvent(event);
+    }
+
+    void AsterSlider::animateHover(bool hovered) {
+        m_hoverAnim->stop();
+        m_hoverAnim->setStartValue(m_handleBorderOpacity);
+        m_hoverAnim->setEndValue(hovered ? 1.0 : 0.0);
+        m_hoverAnim->setDuration(600); // Even slower for smoother effect
+        m_hoverAnim->start();
     }
 
 }

@@ -74,7 +74,7 @@ namespace AsterUI {
     void AsterTextEdit::setStatus(Status status) {
         if (m_status == status) return;
         m_status = status;
-        animateBorder(m_isFocused);
+        animateBorder();
     }
 
     void AsterTextEdit::setBorderColor(const QColor& color) {
@@ -86,11 +86,11 @@ namespace AsterUI {
         if (watched == m_editor) {
             if (event->type() == QEvent::FocusIn) {
                 m_isFocused = true;
-                animateBorder(true);
+                animateBorder();
                 update();
             } else if (event->type() == QEvent::FocusOut) {
                 m_isFocused = false;
-                animateBorder(false);
+                animateBorder();
                 update();
             }
         }
@@ -118,15 +118,6 @@ namespace AsterUI {
 
         // 2. 确定边框颜色
         QColor borderColor = m_borderColor;
-        if (m_status == Status::Error) {
-            borderColor = theme->color(AsterTheme::ColorRole::Error);
-        } else if (m_status == Status::Warning) {
-            borderColor = theme->color(AsterTheme::ColorRole::Warning);
-        } else if (m_isHovered && !m_isFocused) {
-            borderColor = theme->color(AsterTheme::ColorRole::Primary);
-        } else if (m_isFocused) {
-            borderColor = theme->color(AsterTheme::ColorRole::Primary);
-        }
 
         // 3. 绘制光晕 (Focus Ring) - 先画光晕，再画边框
         if (m_isFocused) {
@@ -149,17 +140,17 @@ namespace AsterUI {
 
     void AsterTextEdit::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
-        update();
+        animateBorder();
         QFrame::enterEvent(event);
     }
 
     void AsterTextEdit::leaveEvent(QEvent* event) {
         m_isHovered = false;
-        update();
+        animateBorder();
         QFrame::leaveEvent(event);
     }
 
-    void AsterTextEdit::animateBorder(bool focused) {
+    void AsterTextEdit::animateBorder() {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
         QColor end;
@@ -168,9 +159,12 @@ namespace AsterUI {
             end = theme->color(AsterTheme::ColorRole::Error);
         } else if (m_status == Status::Warning) {
             end = theme->color(AsterTheme::ColorRole::Warning);
+        } else if (m_isFocused) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
+        } else if (m_isHovered) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
         } else {
-            end = focused ? theme->color(AsterTheme::ColorRole::Primary) 
-                          : theme->color(AsterTheme::ColorRole::Border);
+            end = theme->color(AsterTheme::ColorRole::Border);
         }
 
         m_borderAnimation->stop();

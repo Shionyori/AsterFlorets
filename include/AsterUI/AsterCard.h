@@ -2,6 +2,8 @@
 
 #include "Global.h"
 #include <QFrame>
+#include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
 
 namespace AsterUI {
 
@@ -37,6 +39,7 @@ namespace AsterUI {
     private:
         void init();
         void updateStyle();
+        void animateHover(bool hovered);
 
     private:
         QColor m_backgroundColor;
@@ -44,6 +47,8 @@ namespace AsterUI {
         bool m_hoverable = false;
         bool m_isHovered = false;
         QString m_title;
+        
+        QParallelAnimationGroup* m_hoverAnimGroup = nullptr;
     };
 
 }

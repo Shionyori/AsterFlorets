@@ -91,7 +91,7 @@ namespace AsterUI {
     void AsterLineEdit::setStatus(Status status) {
         if (m_status == status) return;
         m_status = status;
-        animateBorder(hasFocus());
+        animateBorder();
     }
 
     void AsterLineEdit::setBorderColor(const QColor& color) {
@@ -122,16 +122,7 @@ namespace AsterUI {
 
                 // 边框颜色
                 QColor borderColor = m_borderColor;
-                if (m_status == Status::Error) {
-                    borderColor = theme->color(AsterTheme::ColorRole::Error);
-                } else if (m_status == Status::Warning) {
-                    borderColor = theme->color(AsterTheme::ColorRole::Warning);
-                } else if (m_isHovered && !hasFocus()) {
-                    borderColor = theme->color(AsterTheme::ColorRole::Primary);
-                } else if (hasFocus()) {
-                    borderColor = theme->color(AsterTheme::ColorRole::Primary);
-                }
-
+                
                 // Focus Glow (先画光晕)
                 if (hasFocus()) {
                     QColor glowColor = borderColor;
@@ -158,23 +149,23 @@ namespace AsterUI {
 
     void AsterLineEdit::focusInEvent(QFocusEvent* event) {
         QLineEdit::focusInEvent(event);
-        animateBorder(true);
+        animateBorder();
     }
 
     void AsterLineEdit::focusOutEvent(QFocusEvent* event) {
         QLineEdit::focusOutEvent(event);
-        animateBorder(false);
+        animateBorder();
     }
 
     void AsterLineEdit::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
-        update();
+        animateBorder();
         QLineEdit::enterEvent(event);
     }
 
     void AsterLineEdit::leaveEvent(QEvent* event) {
         m_isHovered = false;
-        update();
+        animateBorder();
         QLineEdit::leaveEvent(event);
     }
 
@@ -186,7 +177,7 @@ namespace AsterUI {
         // QLineEdit handles action layout automatically
     }
 
-    void AsterLineEdit::animateBorder(bool focused) {
+    void AsterLineEdit::animateBorder() {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
         QColor end;
@@ -195,9 +186,12 @@ namespace AsterUI {
             end = theme->color(AsterTheme::ColorRole::Error);
         } else if (m_status == Status::Warning) {
             end = theme->color(AsterTheme::ColorRole::Warning);
+        } else if (hasFocus()) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
+        } else if (m_isHovered) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
         } else {
-            end = focused ? theme->color(AsterTheme::ColorRole::Primary) 
-                          : theme->color(AsterTheme::ColorRole::Border);
+            end = theme->color(AsterTheme::ColorRole::Border);
         }
 
         m_borderAnimation->stop();

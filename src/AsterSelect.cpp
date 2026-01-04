@@ -122,27 +122,27 @@ namespace AsterUI {
         painter.fillPath(path, theme->color(AsterTheme::ColorRole::Surface));
 
         QPen pen(m_borderColor);
-        if (m_isHovered && !hasFocus()) {
-            pen.setColor(theme->color(AsterTheme::ColorRole::Primary));
-        }
+        // Removed manual override for hover/focus since m_borderColor is animated
+        
         if (hasFocus()) {
-             pen.setColor(theme->color(AsterTheme::ColorRole::Primary));
-             pen.setWidth(1); // Focus 状态保持 1px，或者加粗
+             // pen.setColor(theme->color(AsterTheme::ColorRole::Primary)); // Already handled by animation
+             pen.setWidth(1); 
         }
         painter.setPen(pen);
         painter.drawPath(path);
         
         // Focus Ring (Optional)
         if (hasFocus()) {
-            QColor ringColor = theme->color(AsterTheme::ColorRole::Primary);
+            QColor ringColor = m_borderColor; // Use animated color
             ringColor.setAlpha(40);
             QPainterPath ringPath;
-            ringPath.addRoundedRect(rect().adjusted(-2, -2, 2, 2), radius + 2, radius + 2);
-            // Clip out the inner part to avoid overlap? Or just draw behind?
-            // Simple overlay for now
-            painter.setPen(Qt::NoPen);
-            painter.setBrush(ringColor);
-            // painter.drawPath(ringPath); // Uncomment for outer glow
+            // ...
+            // Let's draw a simple glow like LineEdit
+            QPen glowPen(ringColor);
+            glowPen.setWidth(4);
+            painter.setPen(glowPen);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawPath(path);
         }
 
         // 2. 绘制文字
@@ -185,31 +185,38 @@ namespace AsterUI {
 
     void AsterSelect::focusInEvent(QFocusEvent* event) {
         QComboBox::focusInEvent(event);
-        animateBorder(true);
+        animateBorder();
     }
 
     void AsterSelect::focusOutEvent(QFocusEvent* event) {
         QComboBox::focusOutEvent(event);
-        animateBorder(false);
+        animateBorder();
     }
 
     void AsterSelect::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
-        update();
+        animateBorder();
         QComboBox::enterEvent(event);
     }
 
     void AsterSelect::leaveEvent(QEvent* event) {
         m_isHovered = false;
-        update();
+        animateBorder();
         QComboBox::leaveEvent(event);
     }
 
-    void AsterSelect::animateBorder(bool focused) {
+    void AsterSelect::animateBorder() {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
-        QColor end = focused ? theme->color(AsterTheme::ColorRole::Primary) 
-                             : theme->color(AsterTheme::ColorRole::Border);
+        QColor end;
+        
+        if (hasFocus()) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
+        } else if (m_isHovered) {
+            end = theme->color(AsterTheme::ColorRole::Primary);
+        } else {
+            end = theme->color(AsterTheme::ColorRole::Border);
+        }
 
         m_borderAnimation->stop();
         m_borderAnimation->setStartValue(start);

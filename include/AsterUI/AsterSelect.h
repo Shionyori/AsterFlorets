@@ -26,7 +26,7 @@ namespace AsterUI {
 
     private:
         void init();
-        void animateBorder(bool focused);
+        void animateBorder();
 
     private:
         QColor m_borderColor;
