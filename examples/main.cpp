@@ -108,6 +108,22 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addLayout(toggleLayout);
 
+    // Radio Buttons
+    QHBoxLayout *radioLayout = new QHBoxLayout();
+    radioLayout->setAlignment(Qt::AlignLeft);
+    
+    auto *radio1 = new AsterUI::AsterRadio("Radio 1");
+    radio1->setChecked(true);
+    radioLayout->addWidget(radio1);
+    
+    auto *radio2 = new AsterUI::AsterRadio("Radio 2");
+    radioLayout->addWidget(radio2);
+    
+    mainLayout->addLayout(radioLayout);
+
+    // Divider
+    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
+
     // Section: Cards
     QLabel *cardLabel = new QLabel("Cards", centralWidget);
     cardLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
@@ -217,6 +233,13 @@ int main(int argc, char *argv[]) {
     selectLayout->addWidget(select2);
 
     mainLayout->addLayout(selectLayout);
+
+    // Section: Feedback
+    mainLayout->addWidget(new AsterUI::AsterDivider("Feedback", Qt::AlignLeft));
+    
+    auto *progress = new AsterUI::AsterProgress();
+    progress->setValue(60);
+    mainLayout->addWidget(progress);
 
     mainLayout->addStretch();
 

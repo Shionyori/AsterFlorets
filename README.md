@@ -52,3 +52,64 @@ cd ./build/windows-msvc/bin/Debug
 - `src`: 源代码
 - `examples`: 示例程序
 - `tests`: 测试用例（暂未创建）
+
+## 组件实现清单
+
+### 通用 (General)
+- [x] Button (按钮) - `AsterButton`
+- [ ] Icon (图标)
+- [ ] Typography (排版)
+
+### 布局 (Layout)
+- [x] Divider (分割线) - `AsterDivider`
+- [ ] Grid (栅格)
+- [ ] Layout (布局)
+- [ ] Space (间距)
+
+### 导航 (Navigation)
+- [ ] Breadcrumb (面包屑)
+- [ ] Dropdown (下拉菜单)
+- [ ] Menu (导航菜单)
+- [ ] Pagination (分页)
+- [ ] Steps (步骤条)
+
+### 数据录入 (Data Entry)
+- [x] CheckBox (复选框) - `AsterCheckBox`
+- [x] Input (输入框) - `AsterLineEdit`
+- [x] Select (选择器) - `AsterSelect`
+- [x] Slider (滑动输入条) - `AsterSlider`
+- [x] Switch (开关) - `AsterSwitch`
+- [x] TextEdit (文本域) - `AsterTextEdit`
+- [x] Radio (单选框) - `AsterRadio`
+- [ ] DatePicker (日期选择框)
+- [ ] Form (表单)
+- [ ] InputNumber (数字输入框)
+- [ ] Upload (上传)
+
+### 数据展示 (Data Display)
+- [x] Card (卡片) - `AsterCard`
+- [x] Tag (标签) - `AsterTag`
+- [ ] Avatar (头像)
+- [ ] Badge (徽标数)
+- [ ] Calendar (日历)
+- [ ] Carousel (走马灯)
+- [ ] Collapse (折叠面板)
+- [ ] List (列表)
+- [ ] Popover (气泡卡片)
+- [ ] Table (表格)
+- [ ] Tabs (标签页)
+- [ ] Timeline (时间轴)
+- [ ] Tooltip (文字提示)
+- [ ] Tree (树形控件)
+
+### 反馈 (Feedback)
+- [ ] Alert (警告提示)
+- [ ] Drawer (抽屉)
+- [ ] Message (全局提示)
+- [ ] Modal (对话框)
+- [ ] Notification (通知提醒框)
+- [x] Progress (进度条) - `AsterProgress`
+- [ ] Spin (加载中)
+
+### 其他 (Other)
+- [x] Theme (主题管理) - `AsterTheme`
