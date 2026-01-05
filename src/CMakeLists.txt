@@ -3,7 +3,7 @@ set(ASTERUI_SOURCES
     AsterTheme.cpp
     AsterButton.cpp
     AsterAvatar.cpp
-    AsterLineEdit.cpp
+    AsterTextInput.cpp
     AsterCheckBox.cpp
     AsterRadio.cpp
     AsterSwitch.cpp
@@ -11,9 +11,10 @@ set(ASTERUI_SOURCES
     AsterTag.cpp
     AsterSlider.cpp
     AsterSelect.cpp
-    AsterTextEdit.cpp
+    AsterTextArea.cpp
     AsterDivider.cpp
     AsterProgress.cpp
+    AsterScrollArea.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -22,8 +23,8 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterTheme.h
     ../include/AsterUI/AsterButton.h
     ../include/AsterUI/AsterAvatar.h
-    ../include/AsterUI/AsterLineEdit.h
-    ../include/AsterUI/AsterTextEdit.h
+    ../include/AsterUI/AsterTextInput.h
+    ../include/AsterUI/AsterTextArea.h
     ../include/AsterUI/AsterCheckBox.h
     ../include/AsterUI/AsterRadio.h
     ../include/AsterUI/AsterSwitch.h
@@ -33,6 +34,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterSelect.h
     ../include/AsterUI/AsterDivider.h
     ../include/AsterUI/AsterProgress.h
+    ../include/AsterUI/AsterScrollArea.h
 )
 
 add_library(AsterUI SHARED

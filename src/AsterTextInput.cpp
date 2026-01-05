@@ -1,4 +1,4 @@
-#include "AsterUI/AsterLineEdit.h"
+#include "AsterUI/AsterTextInput.h"
 #include "AsterUI/AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
@@ -7,22 +7,22 @@
 
 namespace AsterUI {
 
-    AsterLineEdit::AsterLineEdit(QWidget* parent)
+    AsterTextInput::AsterTextInput(QWidget* parent)
         : QLineEdit(parent)
     {
         init();
     }
 
-    AsterLineEdit::AsterLineEdit(const QString& placeholder, QWidget* parent)
+    AsterTextInput::AsterTextInput(const QString& placeholder, QWidget* parent)
         : QLineEdit(parent)
     {
         setPlaceholderText(placeholder);
         init();
     }
 
-    AsterLineEdit::~AsterLineEdit() = default;
+    AsterTextInput::~AsterTextInput() = default;
 
-    void AsterLineEdit::init() {
+    void AsterTextInput::init() {
         setAttribute(Qt::WA_MacShowFocusRect, false);
         setAttribute(Qt::WA_TranslucentBackground); // 支持圆角透明
         
@@ -35,6 +35,12 @@ namespace AsterUI {
         // 样式设置：移除原生边框
         setFrame(false);
         
+        // 强制清除原生样式，防止干扰
+        setStyleSheet("QLineEdit { border: none; background: transparent; }");
+        
+        // 设置最小高度，符合 Ant Design 默认尺寸 (32px)
+        setMinimumHeight(32);
+
         // 设置内边距 (考虑到背景内缩，稍微增加边距)
         setTextMargins(10, 0, 10, 0);
         
@@ -59,11 +65,11 @@ namespace AsterUI {
         });
     }
 
-    bool AsterLineEdit::isClearable() const {
+    bool AsterTextInput::isClearable() const {
         return m_clearable;
     }
 
-    void AsterLineEdit::setClearable(bool clearable) {
+    void AsterTextInput::setClearable(bool clearable) {
         if (m_clearable == clearable) return;
         m_clearable = clearable;
 
@@ -83,23 +89,23 @@ namespace AsterUI {
         }
     }
 
-    void AsterLineEdit::setBorderRadius(int radius) {
+    void AsterTextInput::setBorderRadius(int radius) {
         m_borderRadius = radius;
         update();
     }
 
-    void AsterLineEdit::setStatus(Status status) {
+    void AsterTextInput::setStatus(Status status) {
         if (m_status == status) return;
         m_status = status;
         animateBorder();
     }
 
-    void AsterLineEdit::setBorderColor(const QColor& color) {
+    void AsterTextInput::setBorderColor(const QColor& color) {
         m_borderColor = color;
         update();
     }
 
-    void AsterLineEdit::paintEvent(QPaintEvent* event) {
+    void AsterTextInput::paintEvent(QPaintEvent* event) {
         // 1. 绘制自定义背景和边框
         {
             QPainter painter(this);
@@ -147,37 +153,37 @@ namespace AsterUI {
         QLineEdit::paintEvent(event);
     }
 
-    void AsterLineEdit::focusInEvent(QFocusEvent* event) {
+    void AsterTextInput::focusInEvent(QFocusEvent* event) {
         QLineEdit::focusInEvent(event);
         animateBorder();
     }
 
-    void AsterLineEdit::focusOutEvent(QFocusEvent* event) {
+    void AsterTextInput::focusOutEvent(QFocusEvent* event) {
         QLineEdit::focusOutEvent(event);
         animateBorder();
     }
 
-    void AsterLineEdit::enterEvent(QEnterEvent* event) {
+    void AsterTextInput::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
         animateBorder();
         QLineEdit::enterEvent(event);
     }
 
-    void AsterLineEdit::leaveEvent(QEvent* event) {
+    void AsterTextInput::leaveEvent(QEvent* event) {
         m_isHovered = false;
         animateBorder();
         QLineEdit::leaveEvent(event);
     }
 
-    void AsterLineEdit::resizeEvent(QResizeEvent* event) {
+    void AsterTextInput::resizeEvent(QResizeEvent* event) {
         QLineEdit::resizeEvent(event);
     }
 
-    void AsterLineEdit::updateClearButtonPosition() {
+    void AsterTextInput::updateClearButtonPosition() {
         // QLineEdit handles action layout automatically
     }
 
-    void AsterLineEdit::animateBorder() {
+    void AsterTextInput::animateBorder() {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
         QColor end;

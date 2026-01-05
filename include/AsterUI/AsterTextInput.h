@@ -7,7 +7,7 @@
 
 namespace AsterUI {
 
-    class ASTERUI_EXPORT AsterLineEdit : public QLineEdit {
+    class ASTERUI_EXPORT AsterTextInput : public QLineEdit {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
         Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)
@@ -21,9 +21,9 @@ namespace AsterUI {
         };
         Q_ENUM(Status)
 
-        explicit AsterLineEdit(QWidget* parent = nullptr);
-        explicit AsterLineEdit(const QString& placeholder, QWidget* parent = nullptr);
-        ~AsterLineEdit() override;
+        explicit AsterTextInput(QWidget* parent = nullptr);
+        explicit AsterTextInput(const QString& placeholder, QWidget* parent = nullptr);
+        ~AsterTextInput() override;
 
         // 清除按钮
         bool isClearable() const;

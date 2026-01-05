@@ -4,7 +4,7 @@
 #include "AsterTheme.h"
 #include "AsterButton.h"
 #include "AsterAvatar.h"
-#include "AsterLineEdit.h"
+#include "AsterTextInput.h"
 #include "AsterCheckBox.h"
 #include "AsterRadio.h"
 #include "AsterSwitch.h"
@@ -12,9 +12,10 @@
 #include "AsterTag.h"
 #include "AsterSlider.h"
 #include "AsterSelect.h"
-#include "AsterTextEdit.h"
+#include "AsterTextArea.h"
 #include "AsterDivider.h"
 #include "AsterProgress.h"
+#include "AsterScrollArea.h"
 #include <QString>
 
 namespace AsterUI {

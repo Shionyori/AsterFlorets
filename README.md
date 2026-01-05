@@ -73,7 +73,7 @@ cd ./build/windows-msvc/bin/Debug
 - [x] **Button** (按钮) - `AsterButton`
 - [ ] **Icon** (图标) - `AsterIcon` (封装 SVG/FontAwesome)
 - [ ] **Typography** (排版) - `AsterText` / `AsterTitle`
-- [ ] **ScrollArea** (滚动区域) - `AsterScrollArea` (重点优化：平滑滚动、边缘光晕、自动隐藏、触控板惯性)
+- [x] **ScrollArea** (滚动区域) - `AsterScrollArea` (重点优化：平滑滚动、边缘光晕、自动隐藏、触控板惯性)
 
 ### 3. Layout (布局)
 组织页面结构。
@@ -93,7 +93,7 @@ cd ./build/windows-msvc/bin/Debug
 
 ### 5. Data Entry (数据录入)
 用户输入数据的控件。
-- [x] **Input** (输入框) - `AsterInput` (原 `AsterLineEdit`)
+- [x] **Input** (输入框) - `AsterTextInput` (原 `AsterLineEdit`)
 - [x] **TextArea** (多行文本) - `AsterTextArea` (原 `AsterTextEdit`)
 - [x] **Select** (选择器) - `AsterSelect`
 - [x] **CheckBox** (复选框) - `AsterCheckBox`

@@ -7,7 +7,7 @@
 
 namespace AsterUI {
 
-    class ASTERUI_EXPORT AsterTextEdit : public QFrame {
+    class ASTERUI_EXPORT AsterTextArea : public QFrame {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
         Q_PROPERTY(Status status READ status WRITE setStatus)
@@ -20,9 +20,9 @@ namespace AsterUI {
         };
         Q_ENUM(Status)
 
-        explicit AsterTextEdit(QWidget* parent = nullptr);
-        explicit AsterTextEdit(const QString& placeholder, QWidget* parent = nullptr);
-        ~AsterTextEdit() override;
+        explicit AsterTextArea(QWidget* parent = nullptr);
+        explicit AsterTextArea(const QString& placeholder, QWidget* parent = nullptr);
+        ~AsterTextArea() override;
 
         // Proxy methods for QPlainTextEdit
         void setPlaceholderText(const QString& text);

@@ -11,6 +11,10 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     auto theme = AsterUI::AsterTheme::instance();
+    
+    // Debug Theme Colors
+    qDebug() << "Theme Background Color:" << theme->color(AsterUI::AsterTheme::ColorRole::Background).name();
+    qDebug() << "Theme Surface Color:" << theme->color(AsterUI::AsterTheme::ColorRole::Surface).name();
 
     QMainWindow window;
     window.setWindowTitle("AsterUI Demo - Components");
@@ -20,9 +24,9 @@ int main(int argc, char *argv[]) {
     pal.setColor(QPalette::Window, theme->color(AsterUI::AsterTheme::ColorRole::Background));
     window.setPalette(pal);
 
-    QScrollArea *scrollArea = new QScrollArea();
-    scrollArea->setFrameShape(QFrame::NoFrame);
-    scrollArea->setWidgetResizable(true);
+    AsterUI::AsterScrollArea *scrollArea = new AsterUI::AsterScrollArea();
+    // scrollArea->setFrameShape(QFrame::NoFrame); // Handled by AsterScrollArea
+    // scrollArea->setWidgetResizable(true); // Handled by AsterScrollArea
     
     QWidget *contentWidget = new QWidget();
     // Set palette for content widget to match window background
@@ -111,12 +115,12 @@ int main(int argc, char *argv[]) {
     QVBoxLayout *inputLayout = new QVBoxLayout();
     
     // Basic LineEdit
-    auto *inputBasic = new AsterUI::AsterLineEdit("Basic Input");
+    auto *inputBasic = new AsterUI::AsterTextInput("Basic Input");
     inputBasic->setFixedHeight(30);
     inputLayout->addWidget(inputBasic);
 
     // Clearable LineEdit
-    auto *inputClearable = new AsterUI::AsterLineEdit("Clearable Input");
+    auto *inputClearable = new AsterUI::AsterTextInput("Clearable Input");
     inputClearable->setFixedHeight(30);
     inputClearable->setClearable(true);
     inputLayout->addWidget(inputClearable);
@@ -128,7 +132,7 @@ int main(int argc, char *argv[]) {
     textEditLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(textEditLabel);
 
-    auto *textEdit = new AsterUI::AsterTextEdit();
+    auto *textEdit = new AsterUI::AsterTextArea();
     textEdit->setPlaceholderText("Enter multi-line text here...");
     textEdit->setFixedHeight(100);
     mainLayout->addWidget(textEdit);

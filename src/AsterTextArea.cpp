@@ -1,4 +1,4 @@
-#include "AsterUI/AsterTextEdit.h"
+#include "AsterUI/AsterTextArea.h"
 #include "AsterUI/AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
@@ -7,22 +7,22 @@
 
 namespace AsterUI {
 
-    AsterTextEdit::AsterTextEdit(QWidget* parent)
+    AsterTextArea::AsterTextArea(QWidget* parent)
         : QFrame(parent)
     {
         init();
     }
 
-    AsterTextEdit::AsterTextEdit(const QString& placeholder, QWidget* parent)
+    AsterTextArea::AsterTextArea(const QString& placeholder, QWidget* parent)
         : QFrame(parent)
     {
         init();
         setPlaceholderText(placeholder);
     }
 
-    AsterTextEdit::~AsterTextEdit() = default;
+    AsterTextArea::~AsterTextArea() = default;
 
-    void AsterTextEdit::init() {
+    void AsterTextArea::init() {
         setAttribute(Qt::WA_TranslucentBackground); // 支持圆角透明
         auto theme = AsterTheme::instance();
         m_borderColor = theme->color(AsterTheme::ColorRole::Border);
@@ -55,34 +55,34 @@ namespace AsterUI {
         m_borderAnimation->setEasingCurve(QEasingCurve::OutQuad);
     }
 
-    void AsterTextEdit::setPlaceholderText(const QString& text) {
+    void AsterTextArea::setPlaceholderText(const QString& text) {
         if (m_editor) m_editor->setPlaceholderText(text);
     }
 
-    QString AsterTextEdit::placeholderText() const {
+    QString AsterTextArea::placeholderText() const {
         return m_editor ? m_editor->placeholderText() : QString();
     }
 
-    void AsterTextEdit::setPlainText(const QString& text) {
+    void AsterTextArea::setPlainText(const QString& text) {
         if (m_editor) m_editor->setPlainText(text);
     }
 
-    QString AsterTextEdit::toPlainText() const {
+    QString AsterTextArea::toPlainText() const {
         return m_editor ? m_editor->toPlainText() : QString();
     }
 
-    void AsterTextEdit::setStatus(Status status) {
+    void AsterTextArea::setStatus(Status status) {
         if (m_status == status) return;
         m_status = status;
         animateBorder();
     }
 
-    void AsterTextEdit::setBorderColor(const QColor& color) {
+    void AsterTextArea::setBorderColor(const QColor& color) {
         m_borderColor = color;
         update();
     }
 
-    bool AsterTextEdit::eventFilter(QObject* watched, QEvent* event) {
+    bool AsterTextArea::eventFilter(QObject* watched, QEvent* event) {
         if (watched == m_editor) {
             if (event->type() == QEvent::FocusIn) {
                 m_isFocused = true;
@@ -97,7 +97,7 @@ namespace AsterUI {
         return QFrame::eventFilter(watched, event);
     }
 
-    void AsterTextEdit::paintEvent(QPaintEvent* event) {
+    void AsterTextArea::paintEvent(QPaintEvent* event) {
         Q_UNUSED(event);
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
@@ -138,19 +138,19 @@ namespace AsterUI {
         painter.drawPath(path);
     }
 
-    void AsterTextEdit::enterEvent(QEnterEvent* event) {
+    void AsterTextArea::enterEvent(QEnterEvent* event) {
         m_isHovered = true;
         animateBorder();
         QFrame::enterEvent(event);
     }
 
-    void AsterTextEdit::leaveEvent(QEvent* event) {
+    void AsterTextArea::leaveEvent(QEvent* event) {
         m_isHovered = false;
         animateBorder();
         QFrame::leaveEvent(event);
     }
 
-    void AsterTextEdit::animateBorder() {
+    void AsterTextArea::animateBorder() {
         auto theme = AsterTheme::instance();
         QColor start = m_borderColor;
         QColor end;
