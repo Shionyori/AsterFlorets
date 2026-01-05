@@ -3,6 +3,7 @@
 #include "Global.h"
 #include "AsterTheme.h"
 #include "AsterButton.h"
+#include "AsterAvatar.h"
 #include "AsterLineEdit.h"
 #include "AsterCheckBox.h"
 #include "AsterRadio.h"

@@ -89,7 +89,7 @@ cd ./build/windows-msvc/bin/Debug
 ### 数据展示 (Data Display)
 - [x] Card (卡片) - `AsterCard`
 - [x] Tag (标签) - `AsterTag`
-- [ ] Avatar (头像)
+- [x] Avatar (头像)
 - [ ] Badge (徽标数)
 - [ ] Calendar (日历)
 - [ ] Carousel (走马灯)

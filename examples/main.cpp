@@ -3,6 +3,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QScrollArea>
 #include <QDebug>
 #include "AsterUI/AsterUI.h"
 
@@ -19,13 +20,57 @@ int main(int argc, char *argv[]) {
     pal.setColor(QPalette::Window, theme->color(AsterUI::AsterTheme::ColorRole::Background));
     window.setPalette(pal);
 
-    QWidget *centralWidget = new QWidget(&window);
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    mainLayout->setContentsMargins(40, 40, 40, 40);
+    QScrollArea *scrollArea = new QScrollArea();
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidgetResizable(true);
+    
+    QWidget *contentWidget = new QWidget();
+    // Set palette for content widget to match window background
+    contentWidget->setPalette(pal);
+    contentWidget->setAutoFillBackground(true);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(contentWidget);
+    mainLayout->setContentsMargins(20, 20, 20, 20);
+    mainLayout->setAlignment(Qt::AlignTop); // Ensure content starts at the top
+
+    // Section: Avatars
+    QLabel *avatarLabel = new QLabel("Avatars", contentWidget);
+    avatarLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    // avatarLabel->setStyleSheet("margin-top: 20px;"); // Removed top margin for the first element
+    mainLayout->addWidget(avatarLabel);
+
+    QHBoxLayout *avatarLayout = new QHBoxLayout();
+    avatarLayout->setAlignment(Qt::AlignLeft);
+    avatarLayout->setSpacing(20);
+
+    // Default Circle Avatar
+    auto *avatar1 = new AsterUI::AsterAvatar("U");
+    avatarLayout->addWidget(avatar1);
+
+    // Square Avatar
+    auto *avatar2 = new AsterUI::AsterAvatar("Admin");
+    avatar2->setShape(AsterUI::AsterAvatar::Shape::Square);
+    avatar2->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Success));
+    avatarLayout->addWidget(avatar2);
+
+    // Large Avatar
+    auto *avatar3 = new AsterUI::AsterAvatar("L");
+    avatar3->setSize(AsterUI::AsterAvatar::Size::Large);
+    avatar3->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Warning));
+    avatarLayout->addWidget(avatar3);
+
+    // Small Avatar
+    auto *avatar4 = new AsterUI::AsterAvatar("S");
+    avatar4->setSize(AsterUI::AsterAvatar::Size::Small);
+    avatar4->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Error));
+    avatarLayout->addWidget(avatar4);
+
+    mainLayout->addLayout(avatarLayout);
 
     // Section: Buttons
-    QLabel *btnLabel = new QLabel("Buttons", centralWidget);
+    QLabel *btnLabel = new QLabel("Buttons", contentWidget);
     btnLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    btnLabel->setStyleSheet("margin-top: 20px;");
     mainLayout->addWidget(btnLabel);
 
     QHBoxLayout *btnLayout = new QHBoxLayout();
@@ -59,7 +104,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addLayout(btnLayout);
 
     // Section: LineEdit
-    QLabel *inputLabel = new QLabel("Inputs", centralWidget);
+    QLabel *inputLabel = new QLabel("Inputs", contentWidget);
     inputLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(inputLabel);
 
@@ -79,7 +124,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addLayout(inputLayout);
 
     // Section: TextEdit
-    QLabel *textEditLabel = new QLabel("TextEdit", centralWidget);
+    QLabel *textEditLabel = new QLabel("TextEdit", contentWidget);
     textEditLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(textEditLabel);
 
@@ -89,7 +134,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addWidget(textEdit);
 
     // Section: Toggles
-    QLabel *toggleLabel = new QLabel("Toggles", centralWidget);
+    QLabel *toggleLabel = new QLabel("Toggles", contentWidget);
     toggleLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(toggleLabel);
 
@@ -125,7 +170,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
 
     // Section: Cards
-    QLabel *cardLabel = new QLabel("Cards", centralWidget);
+    QLabel *cardLabel = new QLabel("Cards", contentWidget);
     cardLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(cardLabel);
 
@@ -148,7 +193,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addLayout(cardLayout);
 
     // Section: Tags
-    QLabel *tagLabel = new QLabel("Tags", centralWidget);
+    QLabel *tagLabel = new QLabel("Tags", contentWidget);
     tagLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(tagLabel);
 
@@ -186,7 +231,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addLayout(tagLayout);
 
     // Section: Sliders
-    QLabel *sliderLabel = new QLabel("Sliders", centralWidget);
+    QLabel *sliderLabel = new QLabel("Sliders", contentWidget);
     sliderLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(sliderLabel);
 
@@ -208,7 +253,7 @@ int main(int argc, char *argv[]) {
     mainLayout->addLayout(sliderLayout);
 
     // Section: Selects
-    QLabel *selectLabel = new QLabel("Selects", centralWidget);
+    QLabel *selectLabel = new QLabel("Selects", contentWidget);
     selectLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
     mainLayout->addWidget(selectLabel);
 
@@ -243,7 +288,8 @@ int main(int argc, char *argv[]) {
 
     mainLayout->addStretch();
 
-    window.setCentralWidget(centralWidget);
+    scrollArea->setWidget(contentWidget);
+    window.setCentralWidget(scrollArea);
     window.show();
 
     return app.exec();
