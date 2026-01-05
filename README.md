@@ -55,61 +55,80 @@ cd ./build/windows-msvc/bin/Debug
 
 ## 组件实现清单
 
-### 通用 (General)
-- [x] Button (按钮) - `AsterButton`
-- [ ] Icon (图标)
-- [ ] Typography (排版)
+### 0. Core Systems (核心架构) [Infrastructure]
+库的底层支撑，决定整体的性能、交互手感和开发体验。
+- [x] **Theme** (主题系统) - `AsterTheme` (需升级为 Token 化设计，支持动态切换)
+- [ ] **Motion** (动画引擎) - `AsterMotion` (统一管理 Hover/Press/Slide/Fade 动画，避免割裂感)
+- [ ] **WindowManger** (窗口管理) - `AsterWindowManager` (处理无边框、阴影、拖拽、Aero Snap、DPI适配)
+- [ ] **ModelAdapter** (数据适配器) - `AsterModelAdapter` (简化 Table/Tree 的 Model 开发，桥接普通数据结构)
 
-### 布局 (Layout)
-- [x] Divider (分割线) - `AsterDivider`
-- [ ] Grid (栅格)
-- [ ] Layout (布局)
-- [ ] Space (间距)
+### 1. Application (应用框架) [Desktop Special]
+桌面应用的基石，提供统一的窗口外观和交互。
+- [ ] **Application** (应用辅助) - `AsterApp` (全局初始化、字体管理、事件过滤器)
+- [ ] **Window** (主窗口) - `AsterWindow` (基于 WindowManager 实现，支持 QWidget/QWindow 双模式)
+- [ ] **TitleBar** (标题栏) - `AsterTitleBar` (集成系统按钮，支持自定义内容)
 
-### 导航 (Navigation)
-- [ ] Breadcrumb (面包屑)
-- [ ] Dropdown (下拉菜单)
-- [ ] Menu (导航菜单)
-- [ ] Pagination (分页)
-- [ ] Steps (步骤条)
+### 2. General (通用)
+最基础的 UI 元素。
+- [x] **Button** (按钮) - `AsterButton`
+- [ ] **Icon** (图标) - `AsterIcon` (封装 SVG/FontAwesome)
+- [ ] **Typography** (排版) - `AsterText` / `AsterTitle`
+- [ ] **ScrollArea** (滚动区域) - `AsterScrollArea` (重点优化：平滑滚动、边缘光晕、自动隐藏、触控板惯性)
 
-### 数据录入 (Data Entry)
-- [x] CheckBox (复选框) - `AsterCheckBox`
-- [x] Input (输入框) - `AsterLineEdit`
-- [x] Select (选择器) - `AsterSelect`
-- [x] Slider (滑动输入条) - `AsterSlider`
-- [x] Switch (开关) - `AsterSwitch`
-- [x] TextEdit (文本域) - `AsterTextEdit`
-- [x] Radio (单选框) - `AsterRadio`
-- [ ] DatePicker (日期选择框)
-- [ ] Form (表单)
-- [ ] InputNumber (数字输入框)
-- [ ] Upload (上传)
+### 3. Layout (布局)
+组织页面结构。
+- [x] **Divider** (分割线) - `AsterDivider`
+- [ ] **Space** (间距) - `AsterSpace` (用于自动处理控件间距)
+- [ ] **Grid** (栅格系统) - `AsterGrid` (Row/Col，支持 Gutter 和响应式布局，统一间距规范)
+- [ ] **FlowLayout** (流式布局) - `AsterFlowLayout` (自动换行，用于 Tag 组或卡片列表)
 
-### 数据展示 (Data Display)
-- [x] Card (卡片) - `AsterCard`
-- [x] Tag (标签) - `AsterTag`
-- [x] Avatar (头像)
-- [ ] Badge (徽标数)
-- [ ] Calendar (日历)
-- [ ] Carousel (走马灯)
-- [ ] Collapse (折叠面板)
-- [ ] List (列表)
-- [ ] Popover (气泡卡片)
-- [ ] Table (表格)
-- [ ] Tabs (标签页)
-- [ ] Timeline (时间轴)
-- [ ] Tooltip (文字提示)
-- [ ] Tree (树形控件)
+### 4. Navigation (导航)
+页面跳转与层级指引。
+- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单)
+- [ ] **Tabs** (标签页) - `AsterTabs` (高性能重绘，支持动画开关)
+- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb` (桌面端深层级导航必备)
+- [ ] **Pagination** (分页) - `AsterPagination` (表格/列表数据分页)
+- [ ] **SideBar** (侧边导航) - `AsterSideBar`
+- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出面板)
 
-### 反馈 (Feedback)
-- [ ] Alert (警告提示)
-- [ ] Drawer (抽屉)
-- [ ] Message (全局提示)
-- [ ] Modal (对话框)
-- [ ] Notification (通知提醒框)
-- [x] Progress (进度条) - `AsterProgress`
-- [ ] Spin (加载中)
+### 5. Data Entry (数据录入)
+用户输入数据的控件。
+- [x] **Input** (输入框) - `AsterInput` (原 `AsterLineEdit`)
+- [x] **TextArea** (多行文本) - `AsterTextArea` (原 `AsterTextEdit`)
+- [x] **Select** (选择器) - `AsterSelect`
+- [x] **CheckBox** (复选框) - `AsterCheckBox`
+- [x] **Radio** (单选框) - `AsterRadio`
+- [x] **Switch** (开关) - `AsterSwitch`
+- [x] **Slider** (滑动条) - `AsterSlider`
+- [ ] **NumberInput** (数字输入) - `AsterNumberInput` (原 `AsterSpinBox`)
+- [ ] **DatePicker** (日期选择) - `AsterDatePicker`
+- [ ] **TimePicker** (时间选择) - `AsterTimePicker`
+- [ ] **Upload** (文件上传) - `AsterUpload` (文件拖拽区域 / 增强型文件选择器)
+- [ ] **ColorPicker** (颜色选择器) - `AsterColorPicker` (桌面端常用高级组件)
+- [ ] **AutoComplete** (自动补全) - `AsterAutoComplete` (带样式的自动补全)
 
-### 其他 (Other)
-- [x] Theme (主题管理) - `AsterTheme`
+### 6. Data Display (数据展示)
+展示结构化或非结构化数据。
+- [x] **Avatar** (头像) - `AsterAvatar`
+- [x] **Card** (卡片) - `AsterCard`
+- [x] **Tag** (标签) - `AsterTag`
+- [ ] **List** (列表) - `AsterList` 
+- [ ] **Table** (表格) - `AsterTable` (基于 ModelAdapter)
+- [ ] **Tree** (树形控件) - `AsterTree`
+- [ ] **Tooltip** (文字提示) - `AsterTooltip`
+- [ ] **Popover** (气泡卡片) - `AsterPopover` (可交互的复杂浮层)
+- [ ] **Badge** (徽标数) - `AsterBadge`
+- [ ] **Collapse** (折叠面板) - `AsterCollapse` (设置页/侧边栏常用)
+- [ ] **Descriptions** (描述列表) - `AsterDescriptions` (结构化信息展示)
+- [ ] **Image** (图片) - `AsterImage`
+- [ ] **Statistic** (统计数值) - `AsterStatistic`
+
+### 7. Feedback (反馈)
+用户操作后的反馈交互。
+- [x] **Progress** (进度条) - `AsterProgress`
+- [ ] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
+- [ ] **Dialog** (对话框) - `AsterDialog` (模态确认框)
+- [ ] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
+- [ ] **Alert** (警告提示) - `AsterAlert` (非模态的静态提示条)
+- [ ] **Spin** (加载中) - `AsterSpin`
+- [ ] **Skeleton** (骨架屏) - `AsterSkeleton`
