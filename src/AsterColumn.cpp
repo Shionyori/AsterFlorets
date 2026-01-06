@@ -13,6 +13,10 @@ namespace AsterUI {
 
         setAttribute(Qt::WA_StyledBackground, false);
         setAttribute(Qt::WA_TranslucentBackground, true);
+
+        QSizePolicy policy = sizePolicy();
+        policy.setHeightForWidth(true);
+        setSizePolicy(policy);
     }
 
     AsterColumn::AsterColumn(int span, QWidget* parent)

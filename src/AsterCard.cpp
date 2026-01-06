@@ -30,6 +30,11 @@ namespace AsterUI {
         // 默认内边距
         setContentsMargins(24, 24, 24, 24);
         setMinimumSize(100, 60);
+
+        // Allow height to depend on width (for flow layouts inside)
+        QSizePolicy policy = sizePolicy();
+        policy.setHeightForWidth(true);
+        setSizePolicy(policy);
     }
 
     void AsterCard::setBackgroundColor(const QColor& color) {

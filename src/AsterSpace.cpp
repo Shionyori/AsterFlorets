@@ -33,7 +33,13 @@ void AsterSpace::init()
     
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->setSpacing(m_size);
-    m_layout->setAlignment(Qt::AlignLeft | Qt::AlignTop); // Default alignment
+    // Remove default alignment to allow expansion
+    // m_layout->setAlignment(Qt::AlignLeft | Qt::AlignTop); 
+    
+    // Ensure height-for-width propagation
+    QSizePolicy policy = sizePolicy();
+    policy.setHeightForWidth(true);
+    setSizePolicy(policy);
 }
 
 Qt::Orientation AsterSpace::direction() const

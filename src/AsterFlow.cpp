@@ -192,6 +192,11 @@ namespace AsterUI {
 
         setAttribute(Qt::WA_StyledBackground, false);
         setAttribute(Qt::WA_TranslucentBackground, true);
+
+        // Crucial for flow layout proper resizing
+        QSizePolicy policy = sizePolicy();
+        policy.setHeightForWidth(true);
+        setSizePolicy(policy);
     }
 
     AsterFlow::~AsterFlow() = default;

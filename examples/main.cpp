@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
             r2->addWidget(btnLink);
             vStack->addWidget(r2);
 
+            // [Optimization] Add Stretch to keep content compact at top
+            vStack->addStretch(); 
+
             auto *l = new QVBoxLayout(card);
             l->setContentsMargins(0,0,0,0);
             l->addWidget(vStack);
@@ -155,27 +158,21 @@ int main(int argc, char *argv[]) {
             avRow->setSize(12);
             avRow->addWidget(new AsterAvatar("U"));
             
-            auto *avSq = new AsterAvatar("Adm");
+            auto *avSq = new AsterAvatar("Admin");
             avSq->setShape(AsterAvatar::Shape::Square);
             avSq->setBackgroundColor(theme->color(AsterTheme::ColorRole::Primary));
             avRow->addWidget(avSq);
-            
-            // Fix: QIcon -> QPixmap
-            auto *avIcon = new AsterAvatar(window.style()->standardIcon(QStyle::SP_DriveNetIcon).pixmap(32,32));
-            avIcon->setBackgroundColor(theme->color(AsterTheme::ColorRole::Warning));
-            avRow->addWidget(avIcon);
-            vStack->addWidget(avRow);
 
+            vStack->addWidget(avRow);
             vStack->addWidget(new AsterDivider);
 
-            // Tags in Flow Layout
-            // Fix: AsterText API
+            // Tags in Flow Container
             auto *lblFlow = new AsterText("AsterFlow Layout:");
             lblFlow->setType(AsterText::Type::Secondary);
             vStack->addWidget(lblFlow);
 
             auto *flow = new AsterFlow();
-            flow->setHSpacing(8);
+            flow->setHSpacing(2);
             flow->setVSpacing(8);
             
             flow->addWidget(new AsterTag("Design"));
@@ -192,7 +189,9 @@ int main(int argc, char *argv[]) {
             t3->setType(AsterTag::Type::Error);
             flow->addWidget(t3);
             
-            for(int i=0; i<5; ++i) flow->addWidget(new AsterTag("Tag " + QString::number(i)));
+            auto *t4 = new AsterTag("Closeable Tag");
+            t4->setClosable(true);
+            flow->addWidget(t4);
 
             vStack->addWidget(flow);
 
@@ -270,13 +269,11 @@ int main(int argc, char *argv[]) {
             
             auto *c1 = new AsterColumn(8);
             auto *b1 = new AsterButton("Span 8 (33%)");
-            b1->setType(AsterButton::Type::Primary);
             c1->addWidget(b1);
             row->addColumn(c1);
 
             auto *c2 = new AsterColumn(16);
             auto *b2 = new AsterButton("Span 16 (66%)");
-            // b2->setType(AsterButton::Type::Default); 
             c2->addWidget(b2);
             row->addColumn(c2);
             
@@ -298,7 +295,6 @@ int main(int argc, char *argv[]) {
 
             auto *c3 = new AsterColumn(12);
             auto *b3 = new AsterButton("Span 12 (50%)");
-            b3->setType(AsterButton::Type::Dashed);
             c3->addWidget(b3);
             row->addColumn(c3);
             
@@ -315,11 +311,7 @@ int main(int argc, char *argv[]) {
             row->addColumn(c1);
 
             auto *c2 = new AsterColumn(16);
-            auto *bContent = new AsterButton("Main Content (Span 16)");
-            bContent->setType(AsterButton::Type::Text);
-            // Simulate a panel look
-            bContent->setStyleSheet("background-color: rgba(0,0,0,0.05); border: 1px dashed #ccc;");
-            c2->addWidget(bContent);
+            c2->addWidget(new AsterButton("Main Content (Span 16)"));
             row->addColumn(c2);
 
             auto *c3 = new AsterColumn(4);
