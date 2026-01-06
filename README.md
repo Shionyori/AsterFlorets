@@ -71,7 +71,7 @@ cd ./build/windows-msvc/bin/Debug
 ### 2. General (通用)
 最基础的 UI 元素。
 - [x] **Button** (按钮) - `AsterButton`
-- [ ] **Icon** (图标) - `AsterIcon` (封装 SVG/FontAwesome)
+- [x] **Icon** (图标) - `AsterIcon` (封装 SVG/FontAwesome)
 - [ ] **Typography** (排版) - `AsterText` / `AsterTitle`
 - [x] **ScrollArea** (滚动区域) - `AsterScrollArea` (重点优化：平滑滚动、边缘光晕、自动隐藏、触控板惯性)
 

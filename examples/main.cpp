@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QScrollArea>
+#include <QStyle>
 #include <QDebug>
 #include "AsterUI/AsterUI.h"
 
@@ -25,8 +26,6 @@ int main(int argc, char *argv[]) {
     window.setPalette(pal);
 
     AsterUI::AsterScrollArea *scrollArea = new AsterUI::AsterScrollArea();
-    // scrollArea->setFrameShape(QFrame::NoFrame); // Handled by AsterScrollArea
-    // scrollArea->setWidgetResizable(true); // Handled by AsterScrollArea
     
     QWidget *contentWidget = new QWidget();
     // Set palette for content widget to match window background
@@ -106,6 +105,29 @@ int main(int argc, char *argv[]) {
     btnLayout->addWidget(btnLink);
 
     mainLayout->addLayout(btnLayout);
+
+    // Section: Icons
+    QLabel *iconLabel = new QLabel("Icons", contentWidget);
+    iconLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
+    iconLabel->setStyleSheet("margin-top: 20px;");
+    mainLayout->addWidget(iconLabel);
+
+    QHBoxLayout *iconLayout = new QHBoxLayout();
+    iconLayout->setAlignment(Qt::AlignLeft);
+    iconLayout->setSpacing(20);
+
+    // Standard Icon (using standard pixmap as placeholder for now since we don't have assets)
+    QStyle *style = window.style();
+    
+    auto *icon1 = new AsterUI::AsterIcon(style->standardIcon(QStyle::SP_ComputerIcon));
+    icon1->setIconSize(QSize(24, 24));
+    iconLayout->addWidget(icon1);
+
+    auto *icon2 = new AsterUI::AsterIcon(style->standardIcon(QStyle::SP_MessageBoxWarning));
+    icon2->setIconSize(QSize(24, 24));
+    iconLayout->addWidget(icon2);
+
+    mainLayout->addLayout(iconLayout);
 
     // Section: LineEdit
     QLabel *inputLabel = new QLabel("Inputs", contentWidget);

@@ -2,6 +2,7 @@
 
 #include "Global.h"
 #include "AsterTheme.h"
+#include "AsterIcon.h"
 #include "AsterButton.h"
 #include "AsterAvatar.h"
 #include "AsterTextInput.h"
