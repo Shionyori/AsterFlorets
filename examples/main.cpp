@@ -1,12 +1,11 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QScrollArea>
 #include <QStyle>
 #include <QDebug>
 #include "AsterUI/AsterUI.h"
+
+using namespace AsterUI;
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -19,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     QMainWindow window;
     window.setWindowTitle("AsterUI Demo - Components");
-    window.resize(800, 600);
+    window.resize(1024, 800);
     
     QPalette pal = window.palette();
     pal.setColor(QPalette::Window, theme->color(AsterUI::AsterTheme::ColorRole::Background));
@@ -28,420 +27,250 @@ int main(int argc, char *argv[]) {
     AsterUI::AsterScrollArea *scrollArea = new AsterUI::AsterScrollArea();
     
     QWidget *contentWidget = new QWidget();
-    // Set palette for content widget to match window background
     contentWidget->setPalette(pal);
     contentWidget->setAutoFillBackground(true);
 
+    // Root Layout using AsterRow/Col for high level structure
     QVBoxLayout *mainLayout = new QVBoxLayout(contentWidget);
-    mainLayout->setContentsMargins(20, 20, 20, 20);
-    mainLayout->setAlignment(Qt::AlignTop); // Ensure content starts at the top
-
-    // Section: Typography
-    // Titles
-    mainLayout->addWidget(new AsterUI::AsterTitle("H1. Main Title", 1));
-    mainLayout->addWidget(new AsterUI::AsterTitle("H2. Sub Title", 2));
-    mainLayout->addWidget(new AsterUI::AsterTitle("H3. Section Title", 3));
-    mainLayout->addWidget(new AsterUI::AsterTitle("H4. Subset Title", 4));
-    mainLayout->addWidget(new AsterUI::AsterTitle("H5. Small Title", 5));
-
-    // Texts
-    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
-    
-    auto *textDefault = new AsterUI::AsterText("Default Text: AsterUI is a modern UI library.");
-    mainLayout->addWidget(textDefault);
-
-    auto *textSecondary = new AsterUI::AsterText("Secondary Text: Provides additional information.");
-    textSecondary->setType(AsterUI::AsterText::Type::Secondary);
-    mainLayout->addWidget(textSecondary);
-
-    auto *textSuccess = new AsterUI::AsterText("Success Text: Operation completed successfully.");
-    textSuccess->setType(AsterUI::AsterText::Type::Success);
-    mainLayout->addWidget(textSuccess);
-
-    auto *textWarning = new AsterUI::AsterText("Warning Text: Please check your configuration.");
-    textWarning->setType(AsterUI::AsterText::Type::Warning);
-    mainLayout->addWidget(textWarning);
-
-    auto *textDanger = new AsterUI::AsterText("Danger Text: System error occurred.");
-    textDanger->setType(AsterUI::AsterText::Type::Danger);
-    mainLayout->addWidget(textDanger);
-
-    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
-
-    // Section: Avatars
-    QLabel *avatarLabel = new QLabel("Avatars", contentWidget);
-    avatarLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    // avatarLabel->setStyleSheet("margin-top: 20px;"); // Removed top margin for the first element
-    mainLayout->addWidget(avatarLabel);
-
-    QHBoxLayout *avatarLayout = new QHBoxLayout();
-    avatarLayout->setAlignment(Qt::AlignLeft);
-    avatarLayout->setSpacing(20);
-
-    // Default Circle Avatar
-    auto *avatar1 = new AsterUI::AsterAvatar("U");
-    avatarLayout->addWidget(avatar1);
-
-    // Square Avatar
-    auto *avatar2 = new AsterUI::AsterAvatar("Admin");
-    avatar2->setShape(AsterUI::AsterAvatar::Shape::Square);
-    avatar2->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Success));
-    avatarLayout->addWidget(avatar2);
-
-    // Large Avatar
-    auto *avatar3 = new AsterUI::AsterAvatar("L");
-    avatar3->setSize(AsterUI::AsterAvatar::Size::Large);
-    avatar3->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Warning));
-    avatarLayout->addWidget(avatar3);
-
-    // Small Avatar
-    auto *avatar4 = new AsterUI::AsterAvatar("S");
-    avatar4->setSize(AsterUI::AsterAvatar::Size::Small);
-    avatar4->setBackgroundColor(theme->color(AsterUI::AsterTheme::ColorRole::Error));
-    avatarLayout->addWidget(avatar4);
-
-    mainLayout->addLayout(avatarLayout);
-
-    // Section: Buttons
-    QLabel *btnLabel = new QLabel("Buttons", contentWidget);
-    btnLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    btnLabel->setStyleSheet("margin-top: 20px;");
-    mainLayout->addWidget(btnLabel);
-
-    QHBoxLayout *btnLayout = new QHBoxLayout();
-    btnLayout->setAlignment(Qt::AlignLeft);
-    
-    // Primary Button
-    auto *btnPrimary = new AsterUI::AsterButton("Primary Button");
-    btnPrimary->setType(AsterUI::AsterButton::Type::Primary);
-    btnLayout->addWidget(btnPrimary);
-
-    // Default Button
-    auto *btnDefault = new AsterUI::AsterButton("Default Button");
-    btnDefault->setType(AsterUI::AsterButton::Type::Default);
-    btnLayout->addWidget(btnDefault);
-
-    // Dashed Button
-    auto *btnDashed = new AsterUI::AsterButton("Dashed Button");
-    btnDashed->setType(AsterUI::AsterButton::Type::Dashed);
-    btnLayout->addWidget(btnDashed);
-
-    // Text Button
-    auto *btnText = new AsterUI::AsterButton("Text Button");
-    btnText->setType(AsterUI::AsterButton::Type::Text);
-    btnLayout->addWidget(btnText);
-
-    // Link Button
-    auto *btnLink = new AsterUI::AsterButton("Link Button");
-    btnLink->setType(AsterUI::AsterButton::Type::Link);
-    btnLayout->addWidget(btnLink);
-
-    mainLayout->addLayout(btnLayout);
-
-    // Section: Icons
-    QLabel *iconLabel = new QLabel("Icons", contentWidget);
-    iconLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    iconLabel->setStyleSheet("margin-top: 20px;");
-    mainLayout->addWidget(iconLabel);
-
-    QHBoxLayout *iconLayout = new QHBoxLayout();
-    iconLayout->setAlignment(Qt::AlignLeft);
-    iconLayout->setSpacing(20);
-
-    // Standard Icon (using standard pixmap as placeholder for now since we don't have assets)
-    QStyle *style = window.style();
-    
-    auto *icon1 = new AsterUI::AsterIcon(style->standardIcon(QStyle::SP_ComputerIcon));
-    icon1->setIconSize(QSize(24, 24));
-    iconLayout->addWidget(icon1);
-
-    auto *icon2 = new AsterUI::AsterIcon(style->standardIcon(QStyle::SP_MessageBoxWarning));
-    icon2->setIconSize(QSize(24, 24));
-    iconLayout->addWidget(icon2);
-
-    mainLayout->addLayout(iconLayout);
-
-    // Section: LineEdit
-    QLabel *inputLabel = new QLabel("Inputs", contentWidget);
-    inputLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(inputLabel);
-
-    QVBoxLayout *inputLayout = new QVBoxLayout();
-    
-    // Basic LineEdit
-    auto *inputBasic = new AsterUI::AsterTextInput("Basic Input");
-    inputBasic->setFixedHeight(30);
-    inputLayout->addWidget(inputBasic);
-
-    // Clearable LineEdit
-    auto *inputClearable = new AsterUI::AsterTextInput("Clearable Input");
-    inputClearable->setFixedHeight(30);
-    inputClearable->setClearable(true);
-    inputLayout->addWidget(inputClearable);
-
-    mainLayout->addLayout(inputLayout);
-
-    // Section: TextEdit
-    QLabel *textEditLabel = new QLabel("TextEdit", contentWidget);
-    textEditLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(textEditLabel);
-
-    auto *textEdit = new AsterUI::AsterTextArea();
-    textEdit->setPlaceholderText("Enter multi-line text here...");
-    textEdit->setFixedHeight(100);
-    mainLayout->addWidget(textEdit);
-
-    // Section: Toggles
-    QLabel *toggleLabel = new QLabel("Toggles", contentWidget);
-    toggleLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(toggleLabel);
-
-    QHBoxLayout *toggleLayout = new QHBoxLayout();
-    toggleLayout->setAlignment(Qt::AlignLeft);
-
-    // CheckBox
-    auto *checkBox = new AsterUI::AsterCheckBox("Remember me");
-    toggleLayout->addWidget(checkBox);
-
-    // Switch
-    auto *switchBtn = new AsterUI::AsterSwitch();
-    // 强制设置一个固定大小，排除布局问题
-    switchBtn->setFixedSize(44, 22); 
-    toggleLayout->addWidget(switchBtn);
-
-    mainLayout->addLayout(toggleLayout);
-
-    // Radio Buttons
-    QHBoxLayout *radioLayout = new QHBoxLayout();
-    radioLayout->setAlignment(Qt::AlignLeft);
-    
-    auto *radio1 = new AsterUI::AsterRadio("Radio 1");
-    radio1->setChecked(true);
-    radioLayout->addWidget(radio1);
-    
-    auto *radio2 = new AsterUI::AsterRadio("Radio 2");
-    radioLayout->addWidget(radio2);
-    
-    mainLayout->addLayout(radioLayout);
-
-    // Divider
-    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
-
-    // Section: Cards
-    QLabel *cardLabel = new QLabel("Cards", contentWidget);
-    cardLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(cardLabel);
-
-    QHBoxLayout *cardLayout = new QHBoxLayout();
-    cardLayout->setAlignment(Qt::AlignLeft);
-
-    // Basic Card
-    auto *card1 = new AsterUI::AsterCard();
-    card1->setTitle("Basic Card");
-    card1->setFixedSize(200, 120);
-    cardLayout->addWidget(card1);
-
-    // Hoverable Card
-    auto *card2 = new AsterUI::AsterCard();
-    card2->setTitle("Hoverable Card");
-    card2->setHoverable(true);
-    card2->setFixedSize(200, 120);
-    cardLayout->addWidget(card2);
-
-    mainLayout->addLayout(cardLayout);
-
-    // Section: Tags
-    QLabel *tagLabel = new QLabel("Tags", contentWidget);
-    tagLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(tagLabel);
-
-    QHBoxLayout *tagLayout = new QHBoxLayout();
-    tagLayout->setAlignment(Qt::AlignLeft);
-
-    // Default Tag
-    tagLayout->addWidget(new AsterUI::AsterTag("Default"));
-
-    // Primary Tag
-    auto *tagPrimary = new AsterUI::AsterTag("Primary");
-    tagPrimary->setType(AsterUI::AsterTag::Type::Primary);
-    tagLayout->addWidget(tagPrimary);
-
-    // Success Tag
-    auto *tagSuccess = new AsterUI::AsterTag("Success");
-    tagSuccess->setType(AsterUI::AsterTag::Type::Success);
-    tagLayout->addWidget(tagSuccess);
-
-    // Warning Tag
-    auto *tagWarning = new AsterUI::AsterTag("Warning");
-    tagWarning->setType(AsterUI::AsterTag::Type::Warning);
-    tagLayout->addWidget(tagWarning);
-
-    // Error Tag
-    auto *tagError = new AsterUI::AsterTag("Error");
-    tagError->setType(AsterUI::AsterTag::Type::Error);
-    tagLayout->addWidget(tagError);
-
-    // Closable Tag
-    auto *tagClosable = new AsterUI::AsterTag("Closable");
-    tagClosable->setClosable(true);
-    tagLayout->addWidget(tagClosable);
-
-    mainLayout->addLayout(tagLayout);
-
-    // Section: Sliders
-    QLabel *sliderLabel = new QLabel("Sliders", contentWidget);
-    sliderLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(sliderLabel);
-
-    QHBoxLayout *sliderLayout = new QHBoxLayout();
-    sliderLayout->setAlignment(Qt::AlignLeft);
-
-    // Horizontal Slider
-    auto *sliderH = new AsterUI::AsterSlider(Qt::Horizontal);
-    sliderH->setValue(30);
-    sliderH->setFixedWidth(200);
-    sliderLayout->addWidget(sliderH);
-
-    // Vertical Slider
-    auto *sliderV = new AsterUI::AsterSlider(Qt::Vertical);
-    sliderV->setValue(70);
-    sliderV->setFixedHeight(100);
-    sliderLayout->addWidget(sliderV);
-
-    mainLayout->addLayout(sliderLayout);
-
-    // Section: Selects
-    QLabel *selectLabel = new QLabel("Selects", contentWidget);
-    selectLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
-    mainLayout->addWidget(selectLabel);
-
-    QHBoxLayout *selectLayout = new QHBoxLayout();
-    selectLayout->setAlignment(Qt::AlignLeft);
-
-    // Basic Select
-    auto *select1 = new AsterUI::AsterSelect();
-    select1->setPlaceholderText("Choose an option");
-    select1->addItems({"Option 1", "Option 2", "Option 3", "Long Option Text Here"});
-    select1->setCurrentIndex(-1);
-    select1->setFixedWidth(200);
-    selectLayout->addWidget(select1);
-
-    // Select with many items
-    auto *select2 = new AsterUI::AsterSelect();
-    select2->setPlaceholderText("Select Country");
-    QStringList countries;
-    for(int i=1; i<=20; ++i) countries << QString("Country %1").arg(i);
-    select2->addItems(countries);
-    select2->setFixedWidth(200);
-    selectLayout->addWidget(select2);
-
-    mainLayout->addLayout(selectLayout);
-
-    // Section: Feedback
-    mainLayout->addWidget(new AsterUI::AsterDivider("Feedback", Qt::AlignLeft));
-    
-    auto *progress = new AsterUI::AsterProgress();
-    progress->setValue(60);
-    mainLayout->addWidget(progress);
-
-    // Section: Space
-    mainLayout->addWidget(new AsterUI::AsterTitle("Space", 3));
-    
-    mainLayout->addWidget(new AsterUI::AsterText("Horizontal Space (Size=20):"));
-    auto *spaceH = new AsterUI::AsterSpace(Qt::Horizontal);
-    spaceH->setSize(20);
-    spaceH->addWidget(new AsterUI::AsterButton("Button 1"));
-    spaceH->addWidget(new AsterUI::AsterButton("Button 2"));
-    spaceH->addWidget(new AsterUI::AsterButton("Button 3"));
-    mainLayout->addWidget(spaceH);
-
-    mainLayout->addWidget(new AsterUI::AsterText("Vertical Space (Size=Default):"));
-    auto *spaceV = new AsterUI::AsterSpace(Qt::Vertical);
-    spaceV->addWidget(new AsterUI::AsterTag("Tag 1"));
-    spaceV->addWidget(new AsterUI::AsterTag("Tag 2"));
-    spaceV->addWidget(new AsterUI::AsterTag("Tag 3"));
-    mainLayout->addWidget(spaceV);
-
-    // Section: Grid
-    mainLayout->addWidget(new AsterUI::AsterTitle("Grid (24 Columns)", 3));
-    
-    // Row 1: 12 + 12 (50% - 50%)
-    mainLayout->addWidget(new AsterUI::AsterText("Row 1: Span 12 + Span 12"));
-    auto *row1 = new AsterUI::AsterRow();
-    row1->setGutter(10);
-    
-    auto *col1_1 = new AsterUI::AsterCol(12);
-    auto *btnCol1 = new AsterUI::AsterButton("Col-12");
-    btnCol1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed); // Fill column width
-    col1_1->addWidget(btnCol1);
-    row1->addCol(col1_1);
-
-    auto *col1_2 = new AsterUI::AsterCol(12);
-    auto *btnCol2 = new AsterUI::AsterButton("Col-12");
-    btnCol2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    btnCol2->setType(AsterUI::AsterButton::Type::Primary);
-    col1_2->addWidget(btnCol2);
-    row1->addCol(col1_2);
-    
-    mainLayout->addWidget(row1);
-
-    // Row 2: 8 + 8 + 8 (33% - 33% - 33%)
-    mainLayout->addWidget(new AsterUI::AsterText("Row 2: Span 8 + Span 8 + Span 8"));
-    auto *row2 = new AsterUI::AsterRow();
-    row2->setGutter(10);
-    
-    for (int i = 0; i < 3; ++i) {
-        auto *col = new AsterUI::AsterCol(8);
-        auto *btn = new AsterUI::AsterButton(QString("Col-8"));
-        btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        if(i==1) btn->setType(AsterUI::AsterButton::Type::Dashed);
-        col->addWidget(btn);
-        row2->addCol(col);
+    mainLayout->setContentsMargins(40, 40, 40, 40);
+    mainLayout->setSpacing(30);
+    mainLayout->setAlignment(Qt::AlignTop);
+
+    // Header Area
+    auto *headerLayout = new QVBoxLayout();
+    headerLayout->setSpacing(10);
+    headerLayout->addWidget(new AsterTitle("AsterUI Components", 1));
+    headerLayout->addWidget(new AsterText("A modern, Qt-based UI component library inspired by Ant Design."));
+    mainLayout->addLayout(headerLayout);
+
+    mainLayout->addWidget(new AsterDivider);
+
+    // Grid System for Layout
+    auto *rootGrid = new QVBoxLayout();
+    rootGrid->setSpacing(30);
+
+    // --- Row 1: General & Layout ---
+    {
+        auto *row = new AsterRow();
+        row->setGutter(30);
+
+        // Col 1: Buttons
+        auto *col1 = new AsterCol(12);
+        auto *card = new AsterCard();
+        card->setTitle("Buttons");
+        
+        auto *vbox = new QVBoxLayout(card);
+        vbox->setSpacing(15);
+        
+        auto *space1 = new AsterSpace(Qt::Horizontal);
+        space1->addWidget(new AsterButton("Default"));
+        auto *btnPri = new AsterButton("Primary");
+        btnPri->setType(AsterButton::Type::Primary);
+        space1->addWidget(btnPri);
+        auto *btnDash = new AsterButton("Dashed");
+        btnDash->setType(AsterButton::Type::Dashed);
+        space1->addWidget(btnDash);
+        vbox->addWidget(space1);
+
+        auto *space2 = new AsterSpace(Qt::Horizontal);
+        auto *btnText = new AsterButton("Text Button");
+        btnText->setType(AsterButton::Type::Text);
+        space2->addWidget(btnText);
+        auto *btnLink = new AsterButton("Link Button");
+        btnLink->setType(AsterButton::Type::Link);
+        space2->addWidget(btnLink);
+        vbox->addWidget(space2);
+
+        col1->addWidget(card);
+        row->addCol(col1);
+
+        // Col 2: Icons & Typography
+        auto *col2 = new AsterCol(12);
+        auto *card2 = new AsterCard();
+        card2->setTitle("Icons & Typography");
+
+        auto *vbox2 = new QVBoxLayout(card2);
+        vbox2->setSpacing(15);
+
+        auto *spaceIcons = new AsterSpace(Qt::Horizontal);
+        spaceIcons->setSize(20);
+        QStyle *style = window.style();
+        auto *icon1 = new AsterIcon(style->standardIcon(QStyle::SP_ComputerIcon));
+        icon1->setIconSize(QSize(24, 24));
+        spaceIcons->addWidget(icon1);
+        auto *icon2 = new AsterIcon(style->standardIcon(QStyle::SP_MessageBoxWarning));
+        icon2->setIconSize(QSize(24, 24));
+        icon2->setColor(theme->color(AsterTheme::ColorRole::Warning));
+        spaceIcons->addWidget(icon2);
+        vbox2->addWidget(spaceIcons);
+
+        vbox2->addWidget(new AsterDivider);
+
+        vbox2->addWidget(new AsterText("Default Text"));
+        auto *txtSec = new AsterText("Secondary Text");
+        txtSec->setType(AsterText::Type::Secondary);
+        vbox2->addWidget(txtSec);
+        
+        col2->addWidget(card2);
+        row->addCol(col2);
+
+        rootGrid->addWidget(row);
     }
-    mainLayout->addWidget(row2);
 
-    // Row 3: 6 + 18 (25% - 75%)
-    mainLayout->addWidget(new AsterUI::AsterText("Row 3: Span 6 + Span 18"));
-    auto *row3 = new AsterUI::AsterRow();
-    row3->setGutter(10);
-    
-    auto *col3_1 = new AsterUI::AsterCol(6);
-    auto *btn3_1 = new AsterUI::AsterButton("Col-6");
-    btn3_1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    col3_1->addWidget(btn3_1);
-    row3->addCol(col3_1);
+    // --- Row 2: Data Entry ---
+    {
+        auto *row = new AsterRow();
+        row->setGutter(30);
 
-    auto *col3_2 = new AsterUI::AsterCol(18);
-    auto *btn3_2 = new AsterUI::AsterButton("Col-18");
-    btn3_2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    btn3_2->setType(AsterUI::AsterButton::Type::Primary);
-    col3_2->addWidget(btn3_2);
-    row3->addCol(col3_2);
+        // Col 1: Inputs
+        auto *col1 = new AsterCol(12);
+        auto *card = new AsterCard();
+        card->setTitle("Data Entry");
+        auto *vbox = new QVBoxLayout(card);
+        vbox->setSpacing(15);
 
-    mainLayout->addWidget(row3);
+        vbox->addWidget(new AsterText("Inputs", nullptr));
+        auto *inputBasic = new AsterTextInput("Basic Input");
+        vbox->addWidget(inputBasic);
+        
+        auto *inputClear = new AsterTextInput("Clearable Input");
+        inputClear->setClearable(true);
+        vbox->addWidget(inputClear);
 
-    // Section: FlowLayout
-    mainLayout->addWidget(new AsterUI::AsterTitle("FlowLayout", 3));
-    mainLayout->addWidget(new AsterUI::AsterText("Auto wrap tags:"));
-    
-    QWidget *flowWidget = new QWidget();
-    auto *flowLayout = new AsterUI::AsterFlowLayout(flowWidget);
-    flowLayout->setContentsMargins(0, 0, 0, 0);
-    flowLayout->setSpacing(10); // Spacing for both H and V if supported by base class or manually
+        vbox->addWidget(new AsterText("Select", nullptr));
+        auto *select = new AsterSelect();
+        select->setPlaceholderText("Choose option...");
+        select->addItems({"Option 1", "Option 2", "Option 3"});
+        vbox->addWidget(select);
 
-    QStringList longTags = {
-        "Tag 1", "Tag 2", "Long Tag 3", "Another Tag", "Qt", "C++", 
-        "AsterUI", "FlowLayout", "Responsive", "UI", "Design", "Theme", 
-        "Components", "Widgets", "Open Source"
-    };
+        col1->addWidget(card);
+        row->addCol(col1);
 
-    for (const QString &text : longTags) {
-        flowLayout->addWidget(new AsterUI::AsterTag(text));
+        // Col 2: Toggles & Sliders
+        auto *col2 = new AsterCol(12);
+        auto *card2 = new AsterCard();
+        card2->setTitle("Toggles & Controls");
+        auto *vbox2 = new QVBoxLayout(card2);
+        vbox2->setSpacing(15);
+
+        auto *spaceH = new AsterSpace(Qt::Horizontal);
+        spaceH->addWidget(new AsterCheckBox("CheckBox"));
+        auto *switchBtn = new AsterSwitch();
+        switchBtn->setFixedSize(44, 22);
+        spaceH->addWidget(switchBtn);
+        vbox2->addWidget(spaceH);
+
+        auto *spaceRadio = new AsterSpace(Qt::Horizontal);
+        auto *r1 = new AsterRadio("Radio A");
+        r1->setChecked(true);
+        spaceRadio->addWidget(r1);
+        spaceRadio->addWidget(new AsterRadio("Radio B"));
+        vbox2->addWidget(spaceRadio);
+
+        vbox2->addWidget(new AsterDivider);
+        
+        auto *sliderH = new AsterSlider(Qt::Horizontal);
+        sliderH->setValue(30);
+        vbox2->addWidget(sliderH);
+
+        col2->addWidget(card2);
+        row->addCol(col2);
+
+        rootGrid->addWidget(row);
     }
-    
-    mainLayout->addWidget(flowWidget);
 
+    // --- Row 3: Data Display ---
+    {
+        auto *row = new AsterRow();
+        row->setGutter(30);
+
+        // Col 1: Avatars & Tags
+        auto *col1 = new AsterCol(12);
+        auto *card = new AsterCard();
+        card->setTitle("Data Display");
+        auto *vbox = new QVBoxLayout(card);
+        vbox->setSpacing(20);
+
+        auto *spaceAvatar = new AsterSpace(Qt::Horizontal);
+        spaceAvatar->addWidget(new AsterAvatar("U"));
+        auto *av2 = new AsterAvatar("Adm");
+        av2->setShape(AsterAvatar::Shape::Square);
+        av2->setBackgroundColor(theme->color(AsterTheme::ColorRole::Success));
+        spaceAvatar->addWidget(av2);
+        vbox->addWidget(spaceAvatar);
+
+        auto *flowTags = new AsterFlowLayout(0, 10, 10);
+        flowTags->addItem(new QWidgetItem(new AsterTag("Classic")));
+        
+        auto *tagPri = new AsterTag("Modern UI");
+        tagPri->setType(AsterTag::Type::Primary);
+        flowTags->addItem(new QWidgetItem(tagPri));
+
+        auto *tagSucc = new AsterTag("Stable");
+        tagSucc->setType(AsterTag::Type::Success);
+        flowTags->addItem(new QWidgetItem(tagSucc));
+
+        auto *tagErr = new AsterTag("Beta");
+        tagErr->setType(AsterTag::Type::Error);
+        flowTags->addItem(new QWidgetItem(tagErr));
+
+        QWidget *tagsWidget = new QWidget();
+        tagsWidget->setLayout(flowTags);
+        vbox->addWidget(tagsWidget);
+
+        col1->addWidget(card);
+        row->addCol(col1);
+
+        // Col 2: Feedback & Layouts
+        auto *col2 = new AsterCol(12);
+        auto *card2 = new AsterCard();
+        card2->setTitle("Feedback & Grid System");
+        auto *vbox2 = new QVBoxLayout(card2);
+        vbox2->setSpacing(15);
+
+        auto *progress = new AsterProgress();
+        progress->setValue(75);
+        vbox2->addWidget(progress);
+
+        vbox2->addWidget(new AsterDivider("Grid Demo", Qt::AlignCenter));
+
+        // Mini Grid Demo
+        auto *miniGrid = new QVBoxLayout();
+        miniGrid->setSpacing(10);
+        
+        auto *r1 = new AsterRow();
+        r1->setGutter(10);
+        auto *c1 = new AsterCol(8); c1->addWidget(new AsterButton("8")); r1->addCol(c1);
+        auto *c2 = new AsterCol(8); c2->addWidget(new AsterButton("8")); r1->addCol(c2);
+        auto *c3 = new AsterCol(8); c3->addWidget(new AsterButton("8")); r1->addCol(c3);
+        miniGrid->addWidget(r1);
+
+        auto *r2 = new AsterRow();
+        r2->setGutter(10);
+        auto *c4 = new AsterCol(6); c4->addWidget(new AsterButton("6")); r2->addCol(c4);
+        auto *c5 = new AsterCol(18); 
+        auto *btnLong = new AsterButton("18 (Expanding)"); 
+        btnLong->setType(AsterButton::Type::Primary); 
+        c5->addWidget(btnLong); 
+        r2->addCol(c5);
+        miniGrid->addWidget(r2);
+
+        vbox2->addLayout(miniGrid);
+
+        col2->addWidget(card2);
+        row->addCol(col2);
+
+        rootGrid->addWidget(row);
+    }
+
+    mainLayout->addLayout(rootGrid);
     mainLayout->addStretch();
+
+    // Footer
+    auto *footer = new AsterText("AsterUI Demo 2026 © Open Source");
+    footer->setType(AsterText::Type::Secondary);
+    footer->setAlignment(Qt::AlignCenter);
+    mainLayout->addWidget(footer);
 
     scrollArea->setWidget(contentWidget);
     window.setCentralWidget(scrollArea);
