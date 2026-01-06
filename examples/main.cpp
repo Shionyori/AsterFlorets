@@ -344,6 +344,103 @@ int main(int argc, char *argv[]) {
     progress->setValue(60);
     mainLayout->addWidget(progress);
 
+    // Section: Space
+    mainLayout->addWidget(new AsterUI::AsterTitle("Space", 3));
+    
+    mainLayout->addWidget(new AsterUI::AsterText("Horizontal Space (Size=20):"));
+    auto *spaceH = new AsterUI::AsterSpace(Qt::Horizontal);
+    spaceH->setSize(20);
+    spaceH->addWidget(new AsterUI::AsterButton("Button 1"));
+    spaceH->addWidget(new AsterUI::AsterButton("Button 2"));
+    spaceH->addWidget(new AsterUI::AsterButton("Button 3"));
+    mainLayout->addWidget(spaceH);
+
+    mainLayout->addWidget(new AsterUI::AsterText("Vertical Space (Size=Default):"));
+    auto *spaceV = new AsterUI::AsterSpace(Qt::Vertical);
+    spaceV->addWidget(new AsterUI::AsterTag("Tag 1"));
+    spaceV->addWidget(new AsterUI::AsterTag("Tag 2"));
+    spaceV->addWidget(new AsterUI::AsterTag("Tag 3"));
+    mainLayout->addWidget(spaceV);
+
+    // Section: Grid
+    mainLayout->addWidget(new AsterUI::AsterTitle("Grid (24 Columns)", 3));
+    
+    // Row 1: 12 + 12 (50% - 50%)
+    mainLayout->addWidget(new AsterUI::AsterText("Row 1: Span 12 + Span 12"));
+    auto *row1 = new AsterUI::AsterRow();
+    row1->setGutter(10);
+    
+    auto *col1_1 = new AsterUI::AsterCol(12);
+    auto *btnCol1 = new AsterUI::AsterButton("Col-12");
+    btnCol1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed); // Fill column width
+    col1_1->addWidget(btnCol1);
+    row1->addCol(col1_1);
+
+    auto *col1_2 = new AsterUI::AsterCol(12);
+    auto *btnCol2 = new AsterUI::AsterButton("Col-12");
+    btnCol2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    btnCol2->setType(AsterUI::AsterButton::Type::Primary);
+    col1_2->addWidget(btnCol2);
+    row1->addCol(col1_2);
+    
+    mainLayout->addWidget(row1);
+
+    // Row 2: 8 + 8 + 8 (33% - 33% - 33%)
+    mainLayout->addWidget(new AsterUI::AsterText("Row 2: Span 8 + Span 8 + Span 8"));
+    auto *row2 = new AsterUI::AsterRow();
+    row2->setGutter(10);
+    
+    for (int i = 0; i < 3; ++i) {
+        auto *col = new AsterUI::AsterCol(8);
+        auto *btn = new AsterUI::AsterButton(QString("Col-8"));
+        btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        if(i==1) btn->setType(AsterUI::AsterButton::Type::Dashed);
+        col->addWidget(btn);
+        row2->addCol(col);
+    }
+    mainLayout->addWidget(row2);
+
+    // Row 3: 6 + 18 (25% - 75%)
+    mainLayout->addWidget(new AsterUI::AsterText("Row 3: Span 6 + Span 18"));
+    auto *row3 = new AsterUI::AsterRow();
+    row3->setGutter(10);
+    
+    auto *col3_1 = new AsterUI::AsterCol(6);
+    auto *btn3_1 = new AsterUI::AsterButton("Col-6");
+    btn3_1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    col3_1->addWidget(btn3_1);
+    row3->addCol(col3_1);
+
+    auto *col3_2 = new AsterUI::AsterCol(18);
+    auto *btn3_2 = new AsterUI::AsterButton("Col-18");
+    btn3_2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    btn3_2->setType(AsterUI::AsterButton::Type::Primary);
+    col3_2->addWidget(btn3_2);
+    row3->addCol(col3_2);
+
+    mainLayout->addWidget(row3);
+
+    // Section: FlowLayout
+    mainLayout->addWidget(new AsterUI::AsterTitle("FlowLayout", 3));
+    mainLayout->addWidget(new AsterUI::AsterText("Auto wrap tags:"));
+    
+    QWidget *flowWidget = new QWidget();
+    auto *flowLayout = new AsterUI::AsterFlowLayout(flowWidget);
+    flowLayout->setContentsMargins(0, 0, 0, 0);
+    flowLayout->setSpacing(10); // Spacing for both H and V if supported by base class or manually
+
+    QStringList longTags = {
+        "Tag 1", "Tag 2", "Long Tag 3", "Another Tag", "Qt", "C++", 
+        "AsterUI", "FlowLayout", "Responsive", "UI", "Design", "Theme", 
+        "Components", "Widgets", "Open Source"
+    };
+
+    for (const QString &text : longTags) {
+        flowLayout->addWidget(new AsterUI::AsterTag(text));
+    }
+    
+    mainLayout->addWidget(flowWidget);
+
     mainLayout->addStretch();
 
     scrollArea->setWidget(contentWidget);

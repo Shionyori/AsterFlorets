@@ -78,9 +78,9 @@ cd ./build/windows-msvc/bin/Debug
 ### 3. Layout (布局)
 组织页面结构。
 - [x] **Divider** (分割线) - `AsterDivider`
-- [ ] **Space** (间距) - `AsterSpace` (用于自动处理控件间距)
-- [ ] **Grid** (栅格系统) - `AsterGrid` (Row/Col，支持 Gutter 和响应式布局，统一间距规范)
-- [ ] **FlowLayout** (流式布局) - `AsterFlowLayout` (自动换行，用于 Tag 组或卡片列表)
+- [x] **Space** (间距) - `AsterSpace` (用于自动处理控件间距)
+- [x] **Grid** (栅格系统) - `AsterGrid` (Row/Col，支持 Gutter 和响应式布局，统一间距规范)
+- [x] **FlowLayout** (流式布局) - `AsterFlowLayout` (自动换行，用于 Tag 组或卡片列表)
 
 ### 4. Navigation (导航)
 页面跳转与层级指引。

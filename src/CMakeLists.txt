@@ -1,9 +1,12 @@
 set(ASTERUI_SOURCES
     AsterUI.cpp
     AsterTheme.cpp
+    AsterGrid.cpp
+    AsterFlowLayout.cpp
     AsterIcon.cpp
     AsterText.cpp
     AsterTitle.cpp
+    AsterSpace.cpp
     AsterButton.cpp
     AsterAvatar.cpp
     AsterTextInput.cpp
@@ -23,8 +26,13 @@ set(ASTERUI_SOURCES
 set(ASTERUI_HEADERS
     ../include/AsterUI/Global.h
     ../include/AsterUI/AsterUI.h
+    ../include/AsterUI/AsterTheme.h
+    ../include/AsterUI/AsterGrid.h
+    ../include/AsterUI/AsterFlowLayout.h
+    ../include/AsterUI/AsterIcon.h
     ../include/AsterUI/AsterText.h
     ../include/AsterUI/AsterTitle.h
+    ../include/AsterUI/AsterSpace.h
     ../include/AsterUI/AsterTheme.h
     ../include/AsterUI/AsterIcon.h
     ../include/AsterUI/AsterButton.h
