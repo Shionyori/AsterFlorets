@@ -52,10 +52,6 @@ void AsterSpace::setDirection(Qt::Orientation direction)
     if (m_direction != direction) {
         m_direction = direction;
         
-        // Re-create layout involves moving items, which is complex.
-        // For simplicity, we might just change direction if QBoxLayout supports it.
-        // QBoxLayout::setDirection was introduced in Qt 5? 
-        // Actually best way is to setDirection on the existing layout if it is QBoxLayout.
         m_layout->setDirection(direction == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom);
         
         update();

@@ -60,7 +60,13 @@ cd ./build/windows-msvc/bin/Debug
 - [x] **Theme** (主题系统) - `AsterTheme` (支持浅色/深色主题，管理全局颜色 Token)
 - [ ] **Motion** (动画引擎) - `AsterMotion` (统一管理 Hover/Press/Slide/Fade 动画)
 
-### 1. Layout (布局容器)
+### 1. Foundation (基础设施)
+基础设施组件，提供统一的样式和行为规范。
+- [ ] **Page** (页面容器) - `AsterPage` (页面布局容器，包含头部、侧边栏和内容区)
+- [ ] **StackView** (堆叠视图) - `AsterStackView` (类似 QStackedWidget，用于页面管理的层级容器)
+- [ ] **Router** (路由系统) - `AsterRouter` (统一管理页面（Page）的切换)
+
+### 2. Layout Container (布局容器)
 **核心理念：布局即容器 (Layout as Container)**。这些组件继承自 `QWidget`，内部封装了 Qt 布局管理器，对外提供符合现代化 UI 开发习惯的 API（如 `gutter`, `span`, `spacing` 等），实现了“一切皆 Widget”的统一开发体验。
 - [x] **Space** (间距容器) - `AsterSpace` (Flex 风格的容器，自动处理子控件间距，支持横向/纵向堆叠)
 - [x] **Row** (行容器) - `AsterRow` (栅格系统行，管理 Gutter 和列的排列)
@@ -70,46 +76,33 @@ cd ./build/windows-msvc/bin/Debug
 - [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装)
 - [x] **Divider** (分割线) - `AsterDivider`
 
-### 2. General (通用)
+### 3. General (通用)
 最基础的 UI 元素。
 - [x] **Button** (按钮) - `AsterButton` (支持 Primary, Dashed, Text, Link 等多种类型)
 - [x] **Icon** (图标) - `AsterIcon` (图标封装，支持颜色和大小调整)
 - [x] **Typography** (排版) - `AsterTitle` / `AsterText` (预设样式的文本组件)
 
-### 3. Data Entry (数据录入)
+### 4. Data Entry (数据录入)
 用户输入数据的控件。
-- [x] **Input** (输入框) - `AsterTextInput` (支持清除按钮、前后缀插槽)
+- [x] **TextInput** (输入框) - `AsterTextInput` (支持清除按钮、前后缀插槽)
 - [x] **TextArea** (多行文本) - `AsterTextArea`
 - [x] **Select** (选择器) - `AsterSelect` (下拉选择)
 - [x] **CheckBox** (复选框) - `AsterCheckBox`
 - [x] **Radio** (单选框) - `AsterRadio`
 - [x] **Switch** (开关) - `AsterSwitch`
 - [x] **Slider** (滑动条) - `AsterSlider`
-
-### 4. Data Display (数据展示)
-用于展示数据的可视化组件。
-- [x] **Card** (卡片) - `AsterCard` (通用容器，包含标题栏和内容区，支持阴影和边框优化)
-- [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
-- [x] **Tag** (标签) - `AsterTag` (用于标记和分类的小型组件)
-- [x] **Progress** (进度条) - `AsterProgress`
-
-### 5. Navigation (导航) [Planned]
-页面跳转与层级指引。
-- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单)
-- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
-- [ ] **Tabs** (标签页) - `AsterTabs`
 - [ ] **NumberInput** (数字输入) - `AsterNumberInput` (原 `AsterSpinBox`)
 - [ ] **DatePicker** (日期选择) - `AsterDatePicker`
 - [ ] **TimePicker** (时间选择) - `AsterTimePicker`
 - [ ] **Upload** (文件上传) - `AsterUpload` (文件拖拽区域 / 增强型文件选择器)
 - [ ] **ColorPicker** (颜色选择器) - `AsterColorPicker` (桌面端常用高级组件)
-- [ ] **AutoComplete** (自动补全) - `AsterAutoComplete` (带样式的自动补全)
 
-### 6. Data Display (数据展示)
-展示结构化或非结构化数据。
-- [x] **Avatar** (头像) - `AsterAvatar`
-- [x] **Card** (卡片) - `AsterCard`
-- [x] **Tag** (标签) - `AsterTag`
+### 5. Data Display (数据展示)
+用于展示数据的可视化组件。
+- [x] **Card** (卡片) - `AsterCard` (通用容器，包含标题栏和内容区，支持阴影和边框优化)
+- [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
+- [x] **Tag** (标签) - `AsterTag` (用于标记和分类的小型组件)
+- [x] **Progress** (进度条) - `AsterProgress`
 - [ ] **List** (列表) - `AsterList` 
 - [ ] **Table** (表格) - `AsterTable` (基于 ModelAdapter)
 - [ ] **Tree** (树形控件) - `AsterTree`
@@ -120,6 +113,13 @@ cd ./build/windows-msvc/bin/Debug
 - [ ] **Descriptions** (描述列表) - `AsterDescriptions` (结构化信息展示)
 - [ ] **Image** (图片) - `AsterImage`
 - [ ] **Statistic** (统计数值) - `AsterStatistic`
+
+### 6. Navigation (导航) [Planned]
+页面跳转与层级指引。
+- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单，最好能实现仿 Ant Design 的侧边栏菜单)
+- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
+- [ ] **Tabs** (标签页) - `AsterTabs`
+- [ ] **Pagination** (分页) - `AsterPagination`
 
 ### 7. Feedback (反馈)
 用户操作后的反馈交互。
