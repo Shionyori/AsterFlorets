@@ -2,58 +2,56 @@
 
 #include "Global.h"
 #include <QWidget>
-#include <QHBoxLayout>
+#include <QGridLayout>
 
 namespace AsterUI {
 
-class ASTERUI_EXPORT AsterCol : public QWidget {
-    Q_OBJECT
-    Q_PROPERTY(int span READ span WRITE setSpan)
+    /**
+     * @brief AsterGrid
+     * A widget that arranges its children in a uniform grid.
+     * Unlike AsterRow/AsterColumn which provide offset/span control,
+     * AsterGrid is for automatically arranging N items into M columns.
+     */
+    class ASTERUI_EXPORT AsterGrid : public QWidget {
+        Q_OBJECT
+        Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount)
+        Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
+        Q_PROPERTY(int horizontalSpacing READ horizontalSpacing WRITE setHorizontalSpacing)
+        Q_PROPERTY(int verticalSpacing READ verticalSpacing WRITE setVerticalSpacing)
 
-public:
-    explicit AsterCol(QWidget *parent = nullptr);
-    explicit AsterCol(int span, QWidget *parent = nullptr);
-    ~AsterCol() override;
+    public:
+        explicit AsterGrid(QWidget* parent = nullptr);
+        explicit AsterGrid(int columns, QWidget* parent = nullptr);
+        ~AsterGrid() override;
 
-    int span() const;
-    void setSpan(int span);
+        int columnCount() const;
+        void setColumnCount(int count);
 
-    // Helper to set a single widget content
-    void setWidget(QWidget *widget);
+        int spacing() const;
+        void setSpacing(int spacing);
 
-    // If using as a generic container, you can access internal layout
-    // but usually we just set one widget or add simplified content.
-    void addWidget(QWidget *widget);
+        int horizontalSpacing() const;
+        void setHorizontalSpacing(int spacing);
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+        int verticalSpacing() const;
+        void setVerticalSpacing(int spacing);
 
-private:
-    int m_span = 24; // Default to full width (24 grid system)
-    QVBoxLayout *m_layout = nullptr;
-};
+        void addWidget(QWidget* w);
+        void removeWidget(QWidget* w); // Added for completeness
+        void clear();
 
-class ASTERUI_EXPORT AsterRow : public QWidget {
-    Q_OBJECT
-    Q_PROPERTY(int gutter READ gutter WRITE setGutter)
+    protected:
+        void paintEvent(QPaintEvent* event) override;
 
-public:
-    explicit AsterRow(QWidget *parent = nullptr);
-    ~AsterRow() override;
+    private:
+        void reflow();
 
-    int gutter() const;
-    void setGutter(int gutter);
-
-    void addCol(AsterCol *col);
-    // Helper to add a plain widget wrapped in a default Col (span=1?? or auto?)
-    // Better to force using AsterCol for clarity in Grid system
-    
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
-private:
-    QHBoxLayout *m_layout = nullptr;
-    int m_gutter = 0;
-};
+    private:
+        int m_columnCount = 3;
+        int m_hSpacing = 16;
+        int m_vSpacing = 16;
+        QGridLayout* m_layout;
+        QList<QWidget*> m_items;
+    };
 
 }

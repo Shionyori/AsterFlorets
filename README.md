@@ -17,7 +17,7 @@ AsterUI 是一个基于 C++ Qt 的现代化 UI 组件库，设计风格参考 An
 
 ## 构建步骤
 
-1. 首先在根目录下创建新的CMakeUserPresets.json文件，并设置 Qt 路径，例如：
+1. 首先在根目录下创建新的 CMakeUserPresets.json 文件，并设置 Qt 路径，例如：
 
 ```json
 {
@@ -57,49 +57,47 @@ cd ./build/windows-msvc/bin/Debug
 
 ### 0. Core Systems (核心架构) [Infrastructure]
 库的底层支撑，决定整体的性能、交互手感和开发体验。
-- [x] **Theme** (主题系统) - `AsterTheme` (需升级为 Token 化设计，支持动态切换)
-- [ ] **Motion** (动画引擎) - `AsterMotion` (统一管理 Hover/Press/Slide/Fade 动画，避免割裂感)
-- [ ] **WindowManger** (窗口管理) - `AsterWindowManager` (处理无边框、阴影、拖拽、Aero Snap、DPI适配)
-- [ ] **ModelAdapter** (数据适配器) - `AsterModelAdapter` (简化 Table/Tree 的 Model 开发，桥接普通数据结构)
+- [x] **Theme** (主题系统) - `AsterTheme` (支持浅色/深色主题，管理全局颜色 Token)
+- [ ] **Motion** (动画引擎) - `AsterMotion` (统一管理 Hover/Press/Slide/Fade 动画)
 
-### 1. Application (应用框架) [Desktop Special]
-桌面应用的基石，提供统一的窗口外观和交互。
-- [ ] **Application** (应用辅助) - `AsterApp` (全局初始化、字体管理、事件过滤器)
-- [ ] **Window** (主窗口) - `AsterWindow` (基于 WindowManager 实现，支持 QWidget/QWindow 双模式)
-- [ ] **TitleBar** (标题栏) - `AsterTitleBar` (集成系统按钮，支持自定义内容)
+### 1. Layout (布局容器)
+**核心理念：布局即容器 (Layout as Container)**。这些组件继承自 `QWidget`，内部封装了 Qt 布局管理器，对外提供符合现代化 UI 开发习惯的 API（如 `gutter`, `span`, `spacing` 等），实现了“一切皆 Widget”的统一开发体验。
+- [x] **Space** (间距容器) - `AsterSpace` (Flex 风格的容器，自动处理子控件间距，支持横向/纵向堆叠)
+- [x] **Row** (行容器) - `AsterRow` (栅格系统行，管理 Gutter 和列的排列)
+- [x] **Column** (列容器) - `AsterColumn` (栅格系统列，支持 span 跨度设置，作为 Row 的子容器)
+- [x] **Grid** (网格容器) - `AsterGrid` (等分网格容器，统一管理子元素间距和排列)
+- [x] **Flow** (流式容器) - `AsterFlow` (自动换行容器，适用于标签组或不定宽卡片列表)
+- [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装)
+- [x] **Divider** (分割线) - `AsterDivider`
 
 ### 2. General (通用)
 最基础的 UI 元素。
-- [x] **Button** (按钮) - `AsterButton`
-- [x] **Icon** (图标) - `AsterIcon` (封装 SVG/FontAwesome)
-- [x] **Typography** (排版) - `AsterText` / `AsterTitle`
-- [x] **ScrollArea** (滚动区域) - `AsterScrollArea` (重点优化：平滑滚动、边缘光晕、自动隐藏、触控板惯性)
+- [x] **Button** (按钮) - `AsterButton` (支持 Primary, Dashed, Text, Link 等多种类型)
+- [x] **Icon** (图标) - `AsterIcon` (图标封装，支持颜色和大小调整)
+- [x] **Typography** (排版) - `AsterTitle` / `AsterText` (预设样式的文本组件)
 
-### 3. Layout (布局)
-组织页面结构。
-- [x] **Divider** (分割线) - `AsterDivider`
-- [x] **Space** (间距) - `AsterSpace` (用于自动处理控件间距)
-- [x] **Grid** (栅格系统) - `AsterGrid` (Row/Col，支持 Gutter 和响应式布局，统一间距规范)
-- [x] **FlowLayout** (流式布局) - `AsterFlowLayout` (自动换行，用于 Tag 组或卡片列表)
-
-### 4. Navigation (导航)
-页面跳转与层级指引。
-- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单)
-- [ ] **Tabs** (标签页) - `AsterTabs` (高性能重绘，支持动画开关)
-- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb` (桌面端深层级导航必备)
-- [ ] **Pagination** (分页) - `AsterPagination` (表格/列表数据分页)
-- [ ] **SideBar** (侧边导航) - `AsterSideBar`
-- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出面板)
-
-### 5. Data Entry (数据录入)
+### 3. Data Entry (数据录入)
 用户输入数据的控件。
-- [x] **Input** (输入框) - `AsterTextInput` (原 `AsterLineEdit`)
-- [x] **TextArea** (多行文本) - `AsterTextArea` (原 `AsterTextEdit`)
-- [x] **Select** (选择器) - `AsterSelect`
+- [x] **Input** (输入框) - `AsterTextInput` (支持清除按钮、前后缀插槽)
+- [x] **TextArea** (多行文本) - `AsterTextArea`
+- [x] **Select** (选择器) - `AsterSelect` (下拉选择)
 - [x] **CheckBox** (复选框) - `AsterCheckBox`
 - [x] **Radio** (单选框) - `AsterRadio`
 - [x] **Switch** (开关) - `AsterSwitch`
 - [x] **Slider** (滑动条) - `AsterSlider`
+
+### 4. Data Display (数据展示)
+用于展示数据的可视化组件。
+- [x] **Card** (卡片) - `AsterCard` (通用容器，包含标题栏和内容区，支持阴影和边框优化)
+- [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
+- [x] **Tag** (标签) - `AsterTag` (用于标记和分类的小型组件)
+- [x] **Progress** (进度条) - `AsterProgress`
+
+### 5. Navigation (导航) [Planned]
+页面跳转与层级指引。
+- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单)
+- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
+- [ ] **Tabs** (标签页) - `AsterTabs`
 - [ ] **NumberInput** (数字输入) - `AsterNumberInput` (原 `AsterSpinBox`)
 - [ ] **DatePicker** (日期选择) - `AsterDatePicker`
 - [ ] **TimePicker** (时间选择) - `AsterTimePicker`
@@ -125,7 +123,6 @@ cd ./build/windows-msvc/bin/Debug
 
 ### 7. Feedback (反馈)
 用户操作后的反馈交互。
-- [x] **Progress** (进度条) - `AsterProgress`
 - [ ] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
 - [ ] **Dialog** (对话框) - `AsterDialog` (模态确认框)
 - [ ] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)

@@ -2,7 +2,9 @@ set(ASTERUI_SOURCES
     AsterUI.cpp
     AsterTheme.cpp
     AsterGrid.cpp
-    AsterFlowLayout.cpp
+    AsterRow.cpp
+    AsterColumn.cpp
+    AsterFlow.cpp
     AsterIcon.cpp
     AsterText.cpp
     AsterTitle.cpp
@@ -28,7 +30,9 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterUI.h
     ../include/AsterUI/AsterTheme.h
     ../include/AsterUI/AsterGrid.h
-    ../include/AsterUI/AsterFlowLayout.h
+    ../include/AsterUI/AsterRow.h
+    ../include/AsterUI/AsterColumn.h
+    ../include/AsterUI/AsterFlow.h
     ../include/AsterUI/AsterIcon.h
     ../include/AsterUI/AsterText.h
     ../include/AsterUI/AsterTitle.h
