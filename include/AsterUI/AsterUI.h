@@ -3,6 +3,8 @@
 #include "Global.h"
 #include "AsterTheme.h"
 #include "AsterIcon.h"
+#include "AsterText.h"
+#include "AsterTitle.h"
 #include "AsterButton.h"
 #include "AsterAvatar.h"
 #include "AsterTextInput.h"

@@ -36,6 +36,38 @@ int main(int argc, char *argv[]) {
     mainLayout->setContentsMargins(20, 20, 20, 20);
     mainLayout->setAlignment(Qt::AlignTop); // Ensure content starts at the top
 
+    // Section: Typography
+    // Titles
+    mainLayout->addWidget(new AsterUI::AsterTitle("H1. Main Title", 1));
+    mainLayout->addWidget(new AsterUI::AsterTitle("H2. Sub Title", 2));
+    mainLayout->addWidget(new AsterUI::AsterTitle("H3. Section Title", 3));
+    mainLayout->addWidget(new AsterUI::AsterTitle("H4. Subset Title", 4));
+    mainLayout->addWidget(new AsterUI::AsterTitle("H5. Small Title", 5));
+
+    // Texts
+    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
+    
+    auto *textDefault = new AsterUI::AsterText("Default Text: AsterUI is a modern UI library.");
+    mainLayout->addWidget(textDefault);
+
+    auto *textSecondary = new AsterUI::AsterText("Secondary Text: Provides additional information.");
+    textSecondary->setType(AsterUI::AsterText::Type::Secondary);
+    mainLayout->addWidget(textSecondary);
+
+    auto *textSuccess = new AsterUI::AsterText("Success Text: Operation completed successfully.");
+    textSuccess->setType(AsterUI::AsterText::Type::Success);
+    mainLayout->addWidget(textSuccess);
+
+    auto *textWarning = new AsterUI::AsterText("Warning Text: Please check your configuration.");
+    textWarning->setType(AsterUI::AsterText::Type::Warning);
+    mainLayout->addWidget(textWarning);
+
+    auto *textDanger = new AsterUI::AsterText("Danger Text: System error occurred.");
+    textDanger->setType(AsterUI::AsterText::Type::Danger);
+    mainLayout->addWidget(textDanger);
+
+    mainLayout->addWidget(new AsterUI::AsterDivider(Qt::Horizontal));
+
     // Section: Avatars
     QLabel *avatarLabel = new QLabel("Avatars", contentWidget);
     avatarLabel->setFont(theme->font(AsterUI::AsterTheme::Size::Large));
