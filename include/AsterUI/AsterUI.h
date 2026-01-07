@@ -26,6 +26,7 @@
 #include "AsterScrollArea.h"
 #include "AsterMessage.h"
 #include "AsterDialog.h"
+#include "AsterNotification.h"
 #include <QString>
 
 namespace AsterUI {

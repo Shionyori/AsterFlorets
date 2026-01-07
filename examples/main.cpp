@@ -347,8 +347,33 @@ int main(int argc, char *argv[])
                  else AsterMessage::info("Cancelled.");
             });
             dialogSpace->addWidget(btnConfirm);
-            
+
             cardSpace->addWidget(dialogSpace);
+
+            cardSpace->addWidget(new AsterText("Notifications:"));
+            auto *notifySpace = new AsterSpace(Qt::Horizontal);
+            
+            auto *btnNotify1 = new AsterButton("Success Notify");
+            QObject::connect(btnNotify1, &AsterButton::clicked, [winPtr](){
+                AsterNotification::success("Download Complete", "The file 'AsterUI_v1.0.zip' has been downloaded successfully.", 4500, winPtr);
+            });
+            notifySpace->addWidget(btnNotify1);
+
+            auto *btnNotify2 = new AsterButton("Error Notify");
+            QObject::connect(btnNotify2, &AsterButton::clicked, [winPtr](){
+                // Duration 6000ms
+                AsterNotification::error("Connection Failed", "Could not connect to the server. Please check your network settings.", 6000, winPtr); 
+            });
+            notifySpace->addWidget(btnNotify2);
+
+            auto *btnNotify3 = new AsterButton("Persistent Notify");
+            QObject::connect(btnNotify3, &AsterButton::clicked, [winPtr](){
+                // Duration 0 = persistent (manual close)
+                AsterNotification::info("System Update", "A new update is available. Please save your work.", 0, winPtr);
+            });
+            notifySpace->addWidget(btnNotify3);
+            
+            cardSpace->addWidget(notifySpace);
 
             auto *l = new QVBoxLayout(card);
             l->setContentsMargins(0, 0, 0, 0);

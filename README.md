@@ -114,7 +114,7 @@ cd ./build/windows-msvc/bin/Debug
 用户操作后的反馈交互。
 - [x] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
 - [x] **Dialog** (对话框) - `AsterDialog` (模态确认框)
-- [ ] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
+- [x] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
 - [ ] **Alert** (警告提示) - `AsterAlert` (非模态的静态提示条)
 - [ ] **Spin** (加载中) - `AsterSpin`
 - [ ] **Skeleton** (骨架屏) - `AsterSkeleton`
