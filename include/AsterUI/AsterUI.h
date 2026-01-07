@@ -24,6 +24,7 @@
 #include "AsterDivider.h"
 #include "AsterProgress.h"
 #include "AsterScrollArea.h"
+#include "AsterMessage.h"
 #include <QString>
 
 namespace AsterUI {

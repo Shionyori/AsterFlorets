@@ -284,6 +284,61 @@ int main(int argc, char *argv[])
         rootSpace->addWidget(row);
     }
 
+    // --- Section 2.5: Interaction & Feedback ---
+    {
+        auto *row = new AsterRow();
+        row->setGutter(24);
+
+        // [Card 5] Global Message
+        {
+            auto *col = new AsterColumn(24);
+            auto *card = new AsterCard();
+            card->setTitle("Global Message (Toast)");
+
+            auto *cardSpace = new AsterSpace(Qt::Vertical);
+            cardSpace->setSize(16);
+
+            cardSpace->addWidget(new AsterText("Click buttons to trigger global messages."));
+
+            auto *btnSpace = new AsterSpace(Qt::Horizontal);
+
+            auto *btnInfo = new AsterButton("Info Message");
+            QObject::connect(btnInfo, &AsterButton::clicked, [=](){
+                AsterMessage::info("This is an info message.");
+            });
+            btnSpace->addWidget(btnInfo);
+
+            auto *btnSuccess = new AsterButton("Success Message");
+            btnSuccess->setType(AsterButton::Type::Primary);
+            QObject::connect(btnSuccess, &AsterButton::clicked, [=](){
+                AsterMessage::success("Operation successful!");
+            });
+            btnSpace->addWidget(btnSuccess);
+
+            auto *btnWarning = new AsterButton("Warning Message");
+            QObject::connect(btnWarning, &AsterButton::clicked, [=](){
+                AsterMessage::warning("This is a warning message.", 4000);
+            });
+            btnSpace->addWidget(btnWarning);
+
+            auto *btnError = new AsterButton("Error Message");
+            QObject::connect(btnError, &AsterButton::clicked, [=](){
+                AsterMessage::error("Something went wrong!", 5000);
+            });
+            btnSpace->addWidget(btnError);
+
+            cardSpace->addWidget(btnSpace);
+
+            auto *l = new QVBoxLayout(card);
+            l->setContentsMargins(0, 0, 0, 0);
+            l->addWidget(cardSpace);
+
+            col->addWidget(card);
+            row->addColumn(col);
+        }
+        rootSpace->addWidget(row);
+    }
+
     // --- Section 3: Advanced Layouts ---
     rootSpace->addWidget(new AsterDivider("Layout System Demo"));
 

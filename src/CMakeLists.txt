@@ -23,6 +23,7 @@ set(ASTERUI_SOURCES
     AsterDivider.cpp
     AsterProgress.cpp
     AsterScrollArea.cpp
+    AsterMessage.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -53,6 +54,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterDivider.h
     ../include/AsterUI/AsterProgress.h
     ../include/AsterUI/AsterScrollArea.h
+    ../include/AsterUI/AsterMessage.h
 )
 
 add_library(AsterUI SHARED
