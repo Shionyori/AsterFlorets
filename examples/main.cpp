@@ -329,6 +329,27 @@ int main(int argc, char *argv[])
 
             cardSpace->addWidget(btnSpace);
 
+            cardSpace->addWidget(new AsterText("Dialogs:"));
+            
+            auto *dialogSpace = new AsterSpace(Qt::Horizontal);
+            
+            auto *btnAlert = new AsterButton("Alert Dialog");
+            QMainWindow* winPtr = &window;
+            QObject::connect(btnAlert, &AsterButton::clicked, [winPtr](){
+                 AsterDialog::alert(winPtr, "System Alert", "This is a modal alert dialog.\nYou must acknowledge this message.");
+            });
+            dialogSpace->addWidget(btnAlert);
+            
+            auto *btnConfirm = new AsterButton("Confirm Dialog");
+            QObject::connect(btnConfirm, &AsterButton::clicked, [winPtr](){
+                 bool res = AsterDialog::confirm(winPtr, "Confirm Action", "Are you sure you want to delete this item?\nThis action cannot be undone.");
+                 if (res) AsterMessage::success("Deleted successfully!");
+                 else AsterMessage::info("Cancelled.");
+            });
+            dialogSpace->addWidget(btnConfirm);
+            
+            cardSpace->addWidget(dialogSpace);
+
             auto *l = new QVBoxLayout(card);
             l->setContentsMargins(0, 0, 0, 0);
             l->addWidget(cardSpace);

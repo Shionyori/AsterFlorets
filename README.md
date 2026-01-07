@@ -55,18 +55,7 @@ cd ./build/windows-msvc/bin/Debug
 
 ## 组件实现清单
 
-### 0. Core Systems (核心架构) [Infrastructure]
-库的底层支撑，决定整体的性能、交互手感和开发体验。
-- [x] **Theme** (主题系统) - `AsterTheme` (支持浅色/深色主题，管理全局颜色 Token)
-- [ ] **Motion** (动画引擎) - `AsterMotion` (统一管理 Hover/Press/Slide/Fade 动画)
-
-### 1. Foundation (基础设施)
-基础设施组件，提供统一的样式和行为规范。
-- [ ] **Page** (页面容器) - `AsterPage` (页面布局容器，包含头部、侧边栏和内容区)
-- [ ] **StackView** (堆叠视图) - `AsterStackView` (类似 QStackedWidget，用于页面管理的层级容器)
-- [ ] **Router** (路由系统) - `AsterRouter` (统一管理页面（Page）的切换)
-
-### 2. Layout Container (布局容器)
+### 1. Layout Container (布局容器)
 **核心理念：布局即容器 (Layout as Container)**。这些组件继承自 `QWidget`，内部封装了 Qt 布局管理器，对外提供符合现代化 UI 开发习惯的 API（如 `gutter`, `span`, `spacing` 等），实现了“一切皆 Widget”的统一开发体验。
 - [x] **Space** (间距容器) - `AsterSpace` (Flex 风格的容器，自动处理子控件间距，支持横向/纵向堆叠)
 - [x] **Row** (行容器) - `AsterRow` (栅格系统行，管理 Gutter 和列的排列)
@@ -76,13 +65,13 @@ cd ./build/windows-msvc/bin/Debug
 - [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装)
 - [x] **Divider** (分割线) - `AsterDivider`
 
-### 3. General (通用)
+### 2. General (通用)
 最基础的 UI 元素。
 - [x] **Button** (按钮) - `AsterButton` (支持 Primary, Dashed, Text, Link 等多种类型)
 - [x] **Icon** (图标) - `AsterIcon` (图标封装，支持颜色和大小调整)
 - [x] **Typography** (排版) - `AsterTitle` / `AsterText` (预设样式的文本组件)
 
-### 4. Data Entry (数据录入)
+### 3. Data Entry (数据录入)
 用户输入数据的控件。
 - [x] **TextInput** (输入框) - `AsterTextInput` (支持清除按钮、前后缀插槽)
 - [x] **TextArea** (多行文本) - `AsterTextArea`
@@ -97,7 +86,7 @@ cd ./build/windows-msvc/bin/Debug
 - [ ] **Upload** (文件上传) - `AsterUpload` (文件拖拽区域 / 增强型文件选择器)
 - [ ] **ColorPicker** (颜色选择器) - `AsterColorPicker` (桌面端常用高级组件)
 
-### 5. Data Display (数据展示)
+### 4. Data Display (数据展示)
 用于展示数据的可视化组件。
 - [x] **Card** (卡片) - `AsterCard` (通用容器，包含标题栏和内容区，支持阴影和边框优化)
 - [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
@@ -114,18 +103,21 @@ cd ./build/windows-msvc/bin/Debug
 - [ ] **Image** (图片) - `AsterImage`
 - [ ] **Statistic** (统计数值) - `AsterStatistic`
 
-### 6. Navigation (导航) [Planned]
+### 5. Navigation (导航)
 页面跳转与层级指引。
 - [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单，最好能实现仿 Ant Design 的侧边栏菜单)
 - [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
 - [ ] **Tabs** (标签页) - `AsterTabs`
 - [ ] **Pagination** (分页) - `AsterPagination`
 
-### 7. Feedback (反馈)
+### 6. Feedback (反馈)
 用户操作后的反馈交互。
 - [x] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
-- [ ] **Dialog** (对话框) - `AsterDialog` (模态确认框)
+- [x] **Dialog** (对话框) - `AsterDialog` (模态确认框)
 - [ ] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
 - [ ] **Alert** (警告提示) - `AsterAlert` (非模态的静态提示条)
 - [ ] **Spin** (加载中) - `AsterSpin`
 - [ ] **Skeleton** (骨架屏) - `AsterSkeleton`
+
+### 7. Other (其他)
+- [x] **Theme** (主题管理) - `AsterTheme` (集中管理全局样式变量，如颜色、字体、间距等)
