@@ -17,6 +17,7 @@ namespace AsterUI {
     AsterSwitch::~AsterSwitch() = default;
 
     void AsterSwitch::init() {
+        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         setCursor(Qt::PointingHandCursor);
         m_animGroup = new QParallelAnimationGroup(this);
         m_glowAnim = new QPropertyAnimation(this, "glowOpacity", this);

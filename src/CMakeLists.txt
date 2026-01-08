@@ -24,7 +24,7 @@ set(ASTERUI_SOURCES
     AsterProgress.cpp
     AsterScrollArea.cpp
     AsterMessage.cpp
-    AsterDialog.cpp
+    AsterModal.cpp
     AsterNotification.cpp
 )
 
@@ -57,7 +57,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterProgress.h
     ../include/AsterUI/AsterScrollArea.h
     ../include/AsterUI/AsterMessage.h
-    ../include/AsterUI/AsterDialog.h
+    ../include/AsterUI/AsterModal.h
     ../include/AsterUI/AsterNotification.h
 )
 

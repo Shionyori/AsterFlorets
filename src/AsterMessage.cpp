@@ -98,7 +98,16 @@ namespace AsterUI {
             if (!g_activeMessages.isEmpty() && g_activeMessages.first()->parentWidget()) {
                 screenGeom = g_activeMessages.first()->parentWidget()->geometry();
             } else if (auto active = QApplication::activeWindow()) {
-                screenGeom = active->geometry();
+                // Fix: 如果是 AsterModal (或类似的非主窗口 Modal)，我们希望 Message 显示在主窗口区域
+                // 且不应该跟随 Dialog 移动或被 Dialog 限制尺寸
+                 QWidget* target = active;
+                 if (target->inherits("AsterUI::AsterModal") && target->parentWidget()) {
+                     // 尝试向上寻找主窗口
+                     if (auto parent = target->parentWidget()->window()) {
+                         target = parent;
+                     }
+                 }
+                screenGeom = target->geometry();
             } else {
                 screenGeom = QGuiApplication::primaryScreen()->availableGeometry();
             }

@@ -55,15 +55,17 @@ cd ./build/windows-msvc/bin/Debug
 
 ## 组件实现清单
 
-### 1. Layout Container (布局容器)
-**核心理念：布局即容器 (Layout as Container)**。这些组件继承自 `QWidget`，内部封装了 Qt 布局管理器，对外提供符合现代化 UI 开发习惯的 API（如 `gutter`, `span`, `spacing` 等），实现了“一切皆 Widget”的统一开发体验。
-- [x] **Space** (间距容器) - `AsterSpace` (Flex 风格的容器，自动处理子控件间距，支持横向/纵向堆叠)
+### 1. Layout Abstract (布局抽象)
+常用布局模式的封装，与 Qt 原生布局管理器配合使用。
+这部分并不是为了取代 Qt 布局系统，而是提供更高层次的布局抽象，简化常见布局场景的实现。
+- [x] **Space** (间距容器) - `AsterSpace` (自动处理子控件间距，支持横向/纵向堆叠)
 - [x] **Row** (行容器) - `AsterRow` (栅格系统行，管理 Gutter 和列的排列)
 - [x] **Column** (列容器) - `AsterColumn` (栅格系统列，支持 span 跨度设置，作为 Row 的子容器)
-- [x] **Grid** (网格容器) - `AsterGrid` (等分网格容器，统一管理子元素间距和排列)
-- [x] **Flow** (流式容器) - `AsterFlow` (自动换行容器，适用于标签组或不定宽卡片列表)
+- [x] **EqualGrid** (等分网格容器) - `AsterGrid` (等分网格，统一管理子元素间距和排列)
+- [x] **Flow** (流式容器) - `AsterFlow` (自动换行，适用于标签组或不定宽卡片列表)
 - [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装)
 - [x] **Divider** (分割线) - `AsterDivider`
+- [ ] **Layout** (布局容器) - `AsterLayout` (页面级布局容器，包含 Header, Sider, Content, Footer)
 
 ### 2. General (通用)
 最基础的 UI 元素。
@@ -75,49 +77,63 @@ cd ./build/windows-msvc/bin/Debug
 用户输入数据的控件。
 - [x] **TextInput** (输入框) - `AsterTextInput` (支持清除按钮、前后缀插槽)
 - [x] **TextArea** (多行文本) - `AsterTextArea`
-- [x] **Select** (选择器) - `AsterSelect` (下拉选择)
+- [x] **Select** (选择器) - `AsterSelect`
 - [x] **CheckBox** (复选框) - `AsterCheckBox`
 - [x] **Radio** (单选框) - `AsterRadio`
 - [x] **Switch** (开关) - `AsterSwitch`
 - [x] **Slider** (滑动条) - `AsterSlider`
-- [ ] **NumberInput** (数字输入) - `AsterNumberInput` (原 `AsterSpinBox`)
+- [ ] **NumberInput** (数字输入) - `AsterNumberInput`
 - [ ] **DatePicker** (日期选择) - `AsterDatePicker`
 - [ ] **TimePicker** (时间选择) - `AsterTimePicker`
-- [ ] **Upload** (文件上传) - `AsterUpload` (文件拖拽区域 / 增强型文件选择器)
-- [ ] **ColorPicker** (颜色选择器) - `AsterColorPicker` (桌面端常用高级组件)
+- [ ] **Upload** (文件上传) - `AsterUpload`
+- [ ] **Form** (表单) - `AsterForm` 
+- [ ] **Rate** (评分) - `AsterRate` 
+- [ ] **ColorPicker** (颜色选择器) - `AsterColorPicker`
+- [ ] **Cascader** (级联选择) - `AsterCascader`
+- [ ] **TreeSelect** (树形选择) - `AsterTreeSelect`
+- [ ] **Transfer** (穿梭框) - `AsterTransfer`
 
 ### 4. Data Display (数据展示)
 用于展示数据的可视化组件。
-- [x] **Card** (卡片) - `AsterCard` (通用容器，包含标题栏和内容区，支持阴影和边框优化)
 - [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
-- [x] **Tag** (标签) - `AsterTag` (用于标记和分类的小型组件)
+- [ ] **Badge** (徽标数) - `AsterBadge`
+- [x] **Card** (卡片) - `AsterCard` (包含标题栏和内容区，支持阴影和边框优化)
+- [ ] **Collapse** (折叠面板) - `AsterCollapse`
+- [ ] **Descriptions** (描述列表) - `AsterDescriptions`
+- [x] **Tag** (标签) - `AsterTag`
 - [x] **Progress** (进度条) - `AsterProgress`
 - [ ] **List** (列表) - `AsterList` 
-- [ ] **Table** (表格) - `AsterTable` (基于 ModelAdapter)
+- [ ] **Table** (表格) - `AsterTable`
 - [ ] **Tree** (树形控件) - `AsterTree`
 - [ ] **Tooltip** (文字提示) - `AsterTooltip`
-- [ ] **Popover** (气泡卡片) - `AsterPopover` (可交互的复杂浮层)
-- [ ] **Badge** (徽标数) - `AsterBadge`
-- [ ] **Collapse** (折叠面板) - `AsterCollapse` (设置页/侧边栏常用)
-- [ ] **Descriptions** (描述列表) - `AsterDescriptions` (结构化信息展示)
+- [ ] **Popover** (气泡卡片) - `AsterPopover`
 - [ ] **Image** (图片) - `AsterImage`
 - [ ] **Statistic** (统计数值) - `AsterStatistic`
+- [ ] **Calendar** (日历) - `AsterCalendar`
+- [ ] **Carousel** (走马灯) - `AsterCarousel`
+- [ ] **Timeline** (时间轴) - `AsterTimeline`
 
 ### 5. Navigation (导航)
 页面跳转与层级指引。
-- [ ] **Menu** (菜单) - `AsterMenu` (重绘 QMenu，用于下拉和右键菜单，最好能实现仿 Ant Design 的侧边栏菜单)
+- [ ] **Anchor** (锚点) - `AsterAnchor`
 - [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
-- [ ] **Tabs** (标签页) - `AsterTabs`
+- [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
+- [ ] **Menu** (菜单) - `AsterMenu`
 - [ ] **Pagination** (分页) - `AsterPagination`
+- [ ] **Steps** (步骤条) - `AsterSteps`
+- [ ] **Tabs** (标签页) - `AsterTabs`
 
 ### 6. Feedback (反馈)
 用户操作后的反馈交互。
+- [ ] **Alert** (警告提示) - `AsterAlert` (信息提示条)
+- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出层)
 - [x] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
-- [x] **Dialog** (对话框) - `AsterDialog` (模态确认框)
+- [x] **Modal** (模态对话框) - `AsterModal` (中心弹出，可自定义内容和按钮) 原 `AsterDialog`
 - [x] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
-- [ ] **Alert** (警告提示) - `AsterAlert` (非模态的静态提示条)
-- [ ] **Spin** (加载中) - `AsterSpin`
+- [ ] **popconfirm** (气泡确认框) - `AsterPopconfirm` (带确认操作的气泡提示)
+- [ ] **Result** (结果页) - `AsterResult`
 - [ ] **Skeleton** (骨架屏) - `AsterSkeleton`
+- [ ] **Spin** (加载中) - `AsterSpin`
 
 ### 7. Other (其他)
 - [x] **Theme** (主题管理) - `AsterTheme` (集中管理全局样式变量，如颜色、字体、间距等)

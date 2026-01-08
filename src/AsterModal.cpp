@@ -1,4 +1,4 @@
-#include "AsterUI/AsterDialog.h"
+#include "AsterUI/AsterModal.h"
 #include "AsterUI/AsterTheme.h"
 #include "AsterUI/AsterButton.h"
 #include "AsterUI/AsterTitle.h"
@@ -16,24 +16,24 @@
 
 namespace AsterUI {
 
-    AsterDialog::AsterDialog(QWidget* parent)
+    AsterModal::AsterModal(QWidget* parent)
         : QDialog(parent)
         , m_customContent(nullptr)
     {
         initUI();
     }
 
-    AsterDialog::AsterDialog(const QString& title, const QString& content, QWidget* parent)
-        : AsterDialog(parent)
+    AsterModal::AsterModal(const QString& title, const QString& content, QWidget* parent)
+        : AsterModal(parent)
     {
         setTitle(title);
         setContent(content);
     }
 
-    AsterDialog::~AsterDialog() {
+    AsterModal::~AsterModal() {
     }
 
-    void AsterDialog::initUI() {
+    void AsterModal::initUI() {
         setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         setAttribute(Qt::WA_TranslucentBackground);
         
@@ -92,14 +92,14 @@ namespace AsterUI {
         footerLayout->addStretch(1);
 
         m_btnCancel = new AsterButton("Cancel", m_footerContainer);
-        connect(m_btnCancel, &AsterButton::clicked, this, &AsterDialog::reject);
+        connect(m_btnCancel, &AsterButton::clicked, this, &AsterModal::reject);
         footerLayout->addWidget(m_btnCancel);
 
         footerLayout->addSpacing(8);
 
         m_btnOk = new AsterButton("OK", m_footerContainer);
         m_btnOk->setType(AsterButton::Type::Primary);
-        connect(m_btnOk, &AsterButton::clicked, this, &AsterDialog::accept);
+        connect(m_btnOk, &AsterButton::clicked, this, &AsterModal::accept);
         footerLayout->addWidget(m_btnOk);
 
         m_mainLayout->addWidget(m_footerContainer);
@@ -108,9 +108,11 @@ namespace AsterUI {
         
         // Fixed width for standard dialog
         setFixedWidth(420);
+        // Set a reasonable initial height to prevent QWindowsWindow geometry warnings
+        resize(420, 200);
     }
 
-    void AsterDialog::updateTheme() {
+    void AsterModal::updateTheme() {
         auto theme = AsterTheme::instance();
         auto bg = theme->colorString(AsterTheme::ColorRole::Surface);
         auto text = theme->colorString(AsterTheme::ColorRole::Text);
@@ -141,12 +143,12 @@ namespace AsterUI {
         ).arg(border));
     }
 
-    void AsterDialog::setTitle(const QString& title) {
+    void AsterModal::setTitle(const QString& title) {
         m_title = title;
         m_titleLabel->setText(title);
     }
 
-    void AsterDialog::setContent(const QString& content) {
+    void AsterModal::setContent(const QString& content) {
         m_content = content;
         m_contentLabel->setText(content);
         if (m_customContent) {
@@ -155,7 +157,7 @@ namespace AsterUI {
         m_contentLabel->show();
     }
     
-    void AsterDialog::setContentWidget(QWidget* widget) {
+    void AsterModal::setContentWidget(QWidget* widget) {
          if (!widget) return;
          m_contentLabel->hide();
          
@@ -168,25 +170,26 @@ namespace AsterUI {
          widget->show();
     }
 
-    void AsterDialog::setOkText(const QString& text) {
+    void AsterModal::setOkText(const QString& text) {
         m_btnOk->setText(text);
     }
 
-    void AsterDialog::setCancelText(const QString& text) {
+    void AsterModal::setCancelText(const QString& text) {
         m_btnCancel->setText(text);
     }
 
-    bool AsterDialog::confirm(QWidget* parent, const QString& title, const QString& content, const QString& okText, const QString& cancelText) {
-        AsterDialog dlg(parent);
+    bool AsterModal::confirm(QWidget* parent, const QString& title, const QString& content, const QString& okText, const QString& cancelText) {
+        AsterModal dlg(parent);
         dlg.setTitle(title);
         dlg.setContent(content);
         dlg.setOkText(okText);
         dlg.setCancelText(cancelText);
+        dlg.adjustSize();
         return dlg.exec() == QDialog::Accepted;
     }
 
-    void AsterDialog::alert(QWidget* parent, const QString& title, const QString& content, Type type) {
-        AsterDialog dlg(parent);
+    void AsterModal::alert(QWidget* parent, const QString& title, const QString& content, Type type) {
+        AsterModal dlg(parent);
         dlg.setTitle(title);
         dlg.setContent(content);
         dlg.m_btnCancel->hide(); // Alert usually just has OK
@@ -194,17 +197,18 @@ namespace AsterUI {
         // Potentially add icon based on Type
         // ... feature for later
         
+        dlg.adjustSize();
         dlg.exec();
     }
 
-    void AsterDialog::paintEvent(QPaintEvent* event) {
+    void AsterModal::paintEvent(QPaintEvent* event) {
         // No custom painting needed, handled by QWidget stylesheet
         QDialog::paintEvent(event);
     }
 
     // Removed nativeEvent to avoid potential ABI issues or unnecessary hooks
 
-    void AsterDialog::mousePressEvent(QMouseEvent* event) {
+    void AsterModal::mousePressEvent(QMouseEvent* event) {
         if (!m_headerContainer) return;
 
         if (event->button() == Qt::LeftButton) {
@@ -227,7 +231,7 @@ namespace AsterUI {
         }
     }
 
-    void AsterDialog::mouseMoveEvent(QMouseEvent* event) {
+    void AsterModal::mouseMoveEvent(QMouseEvent* event) {
         if (m_isDragging && (event->buttons() & Qt::LeftButton)) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             move(event->globalPosition().toPoint() - m_dragPosition);
@@ -238,15 +242,16 @@ namespace AsterUI {
         }
     }
 
-    void AsterDialog::mouseReleaseEvent(QMouseEvent* event) {
+    void AsterModal::mouseReleaseEvent(QMouseEvent* event) {
         if (m_isDragging) {
             m_isDragging = false;
         }
     }
 
-    void AsterDialog::showEvent(QShowEvent* event) {
+    void AsterModal::showEvent(QShowEvent* event) {
         QDialog::showEvent(event);
-        
+        showOverlay();
+
         // Defer animation to ensure layout is complete
         QTimer::singleShot(0, this, [this](){
             // Find the content widget for animation
@@ -259,6 +264,63 @@ namespace AsterUI {
             anim->setDuration(200);
             anim->start(QAbstractAnimation::DeleteWhenStopped);
         });
+    }
+
+    void AsterModal::hideEvent(QHideEvent* event) {
+        hideOverlay();
+        QDialog::hideEvent(event);
+    }
+
+    void AsterModal::closeEvent(QCloseEvent* event) {
+        hideOverlay();
+        QDialog::closeEvent(event);
+    }
+    
+    bool AsterModal::eventFilter(QObject* watched, QEvent* event) {
+        if (watched == parentWidget() && event->type() == QEvent::Resize && m_overlay) {
+             m_overlay->resize(parentWidget()->size());
+        }
+        return QDialog::eventFilter(watched, event);
+    }
+
+    void AsterModal::showOverlay() {
+        if (m_overlay || !parentWidget()) return;
+
+        m_overlay = new QWidget(parentWidget());
+        if (parentWidget()->window()) {
+            // Ensure overlay covers the window area
+            m_overlay->setParent(parentWidget()->window());
+        }
+        
+        m_overlay->setObjectName("AsterModalOverlay");
+        // Semi-transparent black with high z value logic if standard widgets, 
+        // but since Dialog is a separate window, this overlay on parent helps visual modality.
+        m_overlay->setStyleSheet("background-color: rgba(0, 0, 0, 100);"); 
+        
+        if (parentWidget()->window())
+             m_overlay->resize(parentWidget()->window()->size());
+        else
+             m_overlay->resize(parentWidget()->size());
+
+        m_overlay->move(0, 0);
+        m_overlay->show();
+        
+        // Install event filter to track parent resize
+        if (parentWidget()->window())
+            parentWidget()->window()->installEventFilter(this);
+        else 
+            parentWidget()->installEventFilter(this);
+    }
+
+    void AsterModal::hideOverlay() {
+        if (m_overlay) {
+            if (parentWidget()) {
+                 if (parentWidget()->window()) parentWidget()->window()->removeEventFilter(this);
+                 else parentWidget()->removeEventFilter(this);
+            }
+            m_overlay->deleteLater();
+            m_overlay = nullptr;
+        }
     }
 
 }

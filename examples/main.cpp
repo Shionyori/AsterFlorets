@@ -336,13 +336,13 @@ int main(int argc, char *argv[])
             auto *btnAlert = new AsterButton("Alert Dialog");
             QMainWindow* winPtr = &window;
             QObject::connect(btnAlert, &AsterButton::clicked, [winPtr](){
-                 AsterDialog::alert(winPtr, "System Alert", "This is a modal alert dialog.\nYou must acknowledge this message.");
+                 AsterModal::alert(winPtr, "System Alert", "This is a modal alert dialog.\nYou must acknowledge this message.");
             });
             dialogSpace->addWidget(btnAlert);
             
             auto *btnConfirm = new AsterButton("Confirm Dialog");
             QObject::connect(btnConfirm, &AsterButton::clicked, [winPtr](){
-                 bool res = AsterDialog::confirm(winPtr, "Confirm Action", "Are you sure you want to delete this item?\nThis action cannot be undone.");
+                 bool res = AsterModal::confirm(winPtr, "Confirm Action", "Are you sure you want to delete this item?\nThis action cannot be undone.");
                  if (res) AsterMessage::success("Deleted successfully!");
                  else AsterMessage::info("Cancelled.");
             });
@@ -385,173 +385,10 @@ int main(int argc, char *argv[])
         rootSpace->addWidget(row);
     }
 
-    // --- Section 3: Advanced Layouts ---
-    rootSpace->addWidget(new AsterDivider("Layout System Demo"));
-
-    // 1. Asymmetric Layout (Ant Design Row/Col Style)
-    // Using the 24-grid system for non-equal divisions
-    {
-        auto *sectionTitle = new AsterText("1. Asymmetric Layout (AsterRow & AsterColumn - 24 Grid System)");
-        sectionTitle->setAlignment(Qt::AlignCenter);
-        rootSpace->addWidget(sectionTitle);
-
-        auto *layoutSpace = new AsterSpace(Qt::Vertical);
-        layoutSpace->setSize(16);
-
-        // Row A: 8 (33%) + 16 (66%)
-        {
-            auto *row = new AsterRow();
-            row->setGutter(16);
-
-            auto *c1 = new AsterColumn(8);
-            auto *b1 = new AsterButton("Span 8 (33%)");
-            c1->addWidget(b1);
-            row->addColumn(c1);
-
-            auto *c2 = new AsterColumn(16);
-            auto *b2 = new AsterButton("Span 16 (66%)");
-            c2->addWidget(b2);
-            row->addColumn(c2);
-
-            layoutSpace->addWidget(row);
-        }
-
-        // Row B: 6 (25%) + 6 (25%) + 12 (50%)
-        {
-            auto *row = new AsterRow();
-            row->setGutter(16);
-
-            auto *c1 = new AsterColumn(6);
-            c1->addWidget(new AsterButton("Span 6"));
-            row->addColumn(c1);
-
-            auto *c2 = new AsterColumn(6);
-            c2->addWidget(new AsterButton("Span 6"));
-            row->addColumn(c2);
-
-            auto *c3 = new AsterColumn(12);
-            auto *b3 = new AsterButton("Span 12 (50%)");
-            c3->addWidget(b3);
-            row->addColumn(c3);
-
-            layoutSpace->addWidget(row);
-        }
-
-        // Row C: 4 + 16 + 4 (Sidebar - Content - Sidebar)
-        {
-            auto *row = new AsterRow();
-            row->setGutter(16);
-
-            auto *c1 = new AsterColumn(4);
-            c1->addWidget(new AsterButton("Left 4"));
-            row->addColumn(c1);
-
-            auto *c2 = new AsterColumn(16);
-            c2->addWidget(new AsterButton("Main Content (Span 16)"));
-            row->addColumn(c2);
-
-            auto *c3 = new AsterColumn(4);
-            c3->addWidget(new AsterButton("Right 4"));
-            row->addColumn(c3);
-
-            layoutSpace->addWidget(row);
-        }
-
-        rootSpace->addWidget(layoutSpace);
-        rootSpace->addWidget(new AsterDivider);
-    }
-
-    // 2. Uniform Dashboard Grid
-    auto *msg = new AsterText("2. Uniform Dashboard Grid (AsterGrid)");
-    msg->setAlignment(Qt::AlignCenter);
-    rootSpace->addWidget(msg);
-
-    // Grid Container
-    auto *gridCard = new AsterCard();
-    gridCard->setTitle("AsterGrid (Dashboard Layout)");
-
-    // The AsterGrid Component
-    auto *myGrid = new AsterGrid(3); // 3 Columns for Dashboard
-    myGrid->setHorizontalSpacing(24);
-    myGrid->setVerticalSpacing(24);
-
-    // Helper lambda to create a statistic card
-    auto createStatCard = [&](const QString &title, const QString &value, const QColor &color, QStyle::StandardPixmap icon) -> QWidget *
-    {
-        AsterCard *card = new AsterCard();
-        // Remove border for inner cards to make them look like panels, or keep them.
-        // Let's keep them default.
-
-        auto *vLayout = new AsterSpace(Qt::Vertical);
-        vLayout->setSize(12);
-
-        // Header: Icon + Title
-        auto *hHeader = new AsterSpace(Qt::Horizontal);
-        hHeader->setSize(10);
-
-        auto *iconWidget = new AsterAvatar(window.style()->standardIcon(icon).pixmap(24, 24));
-        iconWidget->setSize(32);
-        iconWidget->setShape(AsterAvatar::Shape::Square);
-        iconWidget->setBackgroundColor(color);
-        hHeader->addWidget(iconWidget);
-
-        auto *titleTxt = new AsterText(title);
-        titleTxt->setType(AsterText::Type::Secondary);
-        hHeader->addWidget(titleTxt);
-        hHeader->addStretch();
-
-        vLayout->addWidget(hHeader);
-
-        // Value
-        AsterTitle *valTxt = new AsterTitle(value, 2); // H2
-        // valTxt->setAlignment(Qt::AlignLeft);
-        vLayout->addWidget(valTxt);
-
-        // Footer: Progress
-        auto *prog = new AsterProgress();
-        prog->setValue(rand() % 40 + 60); // Random 60-100
-        prog->setFixedHeight(4);          // Thin progress
-        vLayout->addWidget(prog);
-
-        // Wrap in layout
-        auto *cardL = new QVBoxLayout(card);
-        cardL->setContentsMargins(16, 16, 16, 16); // Padding inside the stat card
-        cardL->addWidget(vLayout);
-
-        return card;
-    };
-
-    // Add Dashboard items
-    myGrid->addWidget(createStatCard("Total Sales", "$126,560", QColor("#1890ff"), QStyle::SP_ComputerIcon));
-    myGrid->addWidget(createStatCard("Active Users", "8,846", QColor("#52c41a"), QStyle::SP_DialogYesButton));
-    myGrid->addWidget(createStatCard("New Orders", "1,234", QColor("#722ed1"), QStyle::SP_FileIcon));
-    myGrid->addWidget(createStatCard("Pending Issues", "56", QColor("#fa8c16"), QStyle::SP_MessageBoxWarning));
-    myGrid->addWidget(createStatCard("System Load", "78%", QColor("#f5222d"), QStyle::SP_DriveNetIcon));
-    myGrid->addWidget(createStatCard("Avg. Response", "120ms", QColor("#13c2c2"), QStyle::SP_ArrowUp));
-
-    auto *gLayout = new QVBoxLayout(gridCard);
-    gLayout->setContentsMargins(0, 0, 0, 0);
-    gLayout->addWidget(myGrid);
-
-    rootSpace->addWidget(gridCard);
-
-    // Push everything to top
-    rootSpace->addStretch();
-
-    // Footer
-    auto *footerSpace = new AsterSpace(Qt::Vertical);
-    footerSpace->setSize(5);
-
-    auto *ft = new AsterText("Designed by AsterUI Team © 2026");
-    ft->setType(AsterText::Type::Secondary);
-    ft->setAlignment(Qt::AlignCenter); // QLabel has SetAlignment
-    footerSpace->addWidget(ft);
-    rootSpace->addWidget(footerSpace);
-
-    // Finalize
     scrollArea->setWidget(rootSpace);
+    scrollArea->setWidgetResizable(true);
+
     window.setCentralWidget(scrollArea);
     window.show();
-
     return app.exec();
 }

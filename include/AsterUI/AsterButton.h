@@ -14,6 +14,12 @@ namespace AsterUI {
         Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor)
         Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)
         Q_PROPERTY(bool loading READ isLoading WRITE setLoading)
+        Q_PROPERTY(int paddingHorizontal READ paddingHorizontal WRITE setPaddingHorizontal)
+        Q_PROPERTY(int paddingVertical READ paddingVertical WRITE setPaddingVertical)
+        Q_PROPERTY(int minWidth READ minWidth WRITE setMinWidth)
+        Q_PROPERTY(int minHeight READ minHeight WRITE setMinHeight)
+        Q_PROPERTY(int customWidth READ customWidth WRITE setCustomWidth)
+        Q_PROPERTY(int customHeight READ customHeight WRITE setCustomHeight)
 
     public:
         enum class Type {
@@ -39,6 +45,32 @@ namespace AsterUI {
         bool isLoading() const { return m_loading; }
         void setLoading(bool loading);
 
+        // 尺寸和边距
+        int paddingHorizontal() const { return m_paddingH; }
+        void setPaddingHorizontal(int h);
+
+        int paddingVertical() const { return m_paddingV; }
+        void setPaddingVertical(int v);
+
+        int minWidth() const { return m_minWidth; }
+        void setMinWidth(int w);
+
+        int minHeight() const { return m_minHeight; }
+        void setMinHeight(int h);
+
+        // 自定义固定尺寸 (设置 -1 恢复自适应)
+        int customWidth() const { return m_customWidth; }
+        void setCustomWidth(int w);
+
+        int customHeight() const { return m_customHeight; }
+        void setCustomHeight(int h);
+        
+        void setCustomSize(int w, int h);
+
+        // 动画配置
+        void setHoverAnimationDuration(int duration);
+        int hoverAnimationDuration() const { return m_hoverDuration; }
+
         // 动画属性访问器
         QColor backgroundColor() const { return m_backgroundColor; }
         void setBackgroundColor(const QColor& color);
@@ -63,9 +95,12 @@ namespace AsterUI {
         void updateStyle();
         void startHoverAnimation(bool hovered);
         void startRippleAnimation(const QPoint& pos);
+        void initAnimations();
 
         // 绘制辅助
+        void drawBackground(QPainter& painter);
         void drawRipple(QPainter& painter);
+        void drawContent(QPainter& painter);
 
     private:
         Type m_type;
@@ -77,16 +112,34 @@ namespace AsterUI {
 
         int m_borderRadius = -1; // -1 表示使用主题默认值
         bool m_loading = false;
+        
+        // 边距和最小尺寸
+        int m_paddingH = 32;
+        int m_paddingV = 12;
+        int m_minWidth = 60;
+        int m_minHeight = 32;
+        
+        int m_hoverDuration = 200; // 默认 200ms
+        
+        // 自定义尺寸 (-1 表示自适应)
+        int m_customWidth = -1;
+        int m_customHeight = -1;
+
         qreal m_loadingAngle = 0.0;
         QTimer* m_loadingTimer = nullptr;
 
         // 动画相关
         QParallelAnimationGroup* m_colorAnimationGroup;
         
+        // 按下缩放效果
+        qreal m_scale = 1.0;
+        QPropertyAnimation* m_scaleAnimation;
+
         // 波纹效果
         struct Ripple {
             QPoint center;
             qreal radius;
+            qreal maxRadius;
             qreal opacity;
             bool active = false;
         };

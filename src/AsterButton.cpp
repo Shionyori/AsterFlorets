@@ -24,7 +24,15 @@ namespace AsterUI {
     {
         setCursor(Qt::PointingHandCursor);
         
-        // Loading 动画定时器
+        initAnimations();
+
+        updateStyle();
+    }
+
+    AsterButton::~AsterButton() = default;
+
+    void AsterButton::initAnimations() {
+        // 1. Loading 动画定时器
         connect(m_loadingTimer, &QTimer::timeout, this, [this]() {
             m_loadingAngle += 10.0;
             if (m_loadingAngle >= 360.0) m_loadingAngle = 0.0;
@@ -32,13 +40,13 @@ namespace AsterUI {
         });
         m_loadingTimer->setInterval(30); // ~30fps
 
-        // 初始化波纹动画
+        // 2. 初始化波纹动画
         auto rippleAnim = new QVariantAnimation(this);
-        rippleAnim->setDuration(400);
+        rippleAnim->setDuration(400); // 初始值，实际使用时会动态计算
         rippleAnim->setEasingCurve(QEasingCurve::OutQuad);
         connect(rippleAnim, &QVariantAnimation::valueChanged, this, [this](const QVariant& value) {
             qreal progress = value.toReal();
-            m_ripple.radius = width() * 1.5 * progress; // 扩散到宽度的1.5倍
+            m_ripple.radius = m_ripple.maxRadius * progress;
             m_ripple.opacity = 0.4 * (1.0 - progress);  // 透明度从 0.4 渐变到 0
             update();
         });
@@ -48,11 +56,17 @@ namespace AsterUI {
         });
         m_rippleAnimation = reinterpret_cast<QPropertyAnimation*>(rippleAnim); // Hacky cast for storage
 
-        updateStyle();
+        // 3. 初始化按压缩放动画
+        auto scaleAnim = new QVariantAnimation(this);
+        scaleAnim->setDuration(100);
+        scaleAnim->setEasingCurve(QEasingCurve::OutQuad);
+        connect(scaleAnim, &QVariantAnimation::valueChanged, this, [this](const QVariant& value) {
+            m_scale = value.toReal();
+            update();
+        });
+        m_scaleAnimation = reinterpret_cast<QPropertyAnimation*>(scaleAnim);
     }
-
-    AsterButton::~AsterButton() = default;
-
+    
     AsterButton::Type AsterButton::type() const {
         return m_type;
     }
@@ -97,12 +111,75 @@ namespace AsterUI {
         update();
     }
 
+    void AsterButton::setPaddingHorizontal(int h) {
+        if (m_paddingH != h) {
+            m_paddingH = h;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setPaddingVertical(int v) {
+        if (m_paddingV != v) {
+            m_paddingV = v;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setMinWidth(int w) {
+        if (m_minWidth != w) {
+            m_minWidth = w;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setMinHeight(int h) {
+        if (m_minHeight != h) {
+            m_minHeight = h;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setCustomWidth(int w) {
+        if (m_customWidth != w) {
+            m_customWidth = w;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setCustomHeight(int h) {
+        if (m_customHeight != h) {
+            m_customHeight = h;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setCustomSize(int w, int h) {
+        if (m_customWidth != w || m_customHeight != h) {
+            m_customWidth = w;
+            m_customHeight = h;
+            updateGeometry();
+            update();
+        }
+    }
+
+    void AsterButton::setHoverAnimationDuration(int duration) {
+        m_hoverDuration = duration;
+    }
+
     QSize AsterButton::sizeHint() const {
         // 基础尺寸计算
         QFontMetrics fm(font());
-        int w = fm.horizontalAdvance(text()) + 32; // Padding horizontal
-        int h = fm.height() + 12;                  // Padding vertical
-        return QSize(qMax(w, 60), qMax(h, 32));    // 最小尺寸
+        
+        int w = (m_customWidth >= 0) ? m_customWidth : (fm.horizontalAdvance(text()) + m_paddingH);
+        int h = (m_customHeight >= 0) ? m_customHeight : (fm.height() + m_paddingV);
+        
+        return QSize(qMax(w, m_minWidth), qMax(h, m_minHeight));    // 最小尺寸
     }
 
     void AsterButton::paintEvent(QPaintEvent* event) {
@@ -110,10 +187,22 @@ namespace AsterUI {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
 
+        // 应用按压缩放 (以中心为原点)
+        if (!qFuzzyCompare(m_scale, 1.0)) {
+            painter.translate(width() / 2.0, height() / 2.0);
+            painter.scale(m_scale, m_scale);
+            painter.translate(-width() / 2.0, -height() / 2.0);
+        }
+
+        drawBackground(painter); // 包含背景和边框
+        drawRipple(painter);
+        drawContent(painter);    // 文本和 Loading
+    }
+
+    void AsterButton::drawBackground(QPainter& painter) {
         auto theme = AsterTheme::instance();
         int radius = theme->borderRadius();
 
-        // 1. 绘制背景和边框
         // 注意：Qt 的 drawRect/drawPath 描边是居中对齐的，如果直接用 rect()，
         // 边缘的 0.5px 会被切掉。需要向内收缩半个像素。
         QRectF r = rect();
@@ -127,9 +216,6 @@ namespace AsterUI {
             painter.fillPath(path, m_backgroundColor);
         }
 
-        // 绘制波纹 (在背景之上，文字之下)
-        drawRipple(painter);
-
         // 绘制边框
         if (m_type == Type::Dashed) {
             QPen pen(m_borderColor);
@@ -141,8 +227,9 @@ namespace AsterUI {
             painter.setPen(pen);
             painter.drawPath(path);
         }
+    }
 
-        // 2. 绘制内容 (Spinner + Text)
+    void AsterButton::drawContent(QPainter& painter) {
         painter.setPen(m_textColor);
         painter.setFont(font());
         
@@ -202,10 +289,27 @@ namespace AsterUI {
     void AsterButton::mousePressEvent(QMouseEvent* event) {
         QAbstractButton::mousePressEvent(event);
         startRippleAnimation(event->pos());
+        
+        // 按下缩放动画 (缩小)
+        auto anim = static_cast<QVariantAnimation*>(m_scaleAnimation);
+        anim->stop();
+        anim->setStartValue(m_scale);
+        anim->setEndValue(0.96);
+        anim->setDuration(100);
+        anim->start();
     }
 
     void AsterButton::mouseReleaseEvent(QMouseEvent* event) {
         QAbstractButton::mouseReleaseEvent(event);
+        
+        // 松开恢复动画
+        auto anim = static_cast<QVariantAnimation*>(m_scaleAnimation);
+        anim->stop();
+        anim->setStartValue(m_scale);
+        anim->setEndValue(1.0);
+        anim->setDuration(150);
+        anim->setEasingCurve(QEasingCurve::OutBack); 
+        anim->start();
     }
 
     void AsterButton::updateStyle() {
@@ -285,7 +389,7 @@ namespace AsterUI {
 
         auto createAnim = [this](const QByteArray& prop, const QColor& start, const QColor& end) {
             auto anim = new QPropertyAnimation(this, prop);
-            anim->setDuration(200);
+            anim->setDuration(m_hoverDuration);
             anim->setStartValue(start);
             anim->setEndValue(end);
             return anim;
@@ -307,8 +411,29 @@ namespace AsterUI {
         m_ripple.center = pos;
         m_ripple.active = true;
         
+        // 计算四个顶点到点击位置的最远距离作为最大半径
+        // 这样可以避免渲染不必要的巨大圆形，大幅提升长条形按钮的渲染性能
+        const QPoint corners[4] = {
+            rect().topLeft(), rect().topRight(),
+            rect().bottomLeft(), rect().bottomRight()
+        };
+        
+        qreal maxDist = 0.0;
+        for (const auto& corner : corners) {
+            maxDist = qMax(maxDist, QLineF(pos, corner).length());
+        }
+        m_ripple.maxRadius = maxDist;
+        
         auto anim = static_cast<QVariantAnimation*>(m_rippleAnimation);
         anim->stop();
+        
+        // 动态计算适宜的波纹 duration
+        // 基于最大扩散距离计算，速度更均匀
+        int duration = 300 + static_cast<int>(m_ripple.maxRadius * 0.5);
+        // 放宽持续时间限制，保证长距离动画的平滑度
+        duration = qMin(qMax(duration, 300), 1000);
+        
+        anim->setDuration(duration);
         anim->setStartValue(0.0);
         anim->setEndValue(1.0);
         anim->start();

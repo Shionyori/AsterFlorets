@@ -13,7 +13,7 @@ namespace AsterUI {
 
     class AsterButton;
 
-    class ASTERUI_EXPORT AsterDialog : public QDialog {
+    class ASTERUI_EXPORT AsterModal : public QDialog {
         Q_OBJECT
     public:
         enum class Type {
@@ -25,9 +25,9 @@ namespace AsterUI {
         };
         Q_ENUM(Type)
 
-        explicit AsterDialog(QWidget* parent = nullptr);
-        explicit AsterDialog(const QString& title, const QString& content, QWidget* parent = nullptr);
-        ~AsterDialog();
+        explicit AsterModal(QWidget* parent = nullptr);
+        explicit AsterModal(const QString& title, const QString& content, QWidget* parent = nullptr);
+        ~AsterModal();
 
         void setTitle(const QString& title);
         void setContent(const QString& content);
@@ -49,10 +49,15 @@ namespace AsterUI {
         void mouseMoveEvent(QMouseEvent* event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;
         void showEvent(QShowEvent* event) override;
+        void hideEvent(QHideEvent* event) override;
+        void closeEvent(QCloseEvent* event) override;
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
     private:
         void initUI();
         void updateTheme();
+        void showOverlay();
+        void hideOverlay();
 
     private:
         QVBoxLayout* m_mainLayout;
@@ -71,6 +76,9 @@ namespace AsterUI {
         // Dragging
         bool m_isDragging = false;
         QPoint m_dragPosition;
+
+        // Dimmer Overlay
+        QWidget* m_overlay = nullptr;
     };
 
 }
