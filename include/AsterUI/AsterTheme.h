@@ -32,6 +32,11 @@ namespace AsterUI {
             Border,         // 边框色
             Divider,        // 分割线
             
+            LayoutHeader,   // 页面布局头部区
+            LayoutSider,    // 页面布局侧边区
+            LayoutContent,  // 页面布局内容区
+            LayoutFooter,   // 页面布局底部区
+
             Mask            // 遮罩层
         };
         Q_ENUM(ColorRole)

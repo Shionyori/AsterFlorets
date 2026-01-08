@@ -22,6 +22,7 @@
 #include "AsterSelect.h"
 #include "AsterTextArea.h"
 #include "AsterDivider.h"
+#include "AsterLayout.h"
 #include "AsterProgress.h"
 #include "AsterScrollArea.h"
 #include "AsterMessage.h"

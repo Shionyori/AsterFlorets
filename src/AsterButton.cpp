@@ -15,6 +15,13 @@ namespace AsterUI {
         setText(text);
     }
 
+    AsterButton::AsterButton(const QString& text, Type type, QWidget* parent)
+        : AsterButton(parent)
+    {
+        setText(text);
+        setType(type);
+    }
+
     AsterButton::AsterButton(QWidget* parent)
         : QAbstractButton(parent)
         , m_type(Type::Default)

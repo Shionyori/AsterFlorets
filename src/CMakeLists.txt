@@ -21,6 +21,7 @@ set(ASTERUI_SOURCES
     AsterSelect.cpp
     AsterTextArea.cpp
     AsterDivider.cpp
+    AsterLayout.cpp
     AsterProgress.cpp
     AsterScrollArea.cpp
     AsterMessage.cpp
@@ -54,6 +55,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterSlider.h
     ../include/AsterUI/AsterSelect.h
     ../include/AsterUI/AsterDivider.h
+    ../include/AsterUI/AsterLayout.h
     ../include/AsterUI/AsterProgress.h
     ../include/AsterUI/AsterScrollArea.h
     ../include/AsterUI/AsterMessage.h

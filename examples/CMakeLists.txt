@@ -1,7 +1,10 @@
 if(WIN32)
     add_executable(demo WIN32 main.cpp)
+    add_executable(layout_demo WIN32 layout_demo.cpp)
 else()
     add_executable(demo main.cpp)
+    add_executable(layout_demo layout_demo.cpp)
 endif()
 
 target_link_libraries(demo PRIVATE AsterUI Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(layout_demo PRIVATE AsterUI Qt${QT_VERSION_MAJOR}::Widgets)

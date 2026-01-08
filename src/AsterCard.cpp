@@ -27,14 +27,13 @@ namespace AsterUI {
         shadow->setOffset(0, 4);
         setGraphicsEffect(shadow);
 
-        // 默认内边距
+        // Default contents margins
         setContentsMargins(24, 24, 24, 24);
         setMinimumSize(100, 60);
 
-        // Allow height to depend on width (for flow layouts inside)
-        QSizePolicy policy = sizePolicy();
-        policy.setHeightForWidth(true);
-        setSizePolicy(policy);
+        // Ensure vertical size policy is at least 'Minimum' (Cannot be smaller than sizeHint)
+        // Default is usually Preferred, which allows shrinking if layout demands, but Minimum prevents it.
+        setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     }
 
     void AsterCard::setBackgroundColor(const QColor& color) {

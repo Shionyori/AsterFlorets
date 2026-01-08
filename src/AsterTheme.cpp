@@ -89,6 +89,11 @@ namespace AsterUI {
         m_colors[ColorRole::Surface]       = QColor("#FFFFFF");
         m_colors[ColorRole::Border]        = QColor("#D9D9D9");
         m_colors[ColorRole::Divider]       = QColor("#F0F0F0");
+        m_colors[ColorRole::LayoutHeader]  = QColor("#F7F7F7");
+        m_colors[ColorRole::LayoutSider]   = QColor("#F7F7F7");
+        m_colors[ColorRole::LayoutContent] = QColor("#FFFFFF");
+        m_colors[ColorRole::LayoutFooter]  = QColor("#F7F7F7");
+        
         
         m_colors[ColorRole::Mask]          = QColor(0, 0, 0, 115); // 45% Black
     }

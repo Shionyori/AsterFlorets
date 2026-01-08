@@ -32,6 +32,7 @@ namespace AsterUI {
         Q_ENUM(Type)
 
         explicit AsterButton(const QString& text, QWidget* parent = nullptr);
+        explicit AsterButton(const QString& text, Type type, QWidget* parent = nullptr);
         explicit AsterButton(QWidget* parent = nullptr);
         ~AsterButton() override;
 

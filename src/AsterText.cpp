@@ -7,6 +7,11 @@ namespace AsterUI {
 AsterText::AsterText(const QString &text, QWidget *parent)
     : QLabel(text, parent)
 {
+    // Enable word wrap by default to ensure text flows correctly in layouts
+    setWordWrap(true);
+    // Ensure the label tries to be at least as tall as its content
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    
     updateStyle();
     connect(AsterTheme::instance(), &AsterTheme::themeChanged, this, &AsterText::updateStyle);
 }

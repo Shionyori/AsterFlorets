@@ -42,10 +42,16 @@ cmake --build --preset windows-msvc-local
 
 3. 运行示例程序：
 
-```bash
-cd ./build/windows-msvc/bin/Debug
-./demo.exe
-```
+- **组件库演示**:
+  ```bash
+  cd ./build/windows-msvc/bin/Debug
+  ./demo.exe
+  ```
+- **布局演示**:
+  ```bash
+  cd ./build/windows-msvc/bin/Debug
+  ./layout_demo.exe
+  ```
 
 ## 目录结构
 - `include/AsterUI`: 公共头文件
@@ -65,7 +71,7 @@ cd ./build/windows-msvc/bin/Debug
 - [x] **Flow** (流式容器) - `AsterFlow` (自动换行，适用于标签组或不定宽卡片列表)
 - [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装)
 - [x] **Divider** (分割线) - `AsterDivider`
-- [ ] **Layout** (布局容器) - `AsterLayout` (页面级布局容器，包含 Header, Sider, Content, Footer)
+- [x] **Layout** (布局容器) - `AsterLayout` (页面级布局容器，包含 Header, Sider, Content, Footer)
 
 ### 2. General (通用)
 最基础的 UI 元素。

@@ -1,6 +1,7 @@
 #include "AsterUI/AsterSpace.h"
 #include "AsterUI/AsterTheme.h"
 #include <QPainter>
+#include <QStyleOption>
 
 namespace AsterUI {
 
@@ -36,10 +37,8 @@ void AsterSpace::init()
     // Remove default alignment to allow expansion
     // m_layout->setAlignment(Qt::AlignLeft | Qt::AlignTop); 
     
-    // Ensure height-for-width propagation
-    QSizePolicy policy = sizePolicy();
-    policy.setHeightForWidth(true);
-    setSizePolicy(policy);
+    // Default Size Policy
+
 }
 
 Qt::Orientation AsterSpace::direction() const
@@ -95,7 +94,11 @@ void AsterSpace::updateSpacing()
 void AsterSpace::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-    // Inherently transparent container
+    // Allow stylesheets to render background
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
 }
