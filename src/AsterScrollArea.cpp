@@ -12,6 +12,12 @@ namespace AsterUI {
         setAttribute(Qt::WA_TranslucentBackground);
         viewport()->setAttribute(Qt::WA_TranslucentBackground);
 
+        // Internal Container (Defaults to Vertical Space)
+        m_container = new AsterSpace(Qt::Vertical, this);
+        // Important: Ensure container allows being resized by ScrollArea
+        m_container->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred); 
+        setWidget(m_container);
+
         // Dynamic Stylesheet based on Theme
         auto theme = AsterTheme::instance();
         
@@ -91,7 +97,37 @@ namespace AsterUI {
         setStyleSheet(style);
     }
 
-    AsterScrollArea::~AsterScrollArea() = default;
+    AsterScrollArea::~AsterScrollArea() {
+         // m_container is managed by QScrollArea via setWidget
+    }
+
+    void AsterScrollArea::addWidget(QWidget* widget) {
+        if (m_container) m_container->addWidget(widget);
+    }
+
+    void AsterScrollArea::addStretch(int stretch) {
+        if (m_container) m_container->addStretch(stretch);
+    }
+
+    void AsterScrollArea::setSpacing(int spacing) {
+         if (m_container) m_container->setSize(spacing);
+    }
+
+    void AsterScrollArea::setDirection(Qt::Orientation direction) {
+        if (m_container) m_container->setDirection(direction);
+    }
+
+    void AsterScrollArea::setContentsMargins(int left, int top, int right, int bottom) {
+        if (m_container) m_container->layout()->setContentsMargins(left, top, right, bottom);
+    }
+    
+    void AsterScrollArea::setContentsMargins(const QMargins &margins) {
+         if (m_container) m_container->layout()->setContentsMargins(margins);
+    }
+
+    AsterSpace* AsterScrollArea::container() const {
+        return m_container;
+    }
 
     void AsterScrollArea::paintEvent(QPaintEvent* event) {
         QScrollArea::paintEvent(event);

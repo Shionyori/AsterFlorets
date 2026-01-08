@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     AsterLayout *pageLayout = new AsterLayout();
     
     // Set Layout Mode: HeaderFirst (Header top full width) or SiderFirst (Sider left full height)
-    // Let's use SiderFirst as it's a very common modern dashboard style (like VS Code or Discord)
     pageLayout->setMode(AsterLayout::Mode::SiderFirst);
 
     // 1. Setup Sider (Left)
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
     pageLayout->setSider(sider);
     pageLayout->setSiderWidth(280); // Fixed width for Sider
 
-    auto *siderLayout = new QVBoxLayout(sider);
+    auto *siderLayout = new QVBoxLayout(sider); // 
     auto *logoTitle = new AsterTitle("AsterUI", 3);
     logoTitle->setStyleSheet("color: white; margin: 20px;");
     siderLayout->addWidget(logoTitle);
@@ -57,51 +56,44 @@ int main(int argc, char *argv[])
     AsterContent *content = new AsterContent();
     pageLayout->setContent(content);
 
-    // Use a layout for AsterContent to hold the ScrollArea
+    // AsterContent -> QVBoxLayout -> AsterScrollArea
     auto *contentLayout = new QVBoxLayout(content);
     contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
     
-    // Create ScrollArea
+    // Create ScrollArea (Now includes internal container)
     AsterScrollArea *scrollArea = new AsterScrollArea();
+    scrollArea->setContentsMargins(32, 32, 32, 32); 
+
+    // Access internal container to style it if needed (optional)
+    // scrollArea->container()->setObjectName("ScrollContent");
+    // scrollArea->container()->setStyleSheet("#ScrollContent { background-color: white; }");
+
     contentLayout->addWidget(scrollArea);
 
-    // Create the Scrollable Container (AsterSpace)
-    AsterSpace *scrollSpace = new AsterSpace(Qt::Vertical);
-    scrollSpace->setObjectName("ScrollSpace");
-    // Explicitly set background to white to verify visibility
-    scrollSpace->setStyleSheet("#ScrollSpace { background-color: white; }");
-
-    // Note: AsterSpace manages its own layout, use addWidget()
-    // Add padding around the content inside the scroll area
-    scrollSpace->setContentsMargins(32, 32, 32, 32); 
-
-    // Card 1
+    // Card 1: Add DIRECTLY to scrollArea
     AsterCard *card1 = new AsterCard();
     auto *card1Layout = new QVBoxLayout(card1);
     card1Layout->setContentsMargins(24, 24, 24, 24); 
-    card1Layout->addWidget(new AsterTitle("Welcome", 3));
-    card1Layout->addWidget(new AsterText("This content is correctly nested: Content > ScrollArea > Space > Card."));
+    card1Layout->addWidget(new AsterTitle("Unified API", 3));
+    card1Layout->addWidget(new AsterText("Now AsterScrollArea works like a container naturally."));
     card1Layout->addSpacing(10);
-    card1Layout->addWidget(new AsterText("Key Fix: Do not create a new layout on AsterSpace. Use addWidget directly."));
-    card1Layout->addWidget(new AsterText("Scrolling Fix: Added more cards and enabled background styling."));
+    card1Layout->addWidget(new AsterText("Usage: scrollArea->addWidget(card)"));
     
-    scrollSpace->addWidget(card1);
+    scrollArea->addWidget(card1);
 
-    // Add extra cards to demonstrate scrolling
+    // Add extra cards
     for(int i=0; i<10; ++i) {
         AsterCard *extraCard = new AsterCard();
         auto *l = new QVBoxLayout(extraCard);
-        l->addWidget(new AsterTitle(QString("Feature Card %1").arg(i+1), 4));
-        l->addWidget(new AsterText(QString("This is item number %1 in the list. Ensure it scrolls.").arg(i+1)));
+        l->addWidget(new AsterTitle(QString("Unified Card %1").arg(i+1), 4));
+        l->addWidget(new AsterText(QString("This item is added directly to ScrollArea.").arg(i+1)));
         l->addStretch();
-        scrollSpace->addWidget(extraCard);
+        scrollArea->addWidget(extraCard);
     }
     
-    scrollSpace->addStretch();
-
-    // Set the widget for ScrollArea
-    scrollArea->setWidget(scrollSpace);
+    scrollArea->addStretch();
+    // No setWidget() call needed anymore!
 
     // 4. Setup Footer (Bottom)
     AsterFooter *footer = new AsterFooter();
