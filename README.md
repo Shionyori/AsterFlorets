@@ -71,7 +71,7 @@ cmake --build --preset windows-msvc-local
 - [x] **Flow** (流式容器) - `AsterFlow` (自动换行，适用于标签组或不定宽卡片列表)
 - [x] **ScrollArea** (滚动容器) - `AsterScrollArea` (支持平滑滚动的容器封装，内置 AsterSpace 作为内容容器)
 - [x] **Divider** (分割线) - `AsterDivider`
-- [x] **Layout** (布局容器) - `AsterLayout` (页面级布局容器，包含 Header, Sider, Content, Footer)
+- [x] **Layout** (布局容器) - `AsterLayout` (页面级布局容器，内置 Header, Sider, Content, Footer 子区域容器)
 
 ### 2. General (通用)
 最基础的 UI 元素。

@@ -24,7 +24,7 @@ namespace AsterUI {
         m_glowAnim->setDuration(200);
         
         // 默认颜色
-        m_uncheckedColor = QColor(0, 0, 0, 64); // Unchecked gray (Alpha 25%)
+        m_uncheckedColor = AsterTheme::instance()->color(AsterTheme::ColorRole::TextDisabled); 
         m_checkedColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Primary);
 
         // 初始颜色

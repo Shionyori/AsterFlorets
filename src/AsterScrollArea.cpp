@@ -7,6 +7,9 @@ namespace AsterUI {
     AsterScrollArea::AsterScrollArea(QWidget* parent)
         : QScrollArea(parent)
     {
+        // Ensure styling works correctly (transparency, etc.)
+        setAttribute(Qt::WA_StyledBackground, true);
+        
         setFrameShape(QFrame::NoFrame);
         setWidgetResizable(true);
         setAttribute(Qt::WA_TranslucentBackground);
@@ -16,6 +19,13 @@ namespace AsterUI {
         m_container = new AsterSpace(Qt::Vertical, this);
         // Important: Ensure container allows being resized by ScrollArea
         m_container->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred); 
+        
+        // // Fix: Make container transparent so it doesn't paint a black/default background over the parent content
+        m_container->setAttribute(Qt::WA_TranslucentBackground);
+        m_container->setAutoFillBackground(false);
+        // Explicitly set transparent background to be safe against style inheritance
+        m_container->setStyleSheet("background: transparent;");
+
         setWidget(m_container);
 
         // Dynamic Stylesheet based on Theme

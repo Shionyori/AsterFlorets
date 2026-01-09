@@ -1,7 +1,7 @@
 set(ASTERUI_SOURCES
     AsterUI.cpp
     AsterTheme.cpp
-    AsterGrid.cpp
+    AsterEqualGrid.cpp
     AsterRow.cpp
     AsterColumn.cpp
     AsterFlow.cpp
@@ -27,13 +27,14 @@ set(ASTERUI_SOURCES
     AsterMessage.cpp
     AsterModal.cpp
     AsterNotification.cpp
+    AsterMenu.cpp
 )
 
 set(ASTERUI_HEADERS
     ../include/AsterUI/Global.h
     ../include/AsterUI/AsterUI.h
     ../include/AsterUI/AsterTheme.h
-    ../include/AsterUI/AsterGrid.h
+    ../include/AsterUI/AsterEqualGrid.h
     ../include/AsterUI/AsterRow.h
     ../include/AsterUI/AsterColumn.h
     ../include/AsterUI/AsterFlow.h
@@ -61,6 +62,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterMessage.h
     ../include/AsterUI/AsterModal.h
     ../include/AsterUI/AsterNotification.h
+    ../include/AsterUI/AsterMenu.h
 )
 
 add_library(AsterUI SHARED

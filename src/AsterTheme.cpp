@@ -89,13 +89,18 @@ namespace AsterUI {
         m_colors[ColorRole::Surface]       = QColor("#FFFFFF");
         m_colors[ColorRole::Border]        = QColor("#D9D9D9");
         m_colors[ColorRole::Divider]       = QColor("#F0F0F0");
-        m_colors[ColorRole::LayoutHeader]  = QColor("#F7F7F7");
-        m_colors[ColorRole::LayoutSider]   = QColor("#F7F7F7");
-        m_colors[ColorRole::LayoutContent] = QColor("#FFFFFF");
-        m_colors[ColorRole::LayoutFooter]  = QColor("#F7F7F7");
-        
-        
-        m_colors[ColorRole::Mask]          = QColor(0, 0, 0, 115); // 45% Black
+
+        // Layout Areas (Empty States)
+        m_colors[ColorRole::LayoutHeader]   = QColor("#F5F7FA");
+        m_colors[ColorRole::LayoutSider]    = QColor("#F5F7FA");
+        m_colors[ColorRole::LayoutContent]  = QColor("#F5F7FA"); 
+        m_colors[ColorRole::LayoutFooter]   = QColor("#F5F7FA");
+
+        // Tag Colors
+        m_colors[ColorRole::TagBackground]  = QColor("#F5F5F5"); // Default Tag Background
+        m_colors[ColorRole::TagBorder]      = QColor("#D9D9D9"); // Default Tag Border
+
+        m_colors[ColorRole::Mask]           = QColor(0, 0, 0, 115); // 45% Black
     }
 
     void AsterTheme::initDarkMode() {

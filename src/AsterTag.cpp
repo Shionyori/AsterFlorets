@@ -89,8 +89,8 @@ namespace AsterUI {
             case Type::Default:
             default:
                 m_textColor = theme->color(AsterTheme::ColorRole::Text);
-                m_bgColor = QColor(245, 245, 245); // Light Gray
-                m_borderColor = QColor(217, 217, 217);
+                m_bgColor = theme->color(AsterTheme::ColorRole::TagBackground); // #F5F5F5
+                m_borderColor = theme->color(AsterTheme::ColorRole::TagBorder); // #D9D9D9
                 break;
         }
     }

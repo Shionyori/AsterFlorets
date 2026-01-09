@@ -16,7 +16,12 @@ static void paintLayoutWidget(QWidget* widget) {
 
 // Helper to set default background from theme
 static void initLayoutWidget(QWidget* widget, AsterTheme::ColorRole role) {
+
+    // Ensure WA_StyledBackground is set to allow stylesheet and palette BG
+    widget->setAttribute(Qt::WA_StyledBackground, true); 
+
     widget->setAutoFillBackground(true);
+
     QPalette pal = widget->palette();
     pal.setColor(QPalette::Window, AsterTheme::instance()->color(role));
     widget->setPalette(pal);
@@ -30,6 +35,10 @@ static void initLayoutWidget(QWidget* widget, AsterTheme::ColorRole role) {
 AsterHeader::AsterHeader(QWidget *parent) : QWidget(parent) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     initLayoutWidget(this, AsterTheme::ColorRole::LayoutHeader);
+
+    auto *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
 }
 
 void AsterHeader::paintEvent(QPaintEvent *) {
@@ -40,6 +49,10 @@ void AsterHeader::paintEvent(QPaintEvent *) {
 AsterFooter::AsterFooter(QWidget *parent) : QWidget(parent) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     initLayoutWidget(this, AsterTheme::ColorRole::LayoutFooter);
+
+    auto *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
 }
 
 void AsterFooter::paintEvent(QPaintEvent *) {
@@ -49,10 +62,11 @@ void AsterFooter::paintEvent(QPaintEvent *) {
 // --- AsterContent ---
 AsterContent::AsterContent(QWidget *parent) : QWidget(parent) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // Content defaults to transparent/inherited usually, but lets set default white per theme
-    // Actually, usually Content area is transparent to show Layout BG, or White card.
-    // Theme says LayoutContent is White.
     initLayoutWidget(this, AsterTheme::ColorRole::LayoutContent);
+
+    auto *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
 }
 
 void AsterContent::paintEvent(QPaintEvent *) {
@@ -63,6 +77,10 @@ void AsterContent::paintEvent(QPaintEvent *) {
 AsterSider::AsterSider(QWidget *parent) : QWidget(parent) {
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     initLayoutWidget(this, AsterTheme::ColorRole::LayoutSider);
+    
+    auto *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
 }
 
 void AsterSider::paintEvent(QPaintEvent *) {

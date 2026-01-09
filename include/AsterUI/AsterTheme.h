@@ -28,7 +28,7 @@ namespace AsterUI {
             Placeholder,    // 占位符文本
             
             Background,     // 背景色
-            Surface,        // 表面色 (卡片、弹窗背景)
+            Surface,        // 表面色 (卡片/弹窗背景)
             Border,         // 边框色
             Divider,        // 分割线
             
@@ -37,6 +37,13 @@ namespace AsterUI {
             LayoutContent,  // 页面布局内容区
             LayoutFooter,   // 页面布局底部区
 
+            TagBackground,  // 标签背景色
+            TagBorder,      // 标签边框色
+
+            SliderHandle,   // 滑块滑动块
+            SliderInactive, // 滑块未激活部分
+            SliderActive,   // 滑块已激活部分
+            
             Mask            // 遮罩层
         };
         Q_ENUM(ColorRole)

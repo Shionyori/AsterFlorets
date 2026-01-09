@@ -25,8 +25,8 @@ namespace AsterUI {
     void AsterSlider::init() {
         auto theme = AsterTheme::instance();
         m_activeColor = theme->color(AsterTheme::ColorRole::Primary);
-        m_inactiveColor = QColor(0, 0, 0, 40); // Light gray
-        m_handleColor = Qt::white;
+        m_inactiveColor = theme->color(AsterTheme::ColorRole::Border); 
+        m_handleColor = theme->color(AsterTheme::ColorRole::Surface);
         
         setMinimum(0);
         setMaximum(100);

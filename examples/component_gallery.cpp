@@ -17,7 +17,9 @@ int main(int argc, char *argv[])
     window.setWindowTitle("AsterUI Demo - Component Gallery");
     window.resize(1100, 900);
 
+    // 设置主调色板
     QPalette pal = window.palette();
+    // 设置 QMainWindow 窗口背景色
     pal.setColor(QPalette::Window, theme->color(AsterUI::AsterTheme::ColorRole::Background));
     window.setPalette(pal);
 
@@ -25,7 +27,7 @@ int main(int argc, char *argv[])
 
     // Root Container
     AsterSpace *rootSpace = new AsterSpace(Qt::Vertical);
-    rootSpace->setPalette(pal);
+    rootSpace->setPalette(pal); // 继承主窗口的调色板
     rootSpace->setAutoFillBackground(true);
     rootSpace->setContentsMargins(40, 40, 40, 40);
     rootSpace->setSize(30);

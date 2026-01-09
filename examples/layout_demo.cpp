@@ -25,27 +25,54 @@ int main(int argc, char *argv[])
     pageLayout->setSider(sider);
     pageLayout->setSiderWidth(280); // Fixed width for Sider
 
-    auto *siderLayout = new QVBoxLayout(sider); // 
+    // Layout is now managed by AsterSider (Default: QVBoxLayout, 0 margins)
+    auto *siderLayout = static_cast<QVBoxLayout*>(sider->layout());
+
+    // --- Logo Area ---
+    QWidget* logoArea = new QWidget();
+    logoArea->setFixedHeight(64);
+    auto* logoLayout = new QHBoxLayout(logoArea);
+    logoLayout->setContentsMargins(20, 0, 0, 0);
     auto *logoTitle = new AsterTitle("AsterUI", 3);
-    logoTitle->setStyleSheet("color: white; margin: 20px;");
-    siderLayout->addWidget(logoTitle);
+    logoLayout->addWidget(logoTitle);
+    siderLayout->addWidget(logoArea);
     
-    siderLayout->addSpacing(20);
-    siderLayout->addWidget(new AsterButton("Dashboard", AsterButton::Type::Text));
-    siderLayout->addWidget(new AsterButton("Settings", AsterButton::Type::Text));
-    siderLayout->addWidget(new AsterButton("Profile", AsterButton::Type::Text));
-    siderLayout->addStretch();
+    // --- Main Menu ---
+    AsterMenu *siderMenu = new AsterMenu();
+    siderMenu->setMode(AsterMenu::Mode::Vertical);
     
+    // Add items with Keys, Titles, and Icons (optional)
+    siderMenu->addItem("dashboard", "Dashboard", QIcon());
+    siderMenu->addItem("projects", "Projects", QIcon());
+    siderMenu->addItem("reports", "Reports", QIcon());
+    siderMenu->addItem("settings", "Settings", QIcon());
+    
+    // Set initial selection
+    siderMenu->setSelectedKey("dashboard");
+    
+    // Explicitly set alignment (default is Top, but good to show usage)
+    siderMenu->setAlignment(Qt::AlignTop);
+
+    siderLayout->addWidget(siderMenu);
+    
+    // --- Footer/Version Area ---
+    // If we want a footer in Sider, we can add it here.
+    // Menu is expanding, so it pushes this down.
+    QWidget* versionArea = new QWidget();
+    auto* vl = new QVBoxLayout(versionArea);
     auto *versionText = new AsterText("v1.0.0");
-    versionText->setStyleSheet("color: rgba(255,255,255,0.5); margin: 20px;");
-    siderLayout->addWidget(versionText);
+    versionText->setStyleSheet("color: rgba(0,0,0,0.5);"); 
+    vl->addWidget(versionText);
+    vl->setAlignment(Qt::AlignCenter);
+    
+    siderLayout->addWidget(versionArea);
 
     // 2. Setup Header (Top)
     AsterHeader *header = new AsterHeader();
     pageLayout->setHeader(header);
     pageLayout->setHeaderHeight(64); // Fixed height for Header
 
-    auto *headerLayout = new QHBoxLayout(header);
+    auto *headerLayout = static_cast<QHBoxLayout*>(header->layout());
     headerLayout->addWidget(new AsterTitle("Overview", 4));
     headerLayout->addStretch();
     headerLayout->addWidget(new AsterAvatar("U"));
@@ -56,18 +83,16 @@ int main(int argc, char *argv[])
     AsterContent *content = new AsterContent();
     pageLayout->setContent(content);
 
-    // AsterContent -> QVBoxLayout -> AsterScrollArea
-    auto *contentLayout = new QVBoxLayout(content);
-    contentLayout->setContentsMargins(0, 0, 0, 0);
-    contentLayout->setSpacing(0);
+    // AsterContent -> Default Layout (VBox) -> AsterScrollArea
+    auto *contentLayout = static_cast<QVBoxLayout*>(content->layout());
     
     // Create ScrollArea (Now includes internal container)
     AsterScrollArea *scrollArea = new AsterScrollArea();
     scrollArea->setContentsMargins(32, 32, 32, 32); 
 
-    // Access internal container to style it if needed (optional)
-    // scrollArea->container()->setObjectName("ScrollContent");
-    // scrollArea->container()->setStyleSheet("#ScrollContent { background-color: white; }");
+    // // Access internal container to style it if needed (optional)
+    // // scrollArea->container()->setObjectName("ScrollContent");
+    // // scrollArea->container()->setStyleSheet("#ScrollContent { background-color: white; }");
 
     contentLayout->addWidget(scrollArea);
 
@@ -93,14 +118,13 @@ int main(int argc, char *argv[])
     }
     
     scrollArea->addStretch();
-    // No setWidget() call needed anymore!
 
     // 4. Setup Footer (Bottom)
     AsterFooter *footer = new AsterFooter();
     pageLayout->setFooter(footer);
     pageLayout->setFooterHeight(40); // Fixed height
 
-    auto *footerLayout = new QHBoxLayout(footer);
+    auto *footerLayout = static_cast<QHBoxLayout*>(footer->layout());
     auto *ft = new AsterText("© 2026 AsterUI");
     ft->setStyleSheet("color: #999;");
     footerLayout->addWidget(ft);

@@ -7,12 +7,12 @@
 namespace AsterUI {
 
     /**
-     * @brief AsterGrid
+     * @brief AsterEqualGrid
      * A widget that arranges its children in a uniform grid.
      * Unlike AsterRow/AsterColumn which provide offset/span control,
-     * AsterGrid is for automatically arranging N items into M columns.
+     * AsterEqualGrid is for automatically arranging N items into M columns.
      */
-    class ASTERUI_EXPORT AsterGrid : public QWidget {
+    class ASTERUI_EXPORT AsterEqualGrid : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount)
         Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
@@ -20,9 +20,9 @@ namespace AsterUI {
         Q_PROPERTY(int verticalSpacing READ verticalSpacing WRITE setVerticalSpacing)
 
     public:
-        explicit AsterGrid(QWidget* parent = nullptr);
-        explicit AsterGrid(int columns, QWidget* parent = nullptr);
-        ~AsterGrid() override;
+        explicit AsterEqualGrid(QWidget* parent = nullptr);
+        explicit AsterEqualGrid(int columns, QWidget* parent = nullptr);
+        ~AsterEqualGrid() override;
 
         int columnCount() const;
         void setColumnCount(int count);

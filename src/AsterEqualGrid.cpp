@@ -1,9 +1,9 @@
-#include "AsterUI/AsterGrid.h"
+#include "AsterUI/AsterEqualGrid.h"
 #include <QLayoutItem>
 
 namespace AsterUI {
 
-    AsterGrid::AsterGrid(QWidget* parent)
+    AsterEqualGrid::AsterEqualGrid(QWidget* parent)
         : QWidget(parent)
     {
         m_layout = new QGridLayout(this);
@@ -15,19 +15,19 @@ namespace AsterUI {
         setAttribute(Qt::WA_TranslucentBackground, true);
     }
 
-    AsterGrid::AsterGrid(int columns, QWidget* parent)
-        : AsterGrid(parent)
+    AsterEqualGrid::AsterEqualGrid(int columns, QWidget* parent)
+        : AsterEqualGrid(parent)
     {
         setColumnCount(columns);
     }
 
-    AsterGrid::~AsterGrid() = default;
+    AsterEqualGrid::~AsterEqualGrid() = default;
 
-    int AsterGrid::columnCount() const {
+    int AsterEqualGrid::columnCount() const {
         return m_columnCount;
     }
 
-    void AsterGrid::setColumnCount(int count) {
+    void AsterEqualGrid::setColumnCount(int count) {
         if (count < 1) count = 1;
         if (m_columnCount != count) {
             m_columnCount = count;
@@ -35,11 +35,11 @@ namespace AsterUI {
         }
     }
 
-    int AsterGrid::spacing() const {
+    int AsterEqualGrid::spacing() const {
         return m_hSpacing; 
     }
 
-    void AsterGrid::setSpacing(int spacing) {
+    void AsterEqualGrid::setSpacing(int spacing) {
         if (m_hSpacing != spacing || m_vSpacing != spacing) {
             m_hSpacing = spacing;
             m_vSpacing = spacing;
@@ -48,29 +48,29 @@ namespace AsterUI {
         }
     }
 
-    int AsterGrid::horizontalSpacing() const {
+    int AsterEqualGrid::horizontalSpacing() const {
         return m_hSpacing;
     }
 
-    void AsterGrid::setHorizontalSpacing(int spacing) {
+    void AsterEqualGrid::setHorizontalSpacing(int spacing) {
         if (m_hSpacing != spacing) {
             m_hSpacing = spacing;
             m_layout->setHorizontalSpacing(m_hSpacing);
         }
     }
 
-    int AsterGrid::verticalSpacing() const {
+    int AsterEqualGrid::verticalSpacing() const {
         return m_vSpacing;
     }
 
-    void AsterGrid::setVerticalSpacing(int spacing) {
+    void AsterEqualGrid::setVerticalSpacing(int spacing) {
         if (m_vSpacing != spacing) {
             m_vSpacing = spacing;
             m_layout->setVerticalSpacing(m_vSpacing);
         }
     }
 
-    void AsterGrid::addWidget(QWidget* w) {
+    void AsterEqualGrid::addWidget(QWidget* w) {
         if (!w) return;
         m_items.append(w);
         
@@ -82,7 +82,7 @@ namespace AsterUI {
         m_layout->addWidget(w, row, col);
     }
 
-    void AsterGrid::removeWidget(QWidget* w) {
+    void AsterEqualGrid::removeWidget(QWidget* w) {
         if (!w) return;
         int idx = m_items.indexOf(w);
         if (idx != -1) {
@@ -93,7 +93,7 @@ namespace AsterUI {
         }
     }
 
-    void AsterGrid::clear() {        
+    void AsterEqualGrid::clear() {        
         QLayoutItem* item;
         while ((item = m_layout->takeAt(0)) != nullptr) {
             if (item->widget()) {
@@ -105,7 +105,7 @@ namespace AsterUI {
         m_items.clear();
     }
 
-    void AsterGrid::reflow() {
+    void AsterEqualGrid::reflow() {
         // Remove all from layout
         QLayoutItem* item;
         while ((item = m_layout->takeAt(0)) != nullptr) {
@@ -121,7 +121,7 @@ namespace AsterUI {
         }
     }
 
-    void AsterGrid::paintEvent(QPaintEvent* event) {
+    void AsterEqualGrid::paintEvent(QPaintEvent* event) {
         Q_UNUSED(event);
     }
 

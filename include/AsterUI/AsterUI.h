@@ -2,7 +2,7 @@
 
 #include "Global.h"
 #include "AsterTheme.h"
-#include "AsterGrid.h"
+#include "AsterEqualGrid.h"
 #include "AsterRow.h"
 #include "AsterColumn.h"
 #include "AsterFlow.h"
@@ -28,6 +28,7 @@
 #include "AsterMessage.h"
 #include "AsterModal.h"
 #include "AsterNotification.h"
+#include "AsterMenu.h"
 #include <QString>
 
 namespace AsterUI {
