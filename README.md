@@ -102,7 +102,7 @@ cmake --build --preset windows-msvc-local
 ### 4. Data Display (数据展示)
 用于展示数据的可视化组件。
 - [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
-- [ ] **Badge** (徽标数) - `AsterBadge`
+- [x] **Badge** (徽标数) - `AsterBadge`
 - [x] **Card** (卡片) - `AsterCard` (包含标题栏和内容区，支持阴影和边框优化)
 - [ ] **Collapse** (折叠面板) - `AsterCollapse`
 - [ ] **Descriptions** (描述列表) - `AsterDescriptions`

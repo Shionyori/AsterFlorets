@@ -28,6 +28,7 @@ set(ASTERUI_SOURCES
     AsterModal.cpp
     AsterNotification.cpp
     AsterMenu.cpp
+    AsterBadge.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -63,6 +64,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterModal.h
     ../include/AsterUI/AsterNotification.h
     ../include/AsterUI/AsterMenu.h
+    ../include/AsterUI/AsterBadge.h
 )
 
 add_library(AsterUI SHARED

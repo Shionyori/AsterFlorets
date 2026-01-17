@@ -28,6 +28,7 @@
 #include "AsterMessage.h"
 #include "AsterModal.h"
 #include "AsterNotification.h"
+#include "AsterBadge.h"
 #include "AsterMenu.h"
 #include <QString>
 

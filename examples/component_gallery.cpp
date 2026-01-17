@@ -203,6 +203,31 @@ int main(int argc, char *argv[])
             cardSpace->addWidget(avSpace);
             cardSpace->addWidget(new AsterDivider);
 
+            // Badges
+            auto *lblBadge = new AsterText("Badges:");
+            lblBadge->setType(AsterText::Type::Secondary);
+            cardSpace->addWidget(lblBadge);
+
+            auto *badgeSpace = new AsterSpace(Qt::Horizontal);
+            badgeSpace->setSize(24);
+
+            auto *b1 = new AsterBadge(new AsterAvatar("User"), nullptr);
+            b1->setCount(5);
+            badgeSpace->addWidget(b1);
+
+            auto *b2 = new AsterBadge(new AsterAvatar("A"), nullptr);
+            b2->setDot(true);
+            b2->setColor(theme->color(AsterTheme::ColorRole::Success));
+            badgeSpace->addWidget(b2);
+
+            auto *b3 = new AsterBadge(new AsterButton("Inbox"), nullptr);
+            b3->setCount(100);
+            b3->setMaxCount(99);
+            badgeSpace->addWidget(b3);
+
+            cardSpace->addWidget(badgeSpace);
+            cardSpace->addWidget(new AsterDivider);
+
             // Tags in Flow Container
             auto *lblFlow = new AsterText("AsterFlow Layout:");
             lblFlow->setType(AsterText::Type::Secondary);
