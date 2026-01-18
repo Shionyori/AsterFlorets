@@ -31,6 +31,7 @@
 #include "AsterMenu.h"
 #include "AsterBadge.h"
 #include "AsterTabs.h"
+#include "AsterBreadcrumb.h"
 #include <QString>
 
 namespace AsterUI {

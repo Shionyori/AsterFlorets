@@ -122,7 +122,7 @@ cmake --build --preset windows-msvc-local
 ### 5. Navigation (导航)
 页面跳转与层级指引。
 - [ ] **Anchor** (锚点) - `AsterAnchor`
-- [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
+- [x] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
 - [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
 - [x] **Menu** (菜单) - `AsterMenu`
 - [ ] **Pagination** (分页) - `AsterPagination`

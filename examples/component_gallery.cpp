@@ -311,7 +311,7 @@ int main(int argc, char *argv[])
         rootSpace->addWidget(row);
     }
 
-    // --- Section 2.5: Interaction & Feedback ---
+    // --- Section 3: Messages
     {
         auto *row = new AsterRow();
         row->setGutter(24);
@@ -409,7 +409,14 @@ int main(int argc, char *argv[])
             col->addWidget(card);
             row->addColumn(col);
         }
-        // [Card 6] Tabs Component
+        rootSpace->addWidget(row);
+    }
+
+    {
+        auto row = new AsterRow();
+        row->setGutter(24);
+
+                // [Card 6] Tabs Component
         {
             auto *col = new AsterColumn(24);
             auto *card = new AsterCard();
@@ -453,7 +460,36 @@ int main(int argc, char *argv[])
             col->addWidget(card);
             row->addColumn(col);
         }
-        
+
+        // --- Section 3: Navigation ---
+        {
+             auto *col = new AsterColumn(24);
+             auto *card = new AsterCard();
+             card->setTitle("Navigation - Breadcrumbs");
+             
+             auto *cardSpace = new AsterSpace(Qt::Vertical);
+
+             auto *bc1 = new AsterBreadcrumb();
+             bc1->addItem("Home", [](){ qDebug() << "Home clicked"; });
+             bc1->addItem("Application Center", [](){ qDebug() << "App Center clicked"; });
+             bc1->addItem("Application List", [](){ qDebug() << "App List clicked"; });
+             bc1->addItem("Details");
+             cardSpace->addWidget(bc1);
+
+             auto *bc2 = new AsterBreadcrumb();
+             bc2->setSeparator(">");
+             bc2->addItem("Home");
+             bc2->addItem("User");
+             bc2->addItem("Profile");
+             cardSpace->addWidget(bc2);
+
+             auto *l = new QVBoxLayout(card);
+             l->setContentsMargins(0, 0, 0, 0);
+             l->addWidget(cardSpace);
+
+             col->addWidget(card);
+             row->addColumn(col);
+        }
         rootSpace->addWidget(row);
     }
 

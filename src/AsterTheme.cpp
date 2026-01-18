@@ -80,10 +80,10 @@ namespace AsterUI {
         m_colors[ColorRole::Info]    = QColor("#1890FF");
 
         // Neutral
-        m_colors[ColorRole::Text]          = QColor(0, 0, 0, 225); // ~88%
-        m_colors[ColorRole::TextSecondary] = QColor(0, 0, 0, 166); // ~65%
-        m_colors[ColorRole::TextDisabled]  = QColor(0, 0, 0, 64);  // ~25%
-        m_colors[ColorRole::Placeholder]   = QColor(0, 0, 0, 115); // ~45%
+        m_colors[ColorRole::Text]          = QColor(0, 0, 0, 217); // 85%
+        m_colors[ColorRole::TextSecondary] = QColor(0, 0, 0, 166); // 65%
+        m_colors[ColorRole::Placeholder]   = QColor(0, 0, 0, 115); // 45%
+        m_colors[ColorRole::TextDisabled]  = QColor(0, 0, 0, 64); // 25%
         
         m_colors[ColorRole::Background]    = QColor("#FFFFFF");
         m_colors[ColorRole::Surface]       = QColor("#FFFFFF");
