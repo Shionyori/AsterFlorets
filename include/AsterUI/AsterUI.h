@@ -28,8 +28,9 @@
 #include "AsterMessage.h"
 #include "AsterModal.h"
 #include "AsterNotification.h"
-#include "AsterBadge.h"
 #include "AsterMenu.h"
+#include "AsterBadge.h"
+#include "AsterTabs.h"
 #include <QString>
 
 namespace AsterUI {

@@ -124,7 +124,7 @@ cmake --build --preset windows-msvc-local
 - [ ] **Anchor** (锚点) - `AsterAnchor`
 - [ ] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
 - [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
-- [ ] **Menu** (菜单) - `AsterMenu`
+- [x] **Menu** (菜单) - `AsterMenu`
 - [ ] **Pagination** (分页) - `AsterPagination`
 - [ ] **Steps** (步骤条) - `AsterSteps`
 - [ ] **Tabs** (标签页) - `AsterTabs`

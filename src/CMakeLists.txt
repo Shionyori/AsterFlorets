@@ -29,6 +29,7 @@ set(ASTERUI_SOURCES
     AsterNotification.cpp
     AsterMenu.cpp
     AsterBadge.cpp
+    AsterTabs.cpp
 )
 
 set(ASTERUI_HEADERS
@@ -64,6 +65,7 @@ set(ASTERUI_HEADERS
     ../include/AsterUI/AsterModal.h
     ../include/AsterUI/AsterNotification.h
     ../include/AsterUI/AsterMenu.h
+    ../include/AsterUI/AsterTabs.h
     ../include/AsterUI/AsterBadge.h
 )
 

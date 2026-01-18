@@ -409,6 +409,51 @@ int main(int argc, char *argv[])
             col->addWidget(card);
             row->addColumn(col);
         }
+        // [Card 6] Tabs Component
+        {
+            auto *col = new AsterColumn(24);
+            auto *card = new AsterCard();
+            card->setTitle("Tabs");
+            
+            auto *cardSpace = new AsterSpace(Qt::Vertical);
+            cardSpace->setSize(16);
+
+            auto *tabs = new AsterTabs();
+            tabs->setFixedHeight(200); // Fixed height for demo
+
+            // Tab 1 Content
+            auto *p1 = new QWidget();
+            auto *l1 = new QVBoxLayout(p1);
+            l1->addWidget(new AsterText("Content of Tab Pane 1"));
+            l1->addWidget(new AsterButton("Action 1"));
+            l1->addStretch();
+            tabs->addTab(p1, "Tab 1");
+
+            // Tab 2 Content
+            auto *p2 = new QWidget();
+            auto *l2 = new QVBoxLayout(p2);
+            l2->addWidget(new AsterText("Content of Tab Pane 2"));
+            l2->addWidget(new AsterCheckBox("Option A"));
+            l2->addStretch();
+            tabs->addTab(p2, "Tab 2");
+
+            // Tab 3 Content
+            auto *p3 = new QWidget();
+            auto *l3 = new QVBoxLayout(p3);
+            l3->addWidget(new AsterText("Content of Tab Pane 3"));
+            l3->addStretch();
+            tabs->addTab(p3, "Tab 3");
+
+            cardSpace->addWidget(tabs);
+
+            auto *l = new QVBoxLayout(card);
+            l->setContentsMargins(0, 0, 0, 0);
+            l->addWidget(cardSpace);
+
+            col->addWidget(card);
+            row->addColumn(col);
+        }
+        
         rootSpace->addWidget(row);
     }
 
