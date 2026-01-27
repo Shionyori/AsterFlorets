@@ -1,5 +1,5 @@
-#include "AsterUI/AsterSlider.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterSlider.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QPropertyAnimation>

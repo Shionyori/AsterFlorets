@@ -1,4 +1,4 @@
-#include "AsterUI/AsterTheme.h"
+#include "AsterTheme.h"
 #include <QApplication>
 #include <QPalette>
 

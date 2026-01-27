@@ -1,5 +1,5 @@
-#include "AsterUI/AsterTextInput.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterTextInput.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 #include <QAction>

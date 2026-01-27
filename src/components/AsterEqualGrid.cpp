@@ -1,4 +1,4 @@
-#include "AsterUI/AsterEqualGrid.h"
+#include "AsterEqualGrid.h"
 #include <QLayoutItem>
 
 namespace AsterUI {

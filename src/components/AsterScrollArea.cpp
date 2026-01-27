@@ -1,5 +1,5 @@
-#include "AsterUI/AsterScrollArea.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterScrollArea.h"
+#include "AsterTheme.h"
 #include <QScrollBar>
 
 namespace AsterUI {

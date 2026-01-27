@@ -1,5 +1,5 @@
-#include "AsterUI/AsterText.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterText.h"
+#include "AsterTheme.h"
 #include <QPainter>
 
 namespace AsterUI {

@@ -1,5 +1,5 @@
-#include "AsterUI/AsterSpace.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterSpace.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QStyleOption>
 

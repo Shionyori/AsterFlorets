@@ -1,5 +1,5 @@
-#include "AsterUI/AsterBadge.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterBadge.h"
+#include "AsterTheme.h"
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QEvent>

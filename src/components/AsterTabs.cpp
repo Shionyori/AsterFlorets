@@ -1,5 +1,5 @@
-#include "AsterUI/AsterTabs.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterTabs.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 #include <QMouseEvent>

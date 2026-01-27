@@ -1,7 +1,7 @@
-#include "AsterUI/AsterNotification.h"
-#include "AsterUI/AsterTheme.h"
-#include "AsterUI/AsterIcon.h"
-#include "AsterUI/AsterButton.h"
+#include "AsterNotification.h"
+#include "AsterTheme.h"
+#include "AsterIcon.h"
+#include "AsterButton.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>

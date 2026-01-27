@@ -1,5 +1,5 @@
-#include "AsterUI/AsterCard.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterCard.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 #include <QGraphicsDropShadowEffect>

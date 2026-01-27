@@ -3,7 +3,7 @@
 #include <QScrollArea>
 #include <QStyle>
 #include <QDebug>
-#include "AsterUI/AsterUI.h"
+#include "AsterUI.h"
 
 using namespace AsterUI;
 

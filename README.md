@@ -1,6 +1,6 @@
 # AsterUI
 
-AsterUI 是一个基于 C++ Qt 的现代化 UI 组件库，设计风格参考 Ant Design，并融入了东方 Project 角色依神紫苑（Shion Yorigami）的配色元素（蓝紫色/白色）。
+AsterUI 是一个基于 C++ Qt 的现代化 UI 组件库，追求实现 Ant Design 的设计风格。
 
 ## 目标
 
@@ -104,10 +104,10 @@ cmake --build --preset windows-msvc-local
 - [x] **Avatar** (头像) - `AsterAvatar` (支持图片、字符、图标，圆形/方形)
 - [x] **Badge** (徽标数) - `AsterBadge`
 - [x] **Card** (卡片) - `AsterCard` (包含标题栏和内容区，支持阴影和边框优化)
-- [ ] **Collapse** (折叠面板) - `AsterCollapse`
-- [ ] **Descriptions** (描述列表) - `AsterDescriptions`
 - [x] **Tag** (标签) - `AsterTag`
 - [x] **Progress** (进度条) - `AsterProgress`
+- [ ] **Collapse** (折叠面板) - `AsterCollapse`
+- [ ] **Descriptions** (描述列表) - `AsterDescriptions`
 - [ ] **List** (列表) - `AsterList` 
 - [ ] **Table** (表格) - `AsterTable`
 - [ ] **Tree** (树形控件) - `AsterTree`
@@ -121,21 +121,21 @@ cmake --build --preset windows-msvc-local
 
 ### 5. Navigation (导航)
 页面跳转与层级指引。
-- [ ] **Anchor** (锚点) - `AsterAnchor`
-- [x] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
-- [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
 - [x] **Menu** (菜单) - `AsterMenu`
+- [x] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
+- [ ] **Anchor** (锚点) - `AsterAnchor`
+- [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
 - [ ] **Pagination** (分页) - `AsterPagination`
 - [ ] **Steps** (步骤条) - `AsterSteps`
 - [ ] **Tabs** (标签页) - `AsterTabs`
 
 ### 6. Feedback (反馈)
 用户操作后的反馈交互。
-- [ ] **Alert** (警告提示) - `AsterAlert` (信息提示条)
-- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出层)
 - [x] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
 - [x] **Modal** (模态对话框) - `AsterModal` (中心弹出，可自定义内容和按钮) 原 `AsterDialog`
 - [x] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
+- [ ] **Alert** (警告提示) - `AsterAlert` (信息提示条)
+- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出层)
 - [ ] **popconfirm** (气泡确认框) - `AsterPopconfirm` (带确认操作的气泡提示)
 - [ ] **Result** (结果页) - `AsterResult`
 - [ ] **Skeleton** (骨架屏) - `AsterSkeleton`

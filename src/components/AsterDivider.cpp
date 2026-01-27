@@ -1,5 +1,5 @@
-#include "AsterUI/AsterDivider.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterDivider.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QFontMetrics>
 

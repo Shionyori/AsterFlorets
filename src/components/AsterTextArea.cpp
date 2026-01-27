@@ -1,5 +1,5 @@
-#include "AsterUI/AsterTextArea.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterTextArea.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 #include <QVBoxLayout>

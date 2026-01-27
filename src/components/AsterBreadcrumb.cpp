@@ -1,6 +1,6 @@
-#include "AsterUI/AsterBreadcrumb.h"
-#include "AsterUI/AsterText.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterBreadcrumb.h"
+#include "AsterText.h"
+#include "AsterTheme.h"
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QEvent>

@@ -1,5 +1,5 @@
-#include "AsterUI/AsterCheckBox.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterCheckBox.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 

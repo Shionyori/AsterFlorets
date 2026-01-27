@@ -1,5 +1,5 @@
-#include "AsterUI/AsterAvatar.h"
-#include "AsterUI/AsterTheme.h"
+#include "AsterAvatar.h"
+#include "AsterTheme.h"
 #include <QPainter>
 #include <QPainterPath>
 

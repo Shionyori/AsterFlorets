@@ -1,8 +1,8 @@
-#include "AsterUI/AsterModal.h"
-#include "AsterUI/AsterTheme.h"
-#include "AsterUI/AsterButton.h"
-#include "AsterUI/AsterTitle.h"
-#include "AsterUI/AsterText.h"
+#include "AsterModal.h"
+#include "AsterTheme.h"
+#include "AsterButton.h"
+#include "AsterTitle.h"
+#include "AsterText.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>

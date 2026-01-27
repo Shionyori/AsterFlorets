@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QLabel>
-#include "AsterUI/AsterUI.h"
+#include "AsterUI.h"
 
 using namespace AsterUI;
 
