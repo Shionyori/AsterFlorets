@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterCheckBox::AsterCheckBox(const QString& text, QWidget* parent)
         : AsterCheckBox(parent)

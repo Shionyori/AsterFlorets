@@ -3,27 +3,27 @@
 #include <QScrollArea>
 #include <QStyle>
 #include <QDebug>
-#include "AsterUI.h"
+#include "AsterFlorets.h"
 
-using namespace AsterUI;
+using namespace AsterFlorets;
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    auto theme = AsterUI::AsterTheme::instance();
+    auto theme = AsterFlorets::AsterTheme::instance();
 
     QMainWindow window;
-    window.setWindowTitle("AsterUI Demo - Component Gallery");
+    window.setWindowTitle("AsterFlorets Demo - Component Gallery");
     window.resize(1100, 900);
 
     // 设置主调色板
     QPalette pal = window.palette();
     // 设置 QMainWindow 窗口背景色
-    pal.setColor(QPalette::Window, theme->color(AsterUI::AsterTheme::ColorRole::Background));
+    pal.setColor(QPalette::Window, theme->color(AsterFlorets::AsterTheme::ColorRole::Background));
     window.setPalette(pal);
 
-    AsterUI::AsterScrollArea *scrollArea = new AsterUI::AsterScrollArea();
+    AsterFlorets::AsterScrollArea *scrollArea = new AsterFlorets::AsterScrollArea();
 
     // Root Container
     AsterSpace *rootSpace = new AsterSpace(Qt::Vertical);
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     {
         auto *headerSpace = new AsterSpace(Qt::Vertical);
         headerSpace->setSize(10);
-        headerSpace->addWidget(new AsterTitle("AsterUI Gallery", 1));
+        headerSpace->addWidget(new AsterTitle("AsterFlorets Gallery", 1));
         headerSpace->addWidget(new AsterText("A modern C++ Qt component library inspired by Ant Design."));
         rootSpace->addWidget(headerSpace);
         rootSpace->addWidget(new AsterDivider);
@@ -382,7 +382,7 @@ int main(int argc, char *argv[])
             
             auto *btnNotify1 = new AsterButton("Success Notify");
             QObject::connect(btnNotify1, &AsterButton::clicked, [winPtr](){
-                AsterNotification::success("Download Complete", "The file 'AsterUI_v1.0.zip' has been downloaded successfully.", 4500, winPtr);
+                AsterNotification::success("Download Complete", "The file 'AsterFlorets_v1.0.zip' has been downloaded successfully.", 4500, winPtr);
             });
             notifySpace->addWidget(btnNotify1);
 

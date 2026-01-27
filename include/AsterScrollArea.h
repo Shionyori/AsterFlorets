@@ -4,9 +4,9 @@
 #include <QScrollArea>
 #include "AsterSpace.h"
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterScrollArea : public QScrollArea {
+    class AsterFlorets_EXPORT AsterScrollArea : public QScrollArea {
         Q_OBJECT
     public:
         explicit AsterScrollArea(QWidget* parent = nullptr);

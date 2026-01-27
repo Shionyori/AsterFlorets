@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QBoxLayout>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-class ASTERUI_EXPORT AsterSpace : public QWidget {
+class AsterFlorets_EXPORT AsterSpace : public QWidget {
     Q_OBJECT
     Q_PROPERTY(Qt::Orientation direction READ direction WRITE setDirection)
     Q_PROPERTY(int size READ size WRITE setSize)

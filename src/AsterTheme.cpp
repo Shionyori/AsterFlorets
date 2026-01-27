@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QPalette>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterTheme* AsterTheme::instance() {
         static AsterTheme* _instance = new AsterTheme(qApp);

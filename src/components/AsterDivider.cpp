@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QFontMetrics>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterDivider::AsterDivider(Qt::Orientation orientation, QWidget* parent)
         : QWidget(parent)

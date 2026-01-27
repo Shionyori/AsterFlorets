@@ -5,9 +5,9 @@
 #include <QPlainTextEdit>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterTextArea : public QFrame {
+    class AsterFlorets_EXPORT AsterTextArea : public QFrame {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
         Q_PROPERTY(Status status READ status WRITE setStatus)

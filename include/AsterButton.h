@@ -5,9 +5,9 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterButton : public QAbstractButton {
+    class AsterFlorets_EXPORT AsterButton : public QAbstractButton {
         Q_OBJECT
         Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)

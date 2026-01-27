@@ -5,7 +5,7 @@
 #include <QMouseEvent>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterTag::AsterTag(const QString& text, QWidget* parent)
         : AsterTag(parent)

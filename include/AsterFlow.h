@@ -3,11 +3,11 @@
 #include "AsterGlobal.h"
 #include <QWidget>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     class AsterFlowLayout; // Forward declaration
 
-    class ASTERUI_EXPORT AsterFlow : public QWidget {
+    class AsterFlorets_EXPORT AsterFlow : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int hSpacing READ hSpacing WRITE setHSpacing)
         Q_PROPERTY(int vSpacing READ vSpacing WRITE setVSpacing)

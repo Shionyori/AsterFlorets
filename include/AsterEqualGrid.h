@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QGridLayout>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     /**
      * @brief AsterEqualGrid
@@ -12,7 +12,7 @@ namespace AsterUI {
      * Unlike AsterRow/AsterColumn which provide offset/span control,
      * AsterEqualGrid is for automatically arranging N items into M columns.
      */
-    class ASTERUI_EXPORT AsterEqualGrid : public QWidget {
+    class AsterFlorets_EXPORT AsterEqualGrid : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount)
         Q_PROPERTY(int spacing READ spacing WRITE setSpacing)

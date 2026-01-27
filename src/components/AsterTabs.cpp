@@ -12,7 +12,7 @@
 #include <QFontMetrics>
 #include <QDebug>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     struct TabItem {
         QString label;

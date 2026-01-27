@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterAvatar::AsterAvatar(QWidget* parent)
         : QWidget(parent)

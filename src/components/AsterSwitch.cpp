@@ -4,7 +4,7 @@
 #include <QPainterPath>
 #include <QMouseEvent>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterSwitch::AsterSwitch(QWidget* parent)
         : QAbstractButton(parent)

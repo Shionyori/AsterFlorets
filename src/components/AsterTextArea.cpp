@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QEvent>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterTextArea::AsterTextArea(QWidget* parent)
         : QFrame(parent)

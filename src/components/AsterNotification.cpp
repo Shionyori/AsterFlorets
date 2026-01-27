@@ -14,7 +14,7 @@
 #include <QStyle>
 #include <QMutex>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     class AsterNotificationWidget;
     static QList<AsterNotificationWidget*> g_activeNotifications;

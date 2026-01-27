@@ -5,9 +5,9 @@
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterCard : public QFrame {
+    class AsterFlorets_EXPORT AsterCard : public QFrame {
         Q_OBJECT
         Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
         Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)

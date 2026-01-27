@@ -6,5 +6,5 @@ else()
     add_executable(LayoutDemo LayoutDemo.cpp)
 endif()
 
-target_link_libraries(ComponentGallery PRIVATE AsterUI Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(LayoutDemo PRIVATE AsterUI Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ComponentGallery PRIVATE AsterFlorets Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(LayoutDemo PRIVATE AsterFlorets Qt${QT_VERSION_MAJOR}::Widgets)

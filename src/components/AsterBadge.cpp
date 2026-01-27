@@ -7,7 +7,7 @@
 #include <QFontMetrics>
 #include <QDebug>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // Internal helper widget for drawing the badge
     class BadgeIndicator : public QWidget {

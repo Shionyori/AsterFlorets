@@ -5,9 +5,9 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterCheckBox : public QCheckBox {
+    class AsterFlorets_EXPORT AsterCheckBox : public QCheckBox {
         Q_OBJECT
         Q_PROPERTY(double checkScale READ checkScale WRITE setCheckScale)
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)

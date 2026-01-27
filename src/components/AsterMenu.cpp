@@ -5,7 +5,7 @@
 #include <QEvent>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // ========================================================================
     // AsterMenuItem

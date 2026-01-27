@@ -6,7 +6,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterCard::AsterCard(QWidget* parent)
         : QFrame(parent)

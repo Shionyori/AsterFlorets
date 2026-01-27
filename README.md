@@ -1,6 +1,6 @@
-# AsterUI
+# AsterFlorets
 
-AsterUI 是一个基于 C++ Qt 的现代化 UI 组件库，追求实现 Ant Design 的设计风格。
+AsterFlorets 是一个基于 C++ Qt 的现代化 UI 组件库，追求实现 Ant Design 的设计风格。
 
 ## 目标
 
@@ -54,7 +54,7 @@ cmake --build --preset windows-msvc-local
   ```
 
 ## 目录结构
-- `include/AsterUI`: 公共头文件
+- `include/AsterFlorets`: 公共头文件
 - `src`: 源代码
 - `examples`: 示例程序
 - `tests`: 测试用例（暂未创建）

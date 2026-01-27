@@ -5,9 +5,9 @@
 #include <QPixmap>
 #include <QIcon>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterAvatar : public QWidget {
+    class AsterFlorets_EXPORT AsterAvatar : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int size READ size WRITE setSize)
         Q_PROPERTY(Shape shape READ shape WRITE setShape)

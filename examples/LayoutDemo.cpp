@@ -1,9 +1,9 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QLabel>
-#include "AsterUI.h"
+#include "AsterFlorets.h"
 
-using namespace AsterUI;
+using namespace AsterFlorets;
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     AsterTheme::instance();
 
     QMainWindow window;
-    window.setWindowTitle("AsterUI Demo - Slot Based Layout");
+    window.setWindowTitle("AsterFlorets Demo - Slot Based Layout");
     window.resize(1280, 800);
 
     // Create the high-level layout container
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     logoArea->setFixedHeight(64);
     auto* logoLayout = new QHBoxLayout(logoArea);
     logoLayout->setContentsMargins(20, 0, 0, 0);
-    auto *logoTitle = new AsterTitle("AsterUI Demo", 3);
+    auto *logoTitle = new AsterTitle("AsterFlorets Demo", 3);
     logoLayout->addWidget(logoTitle);
     siderLayout->addWidget(logoArea);
     
@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     pageLayout->setFooterHeight(40); // Fixed height
 
     auto *footerLayout = static_cast<QHBoxLayout*>(footer->layout());
-    auto *ft = new AsterText("© 2026 AsterUI");
+    auto *ft = new AsterText("© 2026 AsterFlorets");
     ft->setStyleSheet("color: #999;");
     footerLayout->addWidget(ft);
     footerLayout->setAlignment(Qt::AlignCenter);

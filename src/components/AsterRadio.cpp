@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterRadio::AsterRadio(const QString& text, QWidget* parent)
         : AsterRadio(parent)

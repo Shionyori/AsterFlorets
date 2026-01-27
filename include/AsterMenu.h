@@ -8,12 +8,12 @@
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     class AsterMenu;
 
     // --- AsterMenuItem ---
-    class ASTERUI_EXPORT AsterMenuItem : public QWidget {
+    class AsterFlorets_EXPORT AsterMenuItem : public QWidget {
         Q_OBJECT
         Q_PROPERTY(bool selected READ isSelected WRITE setSelected)
         Q_PROPERTY(qreal hoverProgress READ hoverProgress WRITE setHoverProgress)
@@ -59,7 +59,7 @@ namespace AsterUI {
     };
 
     // --- AsterMenu ---
-    class ASTERUI_EXPORT AsterMenu : public QWidget {
+    class AsterFlorets_EXPORT AsterMenu : public QWidget {
         Q_OBJECT
         Q_PROPERTY(Mode mode READ mode WRITE setMode)
         Q_PROPERTY(QString selectedKey READ selectedKey WRITE setSelectedKey)

@@ -15,8 +15,8 @@
             "binaryDir": "${sourceDir}/build/windows-msvc",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "ASTERUI_BUILD_EXAMPLES": "ON",
-                "ASTERUI_BUILD_TESTS": "ON"
+                "ASTER_BUILD_EXAMPLES": "ON",
+                "ASTER_BUILD_TESTS": "ON"
             }
         },
         {
@@ -27,8 +27,8 @@
             "binaryDir": "${sourceDir}/build/linux-mingw",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "ASTERUI_BUILD_EXAMPLES": "ON",
-                "ASTERUI_BUILD_TESTS": "ON"
+                "ASTER_BUILD_EXAMPLES": "ON",
+                "ASTER_BUILD_TESTS": "ON"
             }
         }
     ],

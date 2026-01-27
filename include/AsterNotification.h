@@ -5,9 +5,9 @@
 #include <QString>
 #include <QWidget>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterNotification : public QObject {
+    class AsterFlorets_EXPORT AsterNotification : public QObject {
         Q_OBJECT
     public:
         enum class Type {

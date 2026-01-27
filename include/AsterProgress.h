@@ -3,9 +3,9 @@
 #include "AsterGlobal.h"
 #include <QProgressBar>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterProgress : public QProgressBar {
+    class AsterFlorets_EXPORT AsterProgress : public QProgressBar {
         Q_OBJECT
         Q_PROPERTY(QColor color READ color WRITE setColor)
         Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)

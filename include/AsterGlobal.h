@@ -2,8 +2,8 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(ASTERUI_LIBRARY)
-#  define ASTERUI_EXPORT Q_DECL_EXPORT
+#if defined(AsterFlorets_LIBRARY)
+#  define AsterFlorets_EXPORT Q_DECL_EXPORT
 #else
-#  define ASTERUI_EXPORT Q_DECL_IMPORT
+#  define AsterFlorets_EXPORT Q_DECL_IMPORT
 #endif

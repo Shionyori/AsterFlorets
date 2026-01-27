@@ -34,8 +34,8 @@
 #include "AsterBreadcrumb.h"
 #include <QString>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    ASTERUI_EXPORT QString version();
+    AsterFlorets_EXPORT QString version();
 
 }

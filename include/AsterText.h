@@ -3,9 +3,9 @@
 #include "AsterGlobal.h"
 #include <QLabel>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-class ASTERUI_EXPORT AsterText : public QLabel {
+class AsterFlorets_EXPORT AsterText : public QLabel {
     Q_OBJECT
     Q_PROPERTY(Type type READ type WRITE setType)
 

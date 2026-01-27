@@ -5,9 +5,9 @@
 #include <QIcon>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterTextInput : public QLineEdit {
+    class AsterFlorets_EXPORT AsterTextInput : public QLineEdit {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
         Q_PROPERTY(int borderRadius READ borderRadius WRITE setBorderRadius)

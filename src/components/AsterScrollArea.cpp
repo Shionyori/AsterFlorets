@@ -2,7 +2,7 @@
 #include "AsterTheme.h"
 #include <QScrollBar>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterScrollArea::AsterScrollArea(QWidget* parent)
         : QScrollArea(parent)

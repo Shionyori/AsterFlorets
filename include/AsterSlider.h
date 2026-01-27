@@ -5,9 +5,9 @@
 #include <QColor>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterSlider : public QAbstractSlider {
+    class AsterFlorets_EXPORT AsterSlider : public QAbstractSlider {
         Q_OBJECT
         Q_PROPERTY(QColor activeColor READ activeColor WRITE setActiveColor)
         Q_PROPERTY(QColor inactiveColor READ inactiveColor WRITE setInactiveColor)

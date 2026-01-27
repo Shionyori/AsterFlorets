@@ -5,9 +5,9 @@
 #include <QStringList>
 #include <functional>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterBreadcrumb : public QWidget {
+    class AsterFlorets_EXPORT AsterBreadcrumb : public QWidget {
         Q_OBJECT
 
     public:

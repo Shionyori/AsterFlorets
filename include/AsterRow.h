@@ -4,11 +4,11 @@
 #include <QWidget>
 #include <QHBoxLayout>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     class AsterColumn;
 
-    class ASTERUI_EXPORT AsterRow : public QWidget {
+    class AsterFlorets_EXPORT AsterRow : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int gutter READ gutter WRITE setGutter)
 

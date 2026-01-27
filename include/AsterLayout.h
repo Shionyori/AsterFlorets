@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QBoxLayout>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-class ASTERUI_EXPORT AsterHeader : public QWidget {
+class AsterFlorets_EXPORT AsterHeader : public QWidget {
     Q_OBJECT
 public:
     explicit AsterHeader(QWidget *parent = nullptr);
@@ -14,7 +14,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 };
 
-class ASTERUI_EXPORT AsterFooter : public QWidget {
+class AsterFlorets_EXPORT AsterFooter : public QWidget {
     Q_OBJECT
 public:
     explicit AsterFooter(QWidget *parent = nullptr);
@@ -22,7 +22,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 };
 
-class ASTERUI_EXPORT AsterContent : public QWidget {
+class AsterFlorets_EXPORT AsterContent : public QWidget {
     Q_OBJECT
 public:
     explicit AsterContent(QWidget *parent = nullptr);
@@ -30,7 +30,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 };
 
-class ASTERUI_EXPORT AsterSider : public QWidget {
+class AsterFlorets_EXPORT AsterSider : public QWidget {
     Q_OBJECT
 public:
     explicit AsterSider(QWidget *parent = nullptr);
@@ -38,7 +38,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 };
 
-class ASTERUI_EXPORT AsterLayout : public QWidget {
+class AsterFlorets_EXPORT AsterLayout : public QWidget {
     Q_OBJECT
 public:
     enum class Mode {

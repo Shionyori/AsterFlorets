@@ -4,7 +4,7 @@
 #include <QEvent>
 #include <QStyleOption>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
 // Helper to standardise paint event (support stylesheet + palette fallback)
 static void paintLayoutWidget(QWidget* widget) {

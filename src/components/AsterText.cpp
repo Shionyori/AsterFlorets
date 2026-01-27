@@ -2,7 +2,7 @@
 #include "AsterTheme.h"
 #include <QPainter>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
 AsterText::AsterText(const QString &text, QWidget *parent)
     : QLabel(text, parent)

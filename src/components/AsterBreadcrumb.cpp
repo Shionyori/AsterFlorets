@@ -8,7 +8,7 @@
 #include <QVariantAnimation>
 #include <QDebug>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // Helper class for clickable breadcrumb items with hover background and animation
     class BreadcrumbLabel : public AsterText {

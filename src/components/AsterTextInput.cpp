@@ -5,7 +5,7 @@
 #include <QAction>
 #include <QStyle>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterTextInput::AsterTextInput(QWidget* parent)
         : QLineEdit(parent)

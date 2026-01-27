@@ -9,11 +9,11 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QLabel;
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     class AsterButton;
 
-    class ASTERUI_EXPORT AsterModal : public QDialog {
+    class AsterFlorets_EXPORT AsterModal : public QDialog {
         Q_OBJECT
     public:
         enum class Type {

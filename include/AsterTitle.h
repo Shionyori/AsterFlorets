@@ -3,9 +3,9 @@
 #include "AsterGlobal.h"
 #include <QLabel>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-class ASTERUI_EXPORT AsterTitle : public QLabel {
+class AsterFlorets_EXPORT AsterTitle : public QLabel {
     Q_OBJECT
     Q_PROPERTY(int level READ level WRITE setLevel)
 

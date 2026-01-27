@@ -5,9 +5,9 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterSwitch : public QAbstractButton {
+    class AsterFlorets_EXPORT AsterSwitch : public QAbstractButton {
         Q_OBJECT
         Q_PROPERTY(qreal handlePosition READ handlePosition WRITE setHandlePosition)
         Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)

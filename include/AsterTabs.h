@@ -8,12 +8,12 @@
 class QStackedWidget;
 class QScrollArea;
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // Forward declaration of internal tab bar
     class AsterTabBar;
 
-    class ASTERUI_EXPORT AsterTabs : public QWidget {
+    class AsterFlorets_EXPORT AsterTabs : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentChanged)
 

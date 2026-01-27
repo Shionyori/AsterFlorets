@@ -6,7 +6,7 @@
 #include <QStyledItemDelegate>
 #include <QEvent>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // 自定义委托以美化下拉列表项
     class AsterSelectDelegate : public QStyledItemDelegate {

@@ -5,9 +5,9 @@
 #include <QColor>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterTag : public QWidget {
+    class AsterFlorets_EXPORT AsterTag : public QWidget {
         Q_OBJECT
         Q_PROPERTY(QString text READ text WRITE setText)
         Q_PROPERTY(bool closable READ isClosable WRITE setClosable)

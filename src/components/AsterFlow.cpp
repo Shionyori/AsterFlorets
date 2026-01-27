@@ -5,7 +5,7 @@
 #include <QStyle>
 #include <QWidgetItem>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // --- Embedded AsterFlowLayout Helper Class ---
     // Moved internally to consolidate API surface.

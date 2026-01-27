@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
 AsterIcon::AsterIcon(QWidget *parent)
     : QWidget(parent), m_iconSize(16, 16)

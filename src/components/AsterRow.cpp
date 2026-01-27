@@ -2,7 +2,7 @@
 #include "AsterColumn.h"
 #include <QEvent>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterRow::AsterRow(QWidget* parent)
         : QWidget(parent)

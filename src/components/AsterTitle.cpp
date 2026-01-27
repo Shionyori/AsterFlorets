@@ -1,7 +1,7 @@
 #include "AsterTitle.h"
 #include "AsterTheme.h"
 
-namespace AsterUI {
+namespace AsterFlorets {
 
 AsterTitle::AsterTitle(const QString &text, int level, QWidget *parent)
     : QLabel(text, parent), m_level(level)

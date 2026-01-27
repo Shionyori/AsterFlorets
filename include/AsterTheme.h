@@ -6,9 +6,9 @@
 #include <QFont>
 #include <QHash>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterTheme : public QObject {
+    class AsterFlorets_EXPORT AsterTheme : public QObject {
         Q_OBJECT
 
     public:

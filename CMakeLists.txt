@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(AsterUI VERSION 0.1.0 LANGUAGES CXX)
+project(AsterFlorets VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,7 +22,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 # 输出配置信息
-message(STATUS "AsterUI Configuration:")
+message(STATUS "AsterFlorets Configuration:")
 message(STATUS "  Qt Version: ${QT_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 
@@ -30,7 +30,7 @@ message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 add_subdirectory(src)
 
 # 添加演示目录 (可选)
-option(ASTERUI_BUILD_EXAMPLES "Build examples" ON)
-if(ASTERUI_BUILD_EXAMPLES)
+option(ASTER_BUILD_EXAMPLES "Build examples" ON)
+if(ASTER_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()

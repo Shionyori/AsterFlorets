@@ -7,7 +7,7 @@
 
 #include <QTimer>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterButton::AsterButton(const QString& text, QWidget* parent) 
         : AsterButton(parent) 

@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QColor>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterBadge : public QWidget {
+    class AsterFlorets_EXPORT AsterBadge : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int count READ count WRITE setCount)
         Q_PROPERTY(bool showZero READ showZero WRITE setShowZero)

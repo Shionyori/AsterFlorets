@@ -1,6 +1,6 @@
-#include "AsterUI.h"
+#include "AsterFlorets.h"
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     QString version() {
         return "0.1.0";

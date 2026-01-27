@@ -1,5 +1,5 @@
-set(ASTERUI_SOURCES
-    AsterUI.cpp
+set(AsterFlorets_SOURCES
+    AsterFlorets.cpp
     AsterTheme.cpp
     components/AsterEqualGrid.cpp
     components/AsterRow.cpp
@@ -33,9 +33,9 @@ set(ASTERUI_SOURCES
     components/AsterBreadcrumb.cpp
 )
 
-set(ASTERUI_HEADERS
+set(AsterFlorets_HEADERS
     ../include/AsterGlobal.h
-    ../include/AsterUI.h
+    ../include/AsterFlorets.h
     ../include/AsterTheme.h
     ../include/AsterEqualGrid.h
     ../include/AsterRow.h
@@ -71,20 +71,20 @@ set(ASTERUI_HEADERS
     ../include/AsterBadge.h
 )
 
-add_library(AsterUI SHARED
-    ${ASTERUI_SOURCES}
-    ${ASTERUI_HEADERS}
+add_library(AsterFlorets SHARED
+    ${AsterFlorets_SOURCES}
+    ${AsterFlorets_HEADERS}
 )
 
-target_include_directories(AsterUI PUBLIC
+target_include_directories(AsterFlorets PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(AsterUI PUBLIC
+target_link_libraries(AsterFlorets PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
 )
 
-target_compile_definitions(AsterUI PRIVATE ASTERUI_LIBRARY)
+target_compile_definitions(AsterFlorets PRIVATE AsterFlorets_LIBRARY)

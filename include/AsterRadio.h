@@ -5,9 +5,9 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterRadio : public QRadioButton {
+    class AsterFlorets_EXPORT AsterRadio : public QRadioButton {
         Q_OBJECT
         Q_PROPERTY(double dotScale READ dotScale WRITE setDotScale)
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)

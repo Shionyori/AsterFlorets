@@ -6,9 +6,9 @@
 
 class QWidget;
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterMessage : public QObject {
+    class AsterFlorets_EXPORT AsterMessage : public QObject {
         Q_OBJECT
     public:
         enum class Type {

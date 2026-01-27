@@ -3,9 +3,9 @@
 #include "AsterGlobal.h"
 #include <QWidget>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterDivider : public QWidget {
+    class AsterFlorets_EXPORT AsterDivider : public QWidget {
         Q_OBJECT
         Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)
         Q_PROPERTY(QString text READ text WRITE setText)

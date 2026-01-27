@@ -14,7 +14,7 @@
 #include <QQueue>
 #include <QPainter>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     // Forward declaration & Global list
     class AsterMessageWidget;
@@ -101,7 +101,7 @@ namespace AsterUI {
                 // Fix: 如果是 AsterModal (或类似的非主窗口 Modal)，我们希望 Message 显示在主窗口区域
                 // 且不应该跟随 Dialog 移动或被 Dialog 限制尺寸
                  QWidget* target = active;
-                 if (target->inherits("AsterUI::AsterModal") && target->parentWidget()) {
+                 if (target->inherits("AsterFlorets::AsterModal") && target->parentWidget()) {
                      // 尝试向上寻找主窗口
                      if (auto parent = target->parentWidget()->window()) {
                          target = parent;

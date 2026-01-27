@@ -1,7 +1,7 @@
 #include "AsterEqualGrid.h"
 #include <QLayoutItem>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterEqualGrid::AsterEqualGrid(QWidget* parent)
         : QWidget(parent)

@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QStyleOption>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
 AsterSpace::AsterSpace(QWidget *parent)
     : QWidget(parent)

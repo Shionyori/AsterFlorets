@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QVBoxLayout>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterColumn : public QWidget {
+    class AsterFlorets_EXPORT AsterColumn : public QWidget {
         Q_OBJECT
         Q_PROPERTY(int span READ span WRITE setSpan)
 

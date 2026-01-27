@@ -4,7 +4,7 @@
 #include <QMouseEvent>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterSlider::AsterSlider(Qt::Orientation orientation, QWidget* parent)
         : QAbstractSlider(parent)

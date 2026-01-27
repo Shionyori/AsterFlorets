@@ -14,7 +14,7 @@
 #include <QParallelAnimationGroup>
 #include <QTimer>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterModal::AsterModal(QWidget* parent)
         : QDialog(parent)

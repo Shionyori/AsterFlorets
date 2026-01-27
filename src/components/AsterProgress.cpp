@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
     AsterProgress::AsterProgress(QWidget* parent)
         : QProgressBar(parent)

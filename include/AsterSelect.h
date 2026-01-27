@@ -4,9 +4,9 @@
 #include <QComboBox>
 #include <QPropertyAnimation>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-    class ASTERUI_EXPORT AsterSelect : public QComboBox {
+    class AsterFlorets_EXPORT AsterSelect : public QComboBox {
         Q_OBJECT
         Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
 

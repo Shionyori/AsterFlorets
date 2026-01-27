@@ -5,9 +5,9 @@
 #include <QIcon>
 #include <QColor>
 
-namespace AsterUI {
+namespace AsterFlorets {
 
-class ASTERUI_EXPORT AsterIcon : public QWidget {
+class AsterFlorets_EXPORT AsterIcon : public QWidget {
     Q_OBJECT
     Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
     Q_PROPERTY(QSize iconSize READ iconSize WRITE setIconSize)
