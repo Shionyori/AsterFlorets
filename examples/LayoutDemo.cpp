@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     AsterTheme::instance();
 
     QMainWindow window;
-    window.setWindowTitle("AsterUI - Slot-Based Layout Demo");
+    window.setWindowTitle("AsterUI Demo - Slot Based Layout");
     window.resize(1280, 800);
 
     // Create the high-level layout container
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     logoArea->setFixedHeight(64);
     auto* logoLayout = new QHBoxLayout(logoArea);
     logoLayout->setContentsMargins(20, 0, 0, 0);
-    auto *logoTitle = new AsterTitle("AsterUI", 3);
+    auto *logoTitle = new AsterTitle("AsterUI Demo", 3);
     logoLayout->addWidget(logoTitle);
     siderLayout->addWidget(logoArea);
     
@@ -98,22 +98,21 @@ int main(int argc, char *argv[])
 
     // Card 1: Add DIRECTLY to scrollArea
     AsterCard *card1 = new AsterCard();
+    card1->setTitle("Unified API");
     auto *card1Layout = new QVBoxLayout(card1);
-    card1Layout->setContentsMargins(24, 24, 24, 24); 
-    card1Layout->addWidget(new AsterTitle("Unified API", 3));
+    card1Layout->setContentsMargins(0, 0, 0, 0); 
     card1Layout->addWidget(new AsterText("Now AsterScrollArea works like a container naturally."));
     card1Layout->addSpacing(10);
     card1Layout->addWidget(new AsterText("Usage: scrollArea->addWidget(card)"));
-    
     scrollArea->addWidget(card1);
 
     // Add extra cards
-    for(int i=0; i<10; ++i) {
+    for(int i=0; i<5; ++i) {
         AsterCard *extraCard = new AsterCard();
+        extraCard->setTitle(QString("Content Card %1").arg(i+1));
         auto *l = new QVBoxLayout(extraCard);
-        l->addWidget(new AsterTitle(QString("Unified Card %1").arg(i+1), 4));
+        l->setContentsMargins(0, 0, 0, 0);
         l->addWidget(new AsterText(QString("This item is added directly to ScrollArea.").arg(i+1)));
-        l->addStretch();
         scrollArea->addWidget(extraCard);
     }
     
