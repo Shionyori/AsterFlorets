@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "AsterGlobal.h"
 #include <QAbstractSlider>
 #include <QColor>
 #include <QPropertyAnimation>

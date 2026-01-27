@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "AsterGlobal.h"
 #include <QDialog>
 #include <QString>
 #include <functional>

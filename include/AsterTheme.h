@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "AsterGlobal.h"
 #include <QObject>
 #include <QColor>
 #include <QFont>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "AsterGlobal.h"
 #include "AsterTheme.h"
 #include "AsterEqualGrid.h"
 #include "AsterRow.h"

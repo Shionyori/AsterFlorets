@@ -34,7 +34,7 @@ set(ASTERUI_SOURCES
 )
 
 set(ASTERUI_HEADERS
-    ../include/Global.h
+    ../include/AsterGlobal.h
     ../include/AsterUI.h
     ../include/AsterTheme.h
     ../include/AsterEqualGrid.h

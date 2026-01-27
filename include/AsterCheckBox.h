@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "AsterGlobal.h"
 #include <QCheckBox>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
