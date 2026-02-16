@@ -493,6 +493,107 @@ int main(int argc, char *argv[])
         rootSpace->addWidget(row);
     }
 
+    // --- Section 4: Feedback & Others ---
+    {
+        auto *row = new AsterRow();
+        row->setGutter(24);
+
+        // [Card] Feedback Components
+        {
+            auto *col = new AsterColumn(12);
+            auto *card = new AsterCard();
+            card->setTitle("Feedback & Overlay");
+
+            auto *cardSpace = new AsterSpace(Qt::Vertical);
+            cardSpace->setSize(16);
+
+            // Alerts
+            cardSpace->addWidget(new AsterAlert("Success Tips", AsterAlert::Type::Success));
+            cardSpace->addWidget(new AsterAlert("Informational Notes", AsterAlert::Type::Info));
+            cardSpace->addWidget(new AsterAlert("Warning", AsterAlert::Type::Warning));
+            cardSpace->addWidget(new AsterAlert("Error", AsterAlert::Type::Error));
+
+            // Spin
+            auto *spinRow = new AsterSpace(Qt::Horizontal);
+            spinRow->setSize(20);
+            spinRow->addWidget(new AsterText("Spinning: "));
+            spinRow->addWidget(new AsterSpin());
+            cardSpace->addWidget(spinRow);
+
+            // Tooltip & Popover
+            auto *tpRow = new AsterSpace(Qt::Horizontal);
+            auto *btnTip = new AsterButton("Tooltip");
+            AsterTooltip::install(btnTip, "This is a tooltip text");
+            tpRow->addWidget(btnTip);
+
+            auto *btnPop = new AsterButton("Popover");
+            auto *pop = new AsterPopover(btnPop); // parented to button for demo? No, usually parent to window or nothing
+            pop->setTitle("Popover Title");
+            pop->setContent(new AsterText("Content inside popover"));
+            pop->setTarget(btnPop);
+            tpRow->addWidget(btnPop);
+            
+            cardSpace->addWidget(tpRow);
+
+            // Dropdown
+            auto *dd = new AsterDropdown("Hover me (Dropdown)");
+            dd->addAction("1st menu item", [](){ qDebug() << "1st item clicked"; });
+            dd->addAction("2nd menu item", [](){ qDebug() << "2nd item clicked"; });
+            cardSpace->addWidget(dd);
+
+            // Drawer
+            auto *btnDrawer = new AsterButton("Open Drawer");
+            // Drawer needs parent window usually to cover it
+            // We can try to use 'window' reference if we capture it, but main() variable isn't accessible easily here
+            // Let's create drawer with button as parent for test, or just skip full implementation detail
+            // In real app, drawer is attached to window.
+            cardSpace->addWidget(btnDrawer);
+
+            auto *l = new QVBoxLayout(card);
+            l->setContentsMargins(0, 0, 0, 0);
+            l->addWidget(cardSpace);
+            
+            col->addWidget(card);
+            row->addColumn(col);
+        }
+
+        // [Card] Collapse & Result
+        {
+            auto *col = new AsterColumn(12);
+            auto *card = new AsterCard();
+            card->setTitle("Collapse & Result");
+            
+            auto *cardSpace = new AsterSpace(Qt::Vertical);
+            cardSpace->setSize(16);
+            
+            // Collapse
+            auto *collapse = new AsterCollapse();
+            collapse->setAccordion(true);
+            collapse->addPanel("Panel 1", new AsterText("Content of Panel 1\nLine 2\nLine 3"));
+            collapse->addPanel("Panel 2", new AsterText("Content of Panel 2 is visible when expanded."));
+            collapse->addPanel("Panel 3", new AsterButton("A Button inside panel"));
+            cardSpace->addWidget(collapse);
+            
+            // Result (Mini)
+            auto *res = new AsterResult();
+            res->setStatus(AsterResult::Status::Success);
+            res->setTitle("Successfully Purchased");
+            // res->setSubTitle("Order number: 2017182818828182881");
+            res->setFixedHeight(200); // constrain height for demo
+            
+            cardSpace->addWidget(res);
+
+            auto *l = new QVBoxLayout(card);
+            l->setContentsMargins(0, 0, 0, 0);
+            l->addWidget(cardSpace);
+
+            col->addWidget(card);
+            row->addColumn(col);
+        }
+
+        rootSpace->addWidget(row);
+    }
+
     scrollArea->setWidget(rootSpace);
     scrollArea->setWidgetResizable(true);
 

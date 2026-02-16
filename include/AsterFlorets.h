@@ -32,6 +32,14 @@
 #include "AsterBadge.h"
 #include "AsterTabs.h"
 #include "AsterBreadcrumb.h"
+#include "AsterAlert.h"
+#include "AsterDrawer.h"
+#include "AsterSpin.h"
+#include "AsterTooltip.h"
+#include "AsterPopover.h"
+#include "AsterDropdown.h"
+#include "AsterCollapse.h"
+#include "AsterResult.h"
 #include <QString>
 
 namespace AsterFlorets {

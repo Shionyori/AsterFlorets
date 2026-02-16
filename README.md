@@ -106,13 +106,13 @@ cmake --build --preset windows-msvc-local
 - [x] **Card** (卡片) - `AsterCard` (包含标题栏和内容区，支持阴影和边框优化)
 - [x] **Tag** (标签) - `AsterTag`
 - [x] **Progress** (进度条) - `AsterProgress`
-- [ ] **Collapse** (折叠面板) - `AsterCollapse`
+- [x] **Collapse** (折叠面板) - `AsterCollapse` (支持手风琴模式)
 - [ ] **Descriptions** (描述列表) - `AsterDescriptions`
 - [ ] **List** (列表) - `AsterList` 
 - [ ] **Table** (表格) - `AsterTable`
 - [ ] **Tree** (树形控件) - `AsterTree`
-- [ ] **Tooltip** (文字提示) - `AsterTooltip`
-- [ ] **Popover** (气泡卡片) - `AsterPopover`
+- [x] **Tooltip** (文字提示) - `AsterTooltip` (自动安装及事件过滤)
+- [x] **Popover** (气泡卡片) - `AsterPopover` (支持自定义内容)
 - [ ] **Image** (图片) - `AsterImage`
 - [ ] **Statistic** (统计数值) - `AsterStatistic`
 - [ ] **Calendar** (日历) - `AsterCalendar`
@@ -124,22 +124,23 @@ cmake --build --preset windows-msvc-local
 - [x] **Menu** (菜单) - `AsterMenu`
 - [x] **Breadcrumb** (面包屑) - `AsterBreadcrumb`
 - [ ] **Anchor** (锚点) - `AsterAnchor`
-- [ ] **Dropdown** (下拉菜单) - `AsterDropdown`
+- [x] **Dropdown** (下拉菜单) - `AsterDropdown`
 - [ ] **Pagination** (分页) - `AsterPagination`
 - [ ] **Steps** (步骤条) - `AsterSteps`
-- [ ] **Tabs** (标签页) - `AsterTabs`
+- [x] **Tabs** (标签页) - `AsterTabs` (支持基础标签切换、内容嵌套、动态添加/删除)
 
 ### 6. Feedback (反馈)
 用户操作后的反馈交互。
 - [x] **Message** (全局提示) - `AsterMessage` (Toast 风格，自动消失)
 - [x] **Modal** (模态对话框) - `AsterModal` (中心弹出，可自定义内容和按钮) 原 `AsterDialog`
 - [x] **Notification** (通知提醒框) - `AsterNotification` (右下角弹出)
-- [ ] **Alert** (警告提示) - `AsterAlert` (信息提示条)
-- [ ] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出层)
+- [x] **Alert** (警告提示) - `AsterAlert` (信息提示条)
+- [x] **Drawer** (抽屉) - `AsterDrawer` (侧边滑出层)
 - [ ] **popconfirm** (气泡确认框) - `AsterPopconfirm` (带确认操作的气泡提示)
-- [ ] **Result** (结果页) - `AsterResult`
+- [x] **Result** (结果页) - `AsterResult` (支持 403/404/500/Success/Error/Info/Warning)
 - [ ] **Skeleton** (骨架屏) - `AsterSkeleton`
-- [ ] **Spin** (加载中) - `AsterSpin`
+- [x] **Spin** (加载中) - `AsterSpin`
+- [x] **Tooltip** (文字提示) - `AsterTooltip` (自动安装及事件过滤)
 
 ### 7. Other (其他)
 - [x] **Theme** (主题管理) - `AsterTheme` (集中管理全局样式变量，如颜色、字体、间距等)

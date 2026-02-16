@@ -31,6 +31,14 @@ set(AsterFlorets_SOURCES
     components/AsterBadge.cpp
     components/AsterTabs.cpp
     components/AsterBreadcrumb.cpp
+    components/AsterAlert.cpp
+    components/AsterDrawer.cpp
+    components/AsterSpin.cpp
+    components/AsterTooltip.cpp
+    components/AsterPopover.cpp
+    components/AsterDropdown.cpp
+    components/AsterCollapse.cpp
+    components/AsterResult.cpp
 )
 
 set(AsterFlorets_HEADERS
@@ -48,6 +56,14 @@ set(AsterFlorets_HEADERS
     ../include/AsterTheme.h
     ../include/AsterIcon.h
     ../include/AsterButton.h
+    ../include/AsterAlert.h
+    ../include/AsterDrawer.h
+    ../include/AsterSpin.h
+    ../include/AsterTooltip.h
+    ../include/AsterPopover.h
+    ../include/AsterDropdown.h
+    ../include/AsterCollapse.h
+    ../include/AsterResult.h
     ../include/AsterAvatar.h
     ../include/AsterTextInput.h
     ../include/AsterTextArea.h
