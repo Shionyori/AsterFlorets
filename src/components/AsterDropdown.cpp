@@ -4,6 +4,7 @@
 #include <QPainterPath>
 #include <QPen>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QVariantAnimation>
 
 namespace AsterFlorets {
@@ -59,18 +60,24 @@ namespace AsterFlorets {
     }
 
     void AsterDropdown::paintEvent(QPaintEvent* event) {
-        AsterButton::paintEvent(event);
+        // 重写父类 paintEvent，不使用 AsterButton 自带的波纹/Scale，避免视觉冲突
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        drawBackground(painter); // 使用 AsterButton 的背景绘制逻辑
+
+        // 绘制内容 (Left aligned text)
+        painter.setPen(textColor());
+        painter.setFont(font());
         
-        // Draw small down arrow if not present?
-        // Actually typically text + icon. 
-        // Let's assume user sets text. We just paint an arrow at the right if there's room.
-        
-        QPainter p(this);
-        p.setRenderHint(QPainter::Antialiasing);
-        
+        // Icon / Spinner placeholder logic if needed, simplify for dropdown:
+        int padding = 12;
+        QRect textRect = rect().adjusted(padding, 0, -30, 0); // Reserve space for arrow
+        painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, text());
+
         // Simple arrow
         int arrowSize = 8;
-        int x = width() - 16;
+        int x = width() - 20;
         int y = height() / 2 - arrowSize / 4;
         
         QPainterPath path;
@@ -78,9 +85,25 @@ namespace AsterFlorets {
         path.lineTo(x + arrowSize / 2, y + arrowSize / 2);
         path.lineTo(x + arrowSize, y);
         
-        p.setPen(QPen(AsterTheme::instance()->color(AsterTheme::ColorRole::Text), 1.5));
-        p.setBrush(Qt::NoBrush);
-        p.drawPath(path);
+        QPen arrowPen(textColor(), 1.5);
+        arrowPen.setCapStyle(Qt::RoundCap);
+        arrowPen.setJoinStyle(Qt::RoundJoin);
+        painter.setPen(arrowPen);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPath(path);
+    }
+
+    void AsterDropdown::mousePressEvent(QMouseEvent* event) {
+        // 覆盖 AsterButton 的点击动画逻辑，Dropdown不需要缩放
+        if (event->button() == Qt::LeftButton) {
+            emit clicked();
+        }
+        // QAbstractButton default handling for 'down' state if needed
+        QAbstractButton::mousePressEvent(event);
+    }
+
+    void AsterDropdown::mouseReleaseEvent(QMouseEvent* event) {
+        QAbstractButton::mouseReleaseEvent(event);
     }
 
 }

@@ -23,6 +23,8 @@ namespace AsterFlorets {
         // paint event is handled by AsterButton already
         // But we might want to draw a down arrow icon automatically?
         void paintEvent(QPaintEvent* event) override;
+        void mousePressEvent(QMouseEvent* event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
 
     private:
         QMenu* m_menu = nullptr;

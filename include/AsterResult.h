@@ -5,6 +5,10 @@
 #include <QString>
 #include <QIcon>
 
+// Forward declarations for Qt classes
+class QLabel;
+class QVBoxLayout;
+
 namespace AsterFlorets {
 
     class AsterFlorets_EXPORT AsterResult : public QWidget {
@@ -40,14 +44,20 @@ namespace AsterFlorets {
         void setExtra(QWidget* widget); // Add buttons/actions
 
     protected:
-        void paintEvent(QPaintEvent* event) override;
+        // No longer override paintEvent, usage Layout
+        // void paintEvent(QPaintEvent* event) override;
 
     private:
         Status m_status = Status::Info;
-        QString m_title;
-        QString m_subTitle;
-        QWidget* m_extra = nullptr;
-        // Icons are resource based usually, we will draw placeholders
+        
+        // UI Components
+        QWidget* m_iconWidget = nullptr;
+        QLabel* m_titleLabel = nullptr;
+        QLabel* m_subLabel = nullptr;
+        QWidget* m_extraWidget = nullptr;
+        QVBoxLayout* m_layout = nullptr;
+
+        void updateIcon();
     };
 
 }

@@ -98,6 +98,7 @@ namespace AsterFlorets {
         void startRippleAnimation(const QPoint& pos);
         void initAnimations();
 
+    protected:
         // 绘制辅助
         void drawBackground(QPainter& painter);
         void drawRipple(QPainter& painter);

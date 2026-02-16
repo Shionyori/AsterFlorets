@@ -40,6 +40,8 @@ namespace AsterFlorets {
 
     protected:
         void paintEvent(QPaintEvent* event) override;
+        void showEvent(QShowEvent* event) override;
+        void hideEvent(QHideEvent* event) override;
         QSize sizeHint() const override;
 
     private:

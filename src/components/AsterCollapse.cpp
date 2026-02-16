@@ -54,8 +54,16 @@ namespace AsterFlorets {
             m_scrollArea->setWidgetResizable(true);
             m_scrollArea->setFixedHeight(0); // Start collapsed
             
+            // Fix: Set transparent background for ScrollArea so parent background shows through
+            // Or set specifically to Surface color
+            m_scrollArea->setStyleSheet("QScrollArea { background: transparent; border: none; } QWidget { background: transparent; }");
+            m_scrollArea->viewport()->setStyleSheet("background: transparent;");
+            
             // We need a wrapper widget for layout if we use setWidget
             QWidget* wrapper = new QWidget();
+            // Fix: Ensure wrapper is transparent or has correct background
+            wrapper->setStyleSheet("background: transparent;"); 
+            
             auto contentLayout = new QVBoxLayout(wrapper);
             contentLayout->setContentsMargins(12, 12, 12, 12);
             if (m_content) {
@@ -121,6 +129,10 @@ namespace AsterFlorets {
         void paintEvent(QPaintEvent* event) override {
             Q_UNUSED(event);
             QPainter p(this);
+            
+            // 绘制背景，防止展开过程中出现黑色伪影
+            p.fillRect(rect(), AsterTheme::instance()->color(AsterTheme::ColorRole::Surface));
+
             // Draw bottom border
             p.setPen(QPen(AsterTheme::instance()->color(AsterTheme::ColorRole::Border), 1));
             p.drawLine(rect().bottomLeft(), rect().bottomRight());

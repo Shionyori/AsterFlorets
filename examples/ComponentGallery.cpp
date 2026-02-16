@@ -579,7 +579,6 @@ int main(int argc, char *argv[])
             res->setStatus(AsterResult::Status::Success);
             res->setTitle("Successfully Purchased");
             // res->setSubTitle("Order number: 2017182818828182881");
-            res->setFixedHeight(200); // constrain height for demo
             
             cardSpace->addWidget(res);
 

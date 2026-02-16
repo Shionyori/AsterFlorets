@@ -12,19 +12,22 @@
 namespace AsterFlorets {
 
     AsterPopover::AsterPopover(QWidget* parent)
-        : QWidget(parent) // Start with parent, but we will make it a popup window later or reparent
+        : QWidget(parent)
     {
+        // Popover needs to be a popup window to float above others
+        // Qt::Popup handles closing when clicking outside
         setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
         setAttribute(Qt::WA_TranslucentBackground);
         
+        // Container holds the actual content
         m_container = new QWidget(this);
-        m_container->setObjectName("AsterPopoverContainer");
-        m_container->setAutoFillBackground(true);
+        m_container->setObjectName("AsterPopoverContainer"); // Ensure correct styling
         
-        // Shadow (manual because translucent window)
-        // Actually for simplicity, we rely on painting background with some alpha perhaps?
-        // Or allow WM shadow if not translucent? 
-        // Let's paint a nice rounded rect with shadow.
+        // Fix: Explicitly set background color for container
+        QPalette pal = m_container->palette();
+        pal.setColor(QPalette::Window, AsterTheme::instance()->color(AsterTheme::ColorRole::Surface));
+        m_container->setPalette(pal);
+        m_container->setAutoFillBackground(true);
         
         auto* lay = new QVBoxLayout(m_container);
         lay->setContentsMargins(12, 12, 12, 12);

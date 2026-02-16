@@ -3,20 +3,137 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QIcon>
 
 namespace AsterFlorets {
+
+    // Internal Icon Widget
+    class AsterResultIcon : public QWidget {
+    public:
+        AsterResultIcon(QWidget* parent = nullptr) : QWidget(parent) {
+            setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+            updateSize();
+        }
+
+        void setStatus(AsterResult::Status status) {
+            if (m_status != status) {
+                m_status = status;
+                update();
+            }
+        }
+        
+        QSize sizeHint() const override {
+            return QSize(m_size, m_size);
+        }
+
+        void setIconSize(int size) {
+            if (m_size != size) {
+                m_size = size;
+                updateSize();
+                update();
+            }
+        }
+
+    protected:
+        void paintEvent(QPaintEvent*) override {
+            QPainter p(this);
+            p.setRenderHint(QPainter::Antialiasing);
+
+            QRect r = rect();
+            QColor iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Primary);
+            QString iconText = "i";
+
+            switch (m_status) {
+                case AsterResult::Status::Success: 
+                    iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Success); 
+                    iconText = "V"; // Checkmark
+                    break;
+                case AsterResult::Status::Error: 
+                case AsterResult::Status::ServerError:
+                    iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Error); 
+                    iconText = "X"; // Cross
+                    break;
+                case AsterResult::Status::Warning:
+                    iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Warning); 
+                    iconText = "!";
+                    break;
+                case AsterResult::Status::NotFound:
+                    iconColor = Qt::gray;
+                    iconText = "404";
+                    break;
+                case AsterResult::Status::Forbidden:
+                    iconColor = Qt::gray;
+                    iconText = "403";
+                    break;
+                 default: break;
+            }
+
+            p.setBrush(iconColor);
+            p.setPen(Qt::NoPen);
+            p.drawEllipse(r);
+            
+            p.setPen(Qt::white);
+            QFont f = font();
+            f.setPixelSize(m_size / 3);
+            f.setBold(true);
+            p.setFont(f);
+            p.drawText(r, Qt::AlignCenter, iconText);
+        }
+
+    private:
+        void updateSize() {
+            setFixedSize(m_size, m_size);
+        }
+        AsterResult::Status m_status = AsterResult::Status::Info;
+        int m_size = 72;
+    };
 
     AsterResult::AsterResult(QWidget* parent)
         : QWidget(parent)
     {
         setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        // Central layout
-        auto* layout = new QVBoxLayout(this);
-        layout->setAlignment(Qt::AlignCenter);
-        layout->setSpacing(24);
         
-        // We handle painting mostly, but "extra" widget is added to layout
-        // Actually, let's just use layout for everything to keep it simple
+        // Use Layout System
+        auto* mainLay = new QVBoxLayout(this);
+        mainLay->setAlignment(Qt::AlignCenter);
+        mainLay->setSpacing(16);
+        mainLay->setContentsMargins(24, 24, 24, 24); // Padding
+        m_layout = mainLay;
+
+        // 1. Icon
+        auto* iconWrapper = new AsterResultIcon(this);
+        m_iconWidget = iconWrapper;
+        mainLay->addWidget(m_iconWidget, 0, Qt::AlignCenter);
+
+        // 2. Title
+        m_titleLabel = new QLabel(this);
+        m_titleLabel->setAlignment(Qt::AlignCenter);
+        m_titleLabel->setWordWrap(true);
+        QFont ft = font();
+        ft.setPixelSize(24);
+        ft.setBold(true);
+        m_titleLabel->setFont(ft);
+        // Palette for text color
+        QPalette pt = m_titleLabel->palette();
+        pt.setColor(QPalette::WindowText, AsterTheme::instance()->color(AsterTheme::ColorRole::Text));
+        m_titleLabel->setPalette(pt);
+        mainLay->addWidget(m_titleLabel);
+
+        // 3. SubTitle
+        m_subLabel = new QLabel(this);
+        m_subLabel->setAlignment(Qt::AlignCenter);
+        m_subLabel->setWordWrap(true);
+        QFont fs = font();
+        fs.setPixelSize(14);
+        m_subLabel->setFont(fs);
+        QPalette ps = m_subLabel->palette();
+        ps.setColor(QPalette::WindowText, AsterTheme::instance()->color(AsterTheme::ColorRole::TextSecondary));
+        m_subLabel->setPalette(ps);
+        mainLay->addWidget(m_subLabel);
+        
+        // Hide empty labels initially
+        m_titleLabel->hide();
+        m_subLabel->hide();
     }
 
     AsterResult::~AsterResult() = default;
@@ -24,7 +141,7 @@ namespace AsterFlorets {
     void AsterResult::setStatus(Status status) {
         if (m_status != status) {
             m_status = status;
-            update();
+            static_cast<AsterResultIcon*>(m_iconWidget)->setStatus(status);
         }
     }
 
@@ -33,128 +150,37 @@ namespace AsterFlorets {
     }
 
     void AsterResult::setTitle(const QString& title) {
-        m_title = title;
-        update();
+        m_titleLabel->setText(title);
+        m_titleLabel->setVisible(!title.isEmpty());
     }
 
     QString AsterResult::title() const {
-        return m_title;
+        return m_titleLabel->text();
     }
 
     void AsterResult::setSubTitle(const QString& subTitle) {
-        m_subTitle = subTitle;
-        update();
+        m_subLabel->setText(subTitle);
+        m_subLabel->setVisible(!subTitle.isEmpty());
     }
 
     QString AsterResult::subTitle() const {
-        return m_subTitle;
+        return m_subLabel->text();
     }
 
     void AsterResult::setExtra(QWidget* widget) {
-        if (m_extra) {
-            layout()->removeWidget(m_extra);
-            m_extra->deleteLater();
+        if (m_extraWidget) {
+            m_layout->removeWidget(m_extraWidget);
+            m_extraWidget->deleteLater();
         }
-        m_extra = widget;
-        if (m_extra) {
-            layout()->addWidget(m_extra);
-            m_extra->show();
+        m_extraWidget = widget;
+        if (m_extraWidget) {
+            m_layout->addWidget(m_extraWidget, 0, Qt::AlignCenter);
+            m_extraWidget->show();
         }
     }
 
-    void AsterResult::paintEvent(QPaintEvent* event) {
-        Q_UNUSED(event);
-        QPainter p(this);
-        p.setRenderHint(QPainter::Antialiasing);
-
-        int centX = width() / 2;
-        int currentY = 40; // Top padding
-
-        // 1. Draw Icon
-        int iconSize = 72;
-        QRect iconRect(centX - iconSize/2, currentY, iconSize, iconSize);
-        
-        QColor iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Primary);
-        QString iconText = "i";
-
-        switch (m_status) {
-            case Status::Success: 
-                iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Success); 
-                iconText = "V";
-                break;
-            case Status::Error: 
-            case Status::ServerError:
-                iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Error); 
-                iconText = "X";
-                break;
-            case Status::Warning:
-                iconColor = AsterTheme::instance()->color(AsterTheme::ColorRole::Warning); 
-                iconText = "!";
-                break;
-            case Status::NotFound:
-                iconColor = Qt::gray;
-                iconText = "404";
-                break;
-            case Status::Forbidden:
-                iconColor = Qt::gray;
-                iconText = "403";
-                break;
-             default: break;
-        }
-
-        // Placeholder Icon
-        // In real app, load SVG
-        p.setBrush(iconColor);
-        p.setPen(Qt::NoPen);
-        p.drawEllipse(iconRect);
-        
-        p.setPen(Qt::white);
-        QFont f = font();
-        f.setPixelSize(24);
-        f.setBold(true);
-        p.setFont(f);
-        p.drawText(iconRect, Qt::AlignCenter, iconText);
-
-        currentY += iconSize + 24;
-
-        // 2. Draw Title
-        if (!m_title.isEmpty()) {
-            f.setPixelSize(24);
-            f.setBold(true);
-            p.setFont(f);
-            p.setPen(AsterTheme::instance()->color(AsterTheme::ColorRole::Text));
-            
-            QRect titleRect(20, currentY, width() - 40, 40);
-            p.drawText(titleRect, Qt::AlignCenter | Qt::TextWordWrap, m_title);
-            
-            // Measure actual height for wrapping
-            currentY += 40 + 16; 
-        }
-
-        // 3. Draw SubTitle
-        if (!m_subTitle.isEmpty()) {
-            f.setPixelSize(14);
-            f.setBold(false);
-            p.setFont(f);
-            p.setPen(AsterTheme::instance()->color(AsterTheme::ColorRole::TextSecondary));
-            
-            QRect subRect(40, currentY, width() - 80, 60);
-            p.drawText(subRect, Qt::AlignTop | Qt::AlignHCenter | Qt::TextWordWrap, m_subTitle);
-            
-             currentY += 60 + 24;
-        }
-
-        // Extra widget position is handled by layout, but we need to ensure layout starts after painted content?
-        // Actually mixed approach is bad.
-        // Better: Use standard Draw for everything OR Layout for everything.
-        // Let's rely on Layout for "Extra" buttons, implying they appear at bottom.
-        // To make layout respect painted area, we can set spacing or custom margin on top element.
-        // But since we are painting freely, layout items might overlap if we are not careful.
-        // FIX: The layout contains ONLY the 'extra' widget. We set the layout's top margin to `currentY`.
-        
-        if (layout()) {
-            layout()->setContentsMargins(0, currentY, 0, 0);
-        }
+    void AsterResult::updateIcon() {
+        // ...
     }
 
 }
