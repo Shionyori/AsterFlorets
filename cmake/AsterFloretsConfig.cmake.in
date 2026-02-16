@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+if(NOT TARGET Qt6::Widgets)
+    find_dependency(Qt6 COMPONENTS Core Gui Widgets)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/AsterFloretsTargets.cmake")
+check_required_components(AsterFlorets)
+

@@ -104,3 +104,16 @@ target_link_libraries(AsterFlorets PUBLIC
 )
 
 target_compile_definitions(AsterFlorets PRIVATE AsterFlorets_LIBRARY)
+
+# 安装库文件
+install(TARGETS AsterFlorets
+    EXPORT AsterFloretsTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+)
+
+# 安装头文件
+install(DIRECTORY ../include/ DESTINATION include)
+

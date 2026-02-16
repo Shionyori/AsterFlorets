@@ -12,7 +12,7 @@
             "description": "Build using Visual Studio 17 2022 generator",
             "generator": "Visual Studio 17 2022",
             "architecture": "x64",
-            "binaryDir": "${sourceDir}/build/windows-msvc",
+            "binaryDir": "${sourceDir}/build/windows-msvc-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "ASTER_BUILD_EXAMPLES": "ON",
@@ -20,13 +20,14 @@
             }
         },
         {
-            "name": "linux-mingw",
-            "displayName": "Linux MinGW",
-            "description": "Build using Ninja generator and MinGW",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/linux-mingw",
+            "name":"windows-msvc-release",
+            "displayName": "Windows MSVC Release",
+            "description": "Build using Visual Studio 17 2022 generator in Release mode",
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
+            "binaryDir": "${sourceDir}/build/windows-msvc-release",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_BUILD_TYPE": "Release",
                 "ASTER_BUILD_EXAMPLES": "ON",
                 "ASTER_BUILD_TESTS": "ON"
             }
@@ -38,8 +39,8 @@
             "configurePreset": "windows-msvc"
         },
         {
-            "name": "linux-mingw",
-            "configurePreset": "linux-mingw"
+            "name": "windows-msvc-release",
+            "configurePreset": "windows-msvc-release"
         }
     ]
 }

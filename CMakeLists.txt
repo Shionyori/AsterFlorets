@@ -34,3 +34,33 @@ option(ASTER_BUILD_EXAMPLES "Build examples" ON)
 if(ASTER_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
+
+# 生成并安装 CMake 配置文件
+include(CMakePackageConfigHelpers)
+
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/AsterFloretsConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AsterFloretsConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/AsterFloretsConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/AsterFlorets
+)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/AsterFloretsConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/AsterFloretsConfigVersion.cmake"
+    DESTINATION lib/cmake/AsterFlorets
+)
+
+install(
+    EXPORT AsterFloretsTargets
+    FILE AsterFloretsTargets.cmake
+    NAMESPACE AsterFlorets::
+    DESTINATION lib/cmake/AsterFlorets
+)
+
