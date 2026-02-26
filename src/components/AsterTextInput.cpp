@@ -40,6 +40,7 @@ namespace AsterFlorets {
         
         // 设置最小高度，符合 Ant Design 默认尺寸 (32px)
         setMinimumHeight(32);
+        setFocusPolicy(Qt::StrongFocus);
 
         // 设置内边距 (考虑到背景内缩，稍微增加边距)
         setTextMargins(10, 0, 10, 0);
@@ -123,14 +124,21 @@ namespace AsterFlorets {
                 QPainterPath path;
                 path.addRoundedRect(r, radius, radius);
 
+                const bool disabled = !isEnabled();
+                QColor surfaceColor = theme->color(AsterTheme::ColorRole::Surface);
+                QColor borderColor = m_borderColor;
+
+                if (disabled) {
+                    surfaceColor = theme->color(AsterTheme::ColorRole::Background);
+                    borderColor = theme->color(AsterTheme::ColorRole::Border);
+                }
+
                 // 背景
-                painter.fillPath(path, theme->color(AsterTheme::ColorRole::Surface));
+                painter.fillPath(path, surfaceColor);
 
                 // 边框颜色
-                QColor borderColor = m_borderColor;
-                
                 // Focus Glow (先画光晕)
-                if (hasFocus()) {
+                if (hasFocus() && !disabled) {
                     QColor glowColor = borderColor;
                     glowColor.setAlpha(40);
                     QPen glowPen(glowColor);
@@ -185,6 +193,13 @@ namespace AsterFlorets {
 
     void AsterTextInput::animateBorder() {
         auto theme = AsterTheme::instance();
+
+        if (!isEnabled()) {
+            m_borderAnimation->stop();
+            setBorderColor(theme->color(AsterTheme::ColorRole::Border));
+            return;
+        }
+
         QColor start = m_borderColor;
         QColor end;
 

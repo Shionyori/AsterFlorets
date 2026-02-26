@@ -100,13 +100,54 @@ namespace AsterFlorets {
         m_colors[ColorRole::TagBackground]  = QColor("#F5F5F5"); // Default Tag Background
         m_colors[ColorRole::TagBorder]      = QColor("#D9D9D9"); // Default Tag Border
 
+        // Slider
+        m_colors[ColorRole::SliderHandle]   = QColor("#FFFFFF");
+        m_colors[ColorRole::SliderInactive] = QColor("#D9D9D9");
+        m_colors[ColorRole::SliderActive]   = m_colors[ColorRole::Primary];
+
         m_colors[ColorRole::Mask]           = QColor(0, 0, 0, 115); // 45% Black
     }
 
     void AsterTheme::initDarkMode() {
-        // TODO: Implement Dark Mode based on Shion's dark aura
-        // Placeholder for now
-        initLightMode(); 
+        // Primary Palette
+        m_colors[ColorRole::Primary]       = QColor("#7A78EA");
+        m_colors[ColorRole::PrimaryHover]  = QColor("#9391F0");
+        m_colors[ColorRole::PrimaryActive] = QColor("#5F5CD8");
+
+        // Functional
+        m_colors[ColorRole::Success] = QColor("#49AA19");
+        m_colors[ColorRole::Warning] = QColor("#D89614");
+        m_colors[ColorRole::Error]   = QColor("#DC4446");
+        m_colors[ColorRole::Info]    = QColor("#177DDC");
+
+        // Neutral
+        m_colors[ColorRole::Text]          = QColor(255, 255, 255, 217);
+        m_colors[ColorRole::TextSecondary] = QColor(255, 255, 255, 166);
+        m_colors[ColorRole::Placeholder]   = QColor(255, 255, 255, 115);
+        m_colors[ColorRole::TextDisabled]  = QColor(255, 255, 255, 77);
+
+        // Surfaces
+        m_colors[ColorRole::Background] = QColor("#141414");
+        m_colors[ColorRole::Surface]    = QColor("#1F1F1F");
+        m_colors[ColorRole::Border]     = QColor("#434343");
+        m_colors[ColorRole::Divider]    = QColor("#303030");
+
+        // Layout Areas
+        m_colors[ColorRole::LayoutHeader]  = QColor("#1A1A1A");
+        m_colors[ColorRole::LayoutSider]   = QColor("#1A1A1A");
+        m_colors[ColorRole::LayoutContent] = QColor("#141414");
+        m_colors[ColorRole::LayoutFooter]  = QColor("#1A1A1A");
+
+        // Tag Colors
+        m_colors[ColorRole::TagBackground] = QColor("#2A2A2A");
+        m_colors[ColorRole::TagBorder]     = QColor("#434343");
+
+        // Slider
+        m_colors[ColorRole::SliderHandle]   = QColor("#2A2A2A");
+        m_colors[ColorRole::SliderInactive] = QColor("#434343");
+        m_colors[ColorRole::SliderActive]   = m_colors[ColorRole::Primary];
+
+        m_colors[ColorRole::Mask] = QColor(0, 0, 0, 153); // 60% Black
     }
 
 }

@@ -4,6 +4,7 @@
 #include <QAbstractButton>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include <QVariantAnimation>
 
 namespace AsterFlorets {
 
@@ -135,7 +136,7 @@ namespace AsterFlorets {
         
         // 按下缩放效果
         qreal m_scale = 1.0;
-        QPropertyAnimation* m_scaleAnimation;
+        QVariantAnimation* m_scaleAnimation;
 
         // 波纹效果
         struct Ripple {
@@ -146,7 +147,7 @@ namespace AsterFlorets {
             bool active = false;
         };
         Ripple m_ripple;
-        QPropertyAnimation* m_rippleAnimation;
+        QVariantAnimation* m_rippleAnimation;
     };
 
 }

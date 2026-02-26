@@ -23,7 +23,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 # 输出配置信息
 message(STATUS "AsterFlorets Configuration:")
-message(STATUS "  Qt Version: ${QT_VERSION}")
+message(STATUS "  Qt Version: ${Qt6_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 
 # 添加库目录
@@ -33,6 +33,14 @@ add_subdirectory(src)
 option(ASTER_BUILD_EXAMPLES "Build examples" ON)
 if(ASTER_BUILD_EXAMPLES)
     add_subdirectory(examples)
+endif()
+
+# 添加测试目录 (可选)
+option(ASTER_BUILD_TESTS "Build tests" OFF)
+if(ASTER_BUILD_TESTS)
+    include(CTest)
+    find_package(Qt6 REQUIRED COMPONENTS Test)
+    add_subdirectory(tests)
 endif()
 
 # 生成并安装 CMake 配置文件

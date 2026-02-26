@@ -26,8 +26,9 @@ namespace AsterFlorets {
         : QAbstractButton(parent)
         , m_type(Type::Default)
         , m_colorAnimationGroup(new QParallelAnimationGroup(this))
-        , m_rippleAnimation(new QPropertyAnimation(this, "")) // 占位，后续自定义
+        , m_rippleAnimation(nullptr)
         , m_loadingTimer(new QTimer(this))
+        , m_scaleAnimation(nullptr)
     {
         setCursor(Qt::PointingHandCursor);
         
@@ -61,7 +62,7 @@ namespace AsterFlorets {
             m_ripple.active = false;
             update();
         });
-        m_rippleAnimation = reinterpret_cast<QPropertyAnimation*>(rippleAnim); // Hacky cast for storage
+        m_rippleAnimation = rippleAnim;
 
         // 3. 初始化按压缩放动画
         auto scaleAnim = new QVariantAnimation(this);
@@ -71,7 +72,7 @@ namespace AsterFlorets {
             m_scale = value.toReal();
             update();
         });
-        m_scaleAnimation = reinterpret_cast<QPropertyAnimation*>(scaleAnim);
+        m_scaleAnimation = scaleAnim;
     }
     
     AsterButton::Type AsterButton::type() const {
@@ -208,7 +209,7 @@ namespace AsterFlorets {
 
     void AsterButton::drawBackground(QPainter& painter) {
         auto theme = AsterTheme::instance();
-        int radius = theme->borderRadius();
+        int radius = (m_borderRadius >= 0) ? m_borderRadius : theme->borderRadius();
 
         // 注意：Qt 的 drawRect/drawPath 描边是居中对齐的，如果直接用 rect()，
         // 边缘的 0.5px 会被切掉。需要向内收缩半个像素。
@@ -218,26 +219,46 @@ namespace AsterFlorets {
         QPainterPath path;
         path.addRoundedRect(r, radius, radius);
 
+        QColor backgroundColor = m_backgroundColor;
+        QColor borderColor = m_borderColor;
+
+        if (!isEnabled()) {
+            const QColor surface = theme->color(AsterTheme::ColorRole::Surface);
+            const QColor disabledText = theme->color(AsterTheme::ColorRole::TextDisabled);
+            if (m_type == Type::Primary) {
+                backgroundColor = disabledText;
+                borderColor = disabledText;
+            } else {
+                backgroundColor = surface;
+                borderColor = disabledText;
+            }
+        }
+
         // 填充背景
-        if (m_backgroundColor.isValid() && m_backgroundColor.alpha() > 0) {
-            painter.fillPath(path, m_backgroundColor);
+        if (backgroundColor.isValid() && backgroundColor.alpha() > 0) {
+            painter.fillPath(path, backgroundColor);
         }
 
         // 绘制边框
         if (m_type == Type::Dashed) {
-            QPen pen(m_borderColor);
+            QPen pen(borderColor);
             pen.setStyle(Qt::DashLine);
             painter.setPen(pen);
             painter.drawPath(path);
-        } else if (m_borderColor.isValid() && m_borderColor.alpha() > 0) {
-            QPen pen(m_borderColor);
+        } else if (borderColor.isValid() && borderColor.alpha() > 0) {
+            QPen pen(borderColor);
             painter.setPen(pen);
             painter.drawPath(path);
         }
     }
 
     void AsterButton::drawContent(QPainter& painter) {
-        painter.setPen(m_textColor);
+        QColor textColor = m_textColor;
+        if (!isEnabled()) {
+            textColor = AsterTheme::instance()->color(AsterTheme::ColorRole::TextDisabled);
+        }
+
+        painter.setPen(textColor);
         painter.setFont(font());
         
         if (m_loading) {
@@ -254,7 +275,7 @@ namespace AsterFlorets {
             painter.save();
             painter.translate(startX + spinnerSize / 2, centerY);
             painter.rotate(m_loadingAngle);
-            painter.setPen(QPen(m_textColor, 2));
+            painter.setPen(QPen(textColor, 2));
             painter.drawArc(-spinnerSize/2, -spinnerSize/2, spinnerSize, spinnerSize, 0, 270 * 16);
             painter.restore();
             
@@ -267,7 +288,7 @@ namespace AsterFlorets {
     }
 
     void AsterButton::drawRipple(QPainter& painter) {
-        if (!m_ripple.active) return;
+        if (!m_ripple.active || !isEnabled()) return;
 
         painter.save();
         QPainterPath path;
@@ -285,20 +306,23 @@ namespace AsterFlorets {
 
     void AsterButton::enterEvent(QEnterEvent* event) {
         QAbstractButton::enterEvent(event);
+        if (!isEnabled()) return;
         startHoverAnimation(true);
     }
 
     void AsterButton::leaveEvent(QEvent* event) {
         QAbstractButton::leaveEvent(event);
+        if (!isEnabled()) return;
         startHoverAnimation(false);
     }
 
     void AsterButton::mousePressEvent(QMouseEvent* event) {
         QAbstractButton::mousePressEvent(event);
+        if (!isEnabled()) return;
         startRippleAnimation(event->pos());
         
         // 按下缩放动画 (缩小)
-        auto anim = static_cast<QVariantAnimation*>(m_scaleAnimation);
+        auto anim = m_scaleAnimation;
         anim->stop();
         anim->setStartValue(m_scale);
         anim->setEndValue(0.96);
@@ -308,9 +332,10 @@ namespace AsterFlorets {
 
     void AsterButton::mouseReleaseEvent(QMouseEvent* event) {
         QAbstractButton::mouseReleaseEvent(event);
+        if (!isEnabled()) return;
         
         // 松开恢复动画
-        auto anim = static_cast<QVariantAnimation*>(m_scaleAnimation);
+        auto anim = m_scaleAnimation;
         anim->stop();
         anim->setStartValue(m_scale);
         anim->setEndValue(1.0);
@@ -361,6 +386,8 @@ namespace AsterFlorets {
     }
 
     void AsterButton::startHoverAnimation(bool hovered) {
+        if (!isEnabled()) return;
+
         auto theme = AsterTheme::instance();
         
         QColor targetBg, targetBorder, targetText;
@@ -431,7 +458,7 @@ namespace AsterFlorets {
         }
         m_ripple.maxRadius = maxDist;
         
-        auto anim = static_cast<QVariantAnimation*>(m_rippleAnimation);
+        auto anim = m_rippleAnimation;
         anim->stop();
         
         // 动态计算适宜的波纹 duration

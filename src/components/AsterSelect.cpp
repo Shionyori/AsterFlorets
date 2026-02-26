@@ -96,6 +96,8 @@ namespace AsterFlorets {
         m_borderAnimation->setEasingCurve(QEasingCurve::OutQuad);
         
         setCursor(Qt::PointingHandCursor);
+        setMinimumHeight(32);
+        setFocusPolicy(Qt::StrongFocus);
         // 增加一点内边距，防止文字紧贴边缘 (虽然 paintEvent 会重绘，但 sizeHint 可能用到)
     }
 
@@ -112,6 +114,19 @@ namespace AsterFlorets {
         auto theme = AsterTheme::instance();
         int radius = theme->borderRadius();
 
+        const bool disabled = !isEnabled();
+        QColor surfaceColor = theme->color(AsterTheme::ColorRole::Surface);
+        QColor borderColor = m_borderColor;
+        QColor textColor = theme->color(AsterTheme::ColorRole::Text);
+        QColor arrowColor = theme->color(AsterTheme::ColorRole::TextSecondary);
+
+        if (disabled) {
+            surfaceColor = theme->color(AsterTheme::ColorRole::Background);
+            borderColor = theme->color(AsterTheme::ColorRole::Border);
+            textColor = theme->color(AsterTheme::ColorRole::TextDisabled);
+            arrowColor = theme->color(AsterTheme::ColorRole::TextDisabled);
+        }
+
         // 1. 绘制背景和边框
         QRectF r = rect();
         r.adjust(0.5, 0.5, -0.5, -0.5);
@@ -119,12 +134,12 @@ namespace AsterFlorets {
         QPainterPath path;
         path.addRoundedRect(r, radius, radius);
 
-        painter.fillPath(path, theme->color(AsterTheme::ColorRole::Surface));
+        painter.fillPath(path, surfaceColor);
 
-        QPen pen(m_borderColor);
+        QPen pen(borderColor);
         // Removed manual override for hover/focus since m_borderColor is animated
         
-        if (hasFocus()) {
+           if (hasFocus() && !disabled) {
              // pen.setColor(theme->color(AsterTheme::ColorRole::Primary)); // Already handled by animation
              pen.setWidth(1); 
         }
@@ -132,8 +147,8 @@ namespace AsterFlorets {
         painter.drawPath(path);
         
         // Focus Ring (Optional)
-        if (hasFocus()) {
-            QColor ringColor = m_borderColor; // Use animated color
+        if (hasFocus() && !disabled) {
+            QColor ringColor = borderColor; // Use animated color
             ringColor.setAlpha(40);
             QPainterPath ringPath;
             // ...
@@ -149,11 +164,12 @@ namespace AsterFlorets {
         QRect textRect = rect().adjusted(12, 0, -30, 0); // Left padding 12, Right padding for arrow
         
         QString text = currentText();
-        QColor textColor = theme->color(AsterTheme::ColorRole::Text);
 
         if (text.isEmpty() && !placeholderText().isEmpty()) {
             text = placeholderText();
-            textColor = theme->color(AsterTheme::ColorRole::TextSecondary);
+            textColor = disabled
+                ? theme->color(AsterTheme::ColorRole::TextDisabled)
+                : theme->color(AsterTheme::ColorRole::TextSecondary);
         }
 
         painter.setPen(textColor);
@@ -174,7 +190,7 @@ namespace AsterFlorets {
         arrowPath.lineTo(arrowX + arrowW / 2.0, arrowY + arrowH);
         arrowPath.lineTo(arrowX + arrowW, arrowY);
         
-        QPen arrowPen(theme->color(AsterTheme::ColorRole::TextSecondary));
+        QPen arrowPen(arrowColor);
         arrowPen.setWidth(2);
         arrowPen.setCapStyle(Qt::RoundCap);
         arrowPen.setJoinStyle(Qt::RoundJoin);
@@ -207,6 +223,13 @@ namespace AsterFlorets {
 
     void AsterSelect::animateBorder() {
         auto theme = AsterTheme::instance();
+
+        if (!isEnabled()) {
+            m_borderAnimation->stop();
+            setBorderColor(theme->color(AsterTheme::ColorRole::Border));
+            return;
+        }
+
         QColor start = m_borderColor;
         QColor end;
         

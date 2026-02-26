@@ -10,6 +10,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QPushButton>
 #include <QMouseEvent>
+#include <QKeyEvent>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QTimer>
@@ -36,6 +37,10 @@ namespace AsterFlorets {
     void AsterModal::initUI() {
         setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
         setAttribute(Qt::WA_TranslucentBackground);
+        setModal(true);
+        setFocusPolicy(Qt::StrongFocus);
+        setAccessibleName("Aster Modal");
+        setAccessibleDescription("Dialog with title, content and action buttons");
         
         // Main layout (container for shadow)
         auto rootLayout = new QVBoxLayout(this);
@@ -66,6 +71,7 @@ namespace AsterFlorets {
         f.setPixelSize(16);
         f.setBold(true);
         m_titleLabel->setFont(f);
+        m_titleLabel->setAccessibleName("Dialog Title");
         headerLayout->addWidget(m_titleLabel);
         // Can add close X button here
         
@@ -81,6 +87,7 @@ namespace AsterFlorets {
         f = m_contentLabel->font();
         f.setPixelSize(14);
         m_contentLabel->setFont(f);
+        m_contentLabel->setAccessibleName("Dialog Content");
         bodyLayout->addWidget(m_contentLabel);
 
         m_mainLayout->addWidget(m_bodyContainer);
@@ -92,6 +99,8 @@ namespace AsterFlorets {
         footerLayout->addStretch(1);
 
         m_btnCancel = new AsterButton("Cancel", m_footerContainer);
+        m_btnCancel->setAccessibleName("Cancel");
+        m_btnCancel->setAccessibleDescription("Cancel and close dialog");
         connect(m_btnCancel, &AsterButton::clicked, this, &AsterModal::reject);
         footerLayout->addWidget(m_btnCancel);
 
@@ -99,8 +108,12 @@ namespace AsterFlorets {
 
         m_btnOk = new AsterButton("OK", m_footerContainer);
         m_btnOk->setType(AsterButton::Type::Primary);
+        m_btnOk->setAccessibleName("OK");
+        m_btnOk->setAccessibleDescription("Confirm and close dialog");
         connect(m_btnOk, &AsterButton::clicked, this, &AsterModal::accept);
         footerLayout->addWidget(m_btnOk);
+
+        setTabOrder(m_btnCancel, m_btnOk);
 
         m_mainLayout->addWidget(m_footerContainer);
 
@@ -146,11 +159,13 @@ namespace AsterFlorets {
     void AsterModal::setTitle(const QString& title) {
         m_title = title;
         m_titleLabel->setText(title);
+        setAccessibleName(title.isEmpty() ? QString("Aster Modal") : title);
     }
 
     void AsterModal::setContent(const QString& content) {
         m_content = content;
         m_contentLabel->setText(content);
+        m_contentLabel->setAccessibleDescription(content);
         if (m_customContent) {
             m_customContent->hide();
         }
@@ -246,11 +261,39 @@ namespace AsterFlorets {
         if (m_isDragging) {
             m_isDragging = false;
         }
+        QDialog::mouseReleaseEvent(event);
+    }
+
+    void AsterModal::keyPressEvent(QKeyEvent* event) {
+        if (!event) {
+            return;
+        }
+
+        if (event->key() == Qt::Key_Escape) {
+            reject();
+            event->accept();
+            return;
+        }
+
+        if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) &&
+            !(event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier))) {
+            if (m_btnOk && m_btnOk->isVisible() && m_btnOk->isEnabled()) {
+                accept();
+                event->accept();
+                return;
+            }
+        }
+
+        QDialog::keyPressEvent(event);
     }
 
     void AsterModal::showEvent(QShowEvent* event) {
         QDialog::showEvent(event);
         showOverlay();
+
+        if (m_btnOk && m_btnOk->isVisible() && m_btnOk->isEnabled()) {
+            m_btnOk->setFocus(Qt::OtherFocusReason);
+        }
 
         // Defer animation to ensure layout is complete
         QTimer::singleShot(0, this, [this](){

@@ -10,6 +10,7 @@
 #include <QParallelAnimationGroup>
 #include <QVariantAnimation>
 #include <QFontMetrics>
+#include <QKeyEvent>
 #include <QDebug>
 
 namespace AsterFlorets {
@@ -33,6 +34,9 @@ namespace AsterFlorets {
         explicit AsterTabBar(QWidget* parent = nullptr) : QWidget(parent) {
             setFixedHeight(46); // Standard tab bar height
             setMouseTracking(true);
+            setFocusPolicy(Qt::StrongFocus);
+            setAccessibleName("Aster Tabs");
+            setAccessibleDescription("Use arrow keys to switch tabs");
             
             // Animation for sliding underline
             m_anim = new QParallelAnimationGroup(this);
@@ -54,6 +58,13 @@ namespace AsterFlorets {
             item.label = label;
             m_tabs.append(item);
             updateLayout();
+
+            if (m_tabs.size() == 1) {
+                m_currentIndex = 0;
+                m_inkPos = m_tabs[0].rect.x();
+                m_inkWidth = m_tabs[0].rect.width();
+            }
+
             update();
         }
 
@@ -146,9 +157,33 @@ namespace AsterFlorets {
                 // if (isSelected) font.setBold(true); else font.setBold(false);
                 p.setFont(font);
 
-                // Draw Text (Centered in rect)
-                // TODO: Handle Icon
-                p.drawText(r, Qt::AlignCenter, item.label);
+                const int iconSize = 16;
+                const int gap = 6;
+                const bool hasIcon = !item.icon.isNull();
+                const int textWidth = QFontMetrics(font).horizontalAdvance(item.label);
+                const int contentWidth = hasIcon ? (iconSize + gap + textWidth) : textWidth;
+
+                int contentX = r.x() + (r.width() - contentWidth) / 2;
+
+                if (hasIcon) {
+                    QRect iconRect(contentX, r.y() + (r.height() - iconSize) / 2, iconSize, iconSize);
+                    item.icon.paint(&p, iconRect);
+                    contentX += iconSize + gap;
+                }
+
+                QRect textRect(contentX, r.y(), textWidth, r.height());
+                p.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, item.label);
+
+                if (hasFocus() && isSelected) {
+                    QColor focusColor = primary;
+                    focusColor.setAlpha(70);
+                    QPen focusPen(focusColor);
+                    focusPen.setWidth(2);
+                    p.setPen(focusPen);
+                    p.setBrush(Qt::NoBrush);
+                    QRect focusRect = r.adjusted(3, 8, -3, -8);
+                    p.drawRoundedRect(focusRect, 5, 5);
+                }
             }
 
             // Draw Ink Bar
@@ -201,9 +236,49 @@ namespace AsterFlorets {
                     if (i != m_currentIndex) {
                         setCurrentIndex(i);
                     }
+                    setFocus(Qt::MouseFocusReason);
                     break;
                 }
             }
+        }
+
+        void keyPressEvent(QKeyEvent* event) override {
+            if (m_tabs.isEmpty()) {
+                QWidget::keyPressEvent(event);
+                return;
+            }
+
+            int target = m_currentIndex;
+            switch (event->key()) {
+                case Qt::Key_Left:
+                case Qt::Key_Up:
+                    target = qMax(0, m_currentIndex - 1);
+                    break;
+                case Qt::Key_Right:
+                case Qt::Key_Down:
+                    target = qMin(m_tabs.size() - 1, m_currentIndex + 1);
+                    break;
+                case Qt::Key_Home:
+                    target = 0;
+                    break;
+                case Qt::Key_End:
+                    target = m_tabs.size() - 1;
+                    break;
+                case Qt::Key_Return:
+                case Qt::Key_Enter:
+                case Qt::Key_Space:
+                    setCurrentIndex(m_currentIndex);
+                    event->accept();
+                    return;
+                default:
+                    QWidget::keyPressEvent(event);
+                    return;
+            }
+
+            if (target != m_currentIndex) {
+                setCurrentIndex(target);
+            }
+            event->accept();
         }
 
     private:
@@ -215,10 +290,14 @@ namespace AsterFlorets {
             QFontMetrics fm(font);
             
             int spacing = 32; // Gap between tabs
-            int padding = 0;
+            const int iconSize = 16;
+            const int iconGap = 6;
 
             for (int i = 0; i < m_tabs.size(); ++i) {
                 int w = fm.horizontalAdvance(m_tabs[i].label) + spacing;
+                if (!m_tabs[i].icon.isNull()) {
+                    w += iconSize + iconGap;
+                }
                 m_tabs[i].rect = QRect(x, 0, w, height());
                 x += w; 
             }
@@ -300,14 +379,7 @@ namespace AsterFlorets {
         if (w) {
             m_stack->removeWidget(w);
             m_tabBar->removeTab(index);
-            // QStackedWidget automatically deletes if parented? No, removeWidget doesn't delete.
-            // But we created it or user passed it? User passed it.
-            // Standard QTabWidget behavior: does NOT delete widget?
-            // "The page widget itself is not deleted."
-            w->deleteLater(); // Typically we want to clean up if we remove tab?
-            // Let's mimic QTabWidget logic strictly: NO delete.
-            // But usually in UI definition users expect simple add/remove.
-            // Let's not delete it for safety, user can delete it.
+            // 与 QTabWidget 一致：removeTab 不负责销毁页面对象。
         }
     }
 

@@ -45,16 +45,22 @@ cmake --build --preset windows-msvc-local
 - **组件库演示**:
   ```bash
   cd ./build/windows-msvc/bin/Debug
-  ./demo.exe
+  ./ComponentGallery.exe
   ```
 - **布局演示**:
   ```bash
   cd ./build/windows-msvc/bin/Debug
-  ./layout_demo.exe
+  ./LayoutDemo.exe
+  ```
+
+- **发布控制台演示（业务流示例）**:
+  ```bash
+  cd ./build/windows-msvc/bin/Debug
+  ./ReleaseConsoleDemo.exe
   ```
 
 ## 目录结构
-- `include/AsterFlorets`: 公共头文件
+- `include`: 公共头文件
 - `src`: 源代码
 - `examples`: 示例程序
 - `tests`: 测试用例（暂未创建）
